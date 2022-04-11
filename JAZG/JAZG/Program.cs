@@ -1,4 +1,4 @@
-﻿namespace jazg;
+﻿namespace JAZG;
 /// <summary>
 /// Class that sets up model, configures the scenerario and starts the simulation
 /// </summary>

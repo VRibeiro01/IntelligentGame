@@ -1,6 +1,6 @@
 ﻿using Mars.Components.Agents;
 
-namespace jazg.Model.Players;
+namespace JAZG.Model.Players;
 
 /// <summary>
 /// abstract class to define player properties and main behaviour.

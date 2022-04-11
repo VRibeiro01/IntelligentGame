@@ -1,5 +1,5 @@
 ﻿using Mars.Components.Layers;
-namespace jazg.Model;
+namespace JAZG.Model;
 
 /// <summary>
 ///  Field, where all agents and entities live
