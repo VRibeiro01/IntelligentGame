@@ -15,6 +15,8 @@ namespace JAZG.Model
 /// </summary>
 public class FieldLayer : RasterLayer
 {
+    
+    // TODO Create CollisionHashEnvironment for humans and zombies and add them to the field
     public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
         UnregisterAgent unregisterAgentHandle)
     {

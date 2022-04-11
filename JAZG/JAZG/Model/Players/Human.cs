@@ -15,6 +15,9 @@ namespace JAZG.Model.Players
         {
             base.Tick();
             Console.WriteLine("Hello world From Human!");
+            
+            // TODO Implement simple movements
+            // TODO implement action upon meting zombie using collisionHashEnvironment  functionalities
         }
     }
 }
