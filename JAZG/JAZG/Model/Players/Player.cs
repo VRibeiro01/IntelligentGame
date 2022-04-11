@@ -1,4 +1,6 @@
-﻿using Mars.Components.Agents;
+﻿using System;
+using Mars.Components.Agents;
+using Mars.Interfaces.Agents;
 
 namespace JAZG.Model.Players;
 
@@ -6,11 +8,14 @@ namespace JAZG.Model.Players;
 /// abstract class to define player properties and main behaviour.
 /// Zombies and humans inherit from this class and can specify their behaviour in their concrete classes
 /// </summary>
-public abstract class Player : IAgent<PlayerLayer>
+public class Player : IAgent<FieldLayer>
 {
-    public void Init(MyLayer layer) 
+ 
+
+    public void Init(FieldLayer layer)
     {
-        // finalize the init process
+        // implement Init process
+        throw new NotImplementedException();
     }
 
     public void Tick() 
@@ -19,5 +24,4 @@ public abstract class Player : IAgent<PlayerLayer>
     }
 
     public Guid ID { get; set; }
-}
 }
