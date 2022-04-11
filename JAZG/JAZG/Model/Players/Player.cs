@@ -22,7 +22,7 @@ namespace JAZG.Model.Players
 
         public virtual void Tick()
         {
-            Console.WriteLine("Hello world From Player!");
+           
         }
 
         public Guid ID { get; set; }

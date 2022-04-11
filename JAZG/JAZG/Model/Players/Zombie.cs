@@ -1,4 +1,6 @@
-﻿namespace JAZG.Model.Players
+﻿using System;
+
+namespace JAZG.Model.Players
 {
     public class Zombie : Player
     {
@@ -6,6 +8,11 @@
         {
             base.Init(layer);
             Energy = 15;
+        }
+        public override void Tick()
+        {
+            base.Tick();
+            Console.WriteLine("Hello world From Zombie!");
         }
     }
 }

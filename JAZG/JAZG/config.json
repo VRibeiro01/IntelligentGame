@@ -4,12 +4,16 @@
     "endPoint": "2020-01-01T01:00:00",
     "deltaT": 1,
     "deltaTUnit": "seconds",
-    "console": true,
+    "console": false,
     "output": "csv"
   },
   "agents": [
     {
       "name": "Human",
+      "count": 3
+    },
+    {
+      "name": "Zombie",
       "count": 3
     }
   ],

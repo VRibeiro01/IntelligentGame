@@ -13,7 +13,8 @@ namespace JAZG.Model.Players
         }
         public override void Tick()
         {
-            Console.WriteLine("Hello world From Player!");
+            base.Tick();
+            Console.WriteLine("Hello world From Human!");
         }
     }
 }
