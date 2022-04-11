@@ -6,8 +6,9 @@ using Mars.Core.Data;
 using Mars.Interfaces.Data;
 using Mars.Interfaces.Layers;
 
-namespace JAZG.Model;
-
+namespace JAZG.Model
+{
+    
 /// <summary>
 ///  Field, where all agents and entities live
 ///  Type Rasterlayer represents a n x m matrix. Allows processing of grid data
@@ -26,4 +27,6 @@ public class FieldLayer : RasterLayer
             
         return true;
     }
+}
+
 }
