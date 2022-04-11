@@ -7,5 +7,10 @@ namespace jazg.Model;
 /// </summary>
 public class FieldLayer : RasterLayer
 {
-    
+    public override bool InitLayer(TInitData layerInitData, RegisterAgent registerAgentHandle, UnregisterAgent unregisterAgentHandle)
+    {
+        base.InitLayer(layerInitData, registerAgentHandle, unregisterAgentHandle);
+        // Do your initialization logic here.
+        return true;
+    } 
 }
