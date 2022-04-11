@@ -11,21 +11,27 @@ namespace JAZG.Model.Players
     /// abstract class to define player properties and main behaviour.
     /// Zombies and humans inherit from this class and can specify their behaviour in their concrete classes
     /// </summary>
-    public class Player : IAgent<FieldLayer>
+    public abstract class Player : IAgent<FieldLayer>
     {
 
 
-        public void Init(FieldLayer layer)
+        public virtual void Init(FieldLayer layer)
         {
-            // implement Init process
-            throw new NotImplementedException();
+            Layer = layer;
         }
 
-        public void Tick()
+        public virtual void Tick()
         {
-            // define your logic here
+            Console.WriteLine("Hello world From Player!");
         }
 
         public Guid ID { get; set; }
+        
+        protected FieldLayer Layer { get; set; }
+        
+        // ****** Attributes
+        protected int Energy { get; set; } 
+        
     }
+    
 }

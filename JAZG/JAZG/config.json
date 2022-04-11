@@ -1,2 +1,23 @@
 ﻿{
+  "globals": {
+    "startPoint": "2020-01-01T00:00:00",
+    "endPoint": "2020-01-01T01:00:00",
+    "deltaT": 1,
+    "deltaTUnit": "seconds",
+    "console": true,
+    "output": "csv"
+  },
+  "agents": [
+    {
+      "name": "Human",
+      "count": 3
+    }
+  ],
+  "layers": [
+    {
+      "name": "FieldLayer",
+      "file": "C:\\Users\\acu765\\RiderProjects\\jazg\\JAZG\\JAZG\\Resources\\grid.csv"
+    }
+  ]
+
 }

@@ -22,8 +22,12 @@ public class FieldLayer : RasterLayer
             
         // the agent manager can create agents and initializes them as defined in the sim config
         var agentManager = layerInitData.Container.Resolve<IAgentManager>();
-        var agents = agentManager.Spawn<Player, FieldLayer >().ToList();
-        Console.WriteLine($"We created {agents.Count} agents.");
+        
+        //Create and register agents
+        var human_agents = agentManager.Spawn<Human, FieldLayer >().ToList();
+        var zombie_agents = agentManager.Spawn<Zombie, FieldLayer >().ToList();
+        Console.WriteLine($"We created {human_agents.Count} human agents.");
+        Console.WriteLine($"We created {zombie_agents.Count} zombie agents.");
             
         return true;
     }
