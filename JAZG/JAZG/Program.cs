@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using JAZG.Model;
+using JAZG.Model.Objects;
 using JAZG.Model.Players;
 using Mars.Components.Starter;
 using Mars.Interfaces.Model;
+using NetTopologySuite.Index.HPRtree;
 
 namespace JAZG
 {
@@ -24,7 +26,7 @@ namespace JAZG
             description.AddAgent<Zombie, FieldLayer>();
             
             // Add entities to model
-            
+            description.AddEntity<Wall>();
             
             // Get model configuration
             var file = File.ReadAllText(@"C:\Users\vivia\mars\jazg\JAZG\JAZG\config.json");
