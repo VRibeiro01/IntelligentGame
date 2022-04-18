@@ -1,6 +1,8 @@
 ﻿using System;
 using Mars.Components.Agents;
+using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Agents;
+using Mars.Interfaces;
 
 namespace JAZG.Model.Players
 {

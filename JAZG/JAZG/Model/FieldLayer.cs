@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using JAZG.Model.Objects;
 using JAZG.Model.Players;
+using Mars.Components.Environments.Cartesian;
 using Mars.Components.Layers;
 using Mars.Core.Data;
 using Mars.Interfaces.Data;
@@ -16,7 +18,8 @@ namespace JAZG.Model
 public class FieldLayer : RasterLayer
 {
     
-    // TODO Create CollisionHashEnvironment for humans and zombies and add them to the field
+    // TODO add human and zombies to the field
+ 
     public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
         UnregisterAgent unregisterAgentHandle)
     {
@@ -24,6 +27,7 @@ public class FieldLayer : RasterLayer
             
         // the agent manager can create agents and initializes them as defined in the sim config
         var agentManager = layerInitData.Container.Resolve<IAgentManager>();
+        var environment = new CollisionEnvironment<Player, Item>();
         
         //Create and register agents
         var human_agents = agentManager.Spawn<Human, FieldLayer >().ToList();
