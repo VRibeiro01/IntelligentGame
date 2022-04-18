@@ -15,13 +15,14 @@
     },
     {
       "name": "Zombie",
-      "count": 3
+      "count": 3,
+      "file": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\zombieInit.csv"
     }
   ],
   "layers": [
     {
       "name": "FieldLayer",
-      "file": "C:\\Users\\acu765\\RiderProjects\\jazg\\JAZG\\JAZG\\Resources\\rec1_Battleground.csv"
+      "file": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\rec1_Battleground.csv"
     }
   ]
 
