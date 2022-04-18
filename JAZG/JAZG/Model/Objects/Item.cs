@@ -1,12 +1,15 @@
 using System;
 using Mars.Components.Environments.Cartesian;
+using Mars.Interfaces.Agents;
 using NetTopologySuite.Geometries;
+using Position = Mars.Interfaces.Environments.Position;
 
 namespace JAZG.Model.Objects
 {
-    public abstract class Item : IObstacle
+    public abstract class Item : IObstacle, IEntity
     {
         public Guid ID { get; set; }
+        
        
 
         public abstract bool IsRoutable(ICharacter character);
