@@ -1,6 +1,4 @@
-﻿using NetTopologySuite.Geometries;
-
-namespace JAZG.Model.Players
+﻿namespace JAZG.Model.Players
 {
     public class Human : Player
     {
@@ -10,7 +8,6 @@ namespace JAZG.Model.Players
             Energy = 30;
         }
 
-        
 
         public void Tick()
         {

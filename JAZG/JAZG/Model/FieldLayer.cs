@@ -5,7 +5,6 @@ using JAZG.Model.Players;
 using Mars.Components.Environments.Cartesian;
 using Mars.Components.Layers;
 using Mars.Core.Data;
-using Mars.Interfaces;
 using Mars.Interfaces.Data;
 using Mars.Interfaces.Layers;
 
@@ -25,17 +24,17 @@ namespace JAZG.Model
             base.InitLayer(layerInitData, registerAgentHandle, unregisterAgentHandle); // base class requires init, too
 
             Environment = new CollisionEnvironment<Player, Item>();
-            
+
             // the agent manager can create agents and initializes them as defined in the sim config
             var agentManager = layerInitData.Container.Resolve<IAgentManager>();
-            
+
 
             //Create and register agents
             var human_agents = agentManager.Spawn<Human, FieldLayer>().ToList();
             var zombie_agents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
             Console.WriteLine("We created " + human_agents.Count + " human agents.");
             Console.WriteLine("We created " + zombie_agents.Count + " zombie agents.");
-            
+
             //TODO create walls and place them on the field
             return true;
         }
