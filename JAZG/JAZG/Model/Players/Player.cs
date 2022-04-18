@@ -13,17 +13,16 @@ namespace JAZG.Model.Players
     public abstract class Player : IAgent<FieldLayer>, ICharacter
     {
         // X coordinate where agent will spawn on collisionHashEnvironment
-        [PropertyDescription (Name="xSpawn")]
-        private int XSpawn { get; set; }
-        
+        [PropertyDescription(Name = "xSpawn")] private int XSpawn { get; set; }
+
         // X coordinate where agent will spawn on collisionHashEnvironment
-        [PropertyDescription (Name="ySpawn")]
-        private int YSpawn { get; set; }
+        [PropertyDescription(Name = "ySpawn")] private int YSpawn { get; set; }
 
         protected FieldLayer Layer { get; set; }
 
         // ****** Attributes
         protected int Energy { get; set; }
+
         public Guid ID { get; set; }
 
 
@@ -31,7 +30,8 @@ namespace JAZG.Model.Players
         {
             Layer = layer;
             Position = Position.CreatePosition(XSpawn, YSpawn);
-           }
+            Layer.Environment.Insert(this, Position);
+        }
 
         public virtual void Tick()
         {
@@ -44,7 +44,7 @@ namespace JAZG.Model.Players
 
         public CollisionKind? HandleCollision(ICharacter other)
         {
-            throw new NotImplementedException();
+            return CollisionKind.Pass;
         }
     }
 }

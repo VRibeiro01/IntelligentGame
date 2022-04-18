@@ -16,7 +16,7 @@ namespace JAZG.Model
     /// </summary>
     public class FieldLayer : RasterLayer
     {
-        // TODO add human and zombies to the field
+        public CollisionEnvironment<Player, Item> Environment { get; set; }
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -25,13 +25,13 @@ namespace JAZG.Model
 
             // the agent manager can create agents and initializes them as defined in the sim config
             var agentManager = layerInitData.Container.Resolve<IAgentManager>();
-            var environment = new CollisionEnvironment<Player, Item>();
+            Environment = new CollisionEnvironment<Player, Item>();
 
             //Create and register agents
             var human_agents = agentManager.Spawn<Human, FieldLayer>().ToList();
             var zombie_agents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
-            Console.WriteLine($"We created {human_agents.Count} human agents.");
-            Console.WriteLine($"We created {zombie_agents.Count} zombie agents.");
+            Console.WriteLine("We created " + human_agents.Count + " human agents.");
+            Console.WriteLine("We created " + zombie_agents.Count + " zombie agents.");
 
             return true;
         }

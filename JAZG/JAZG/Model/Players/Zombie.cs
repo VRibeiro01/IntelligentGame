@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace JAZG.Model.Players
+﻿namespace JAZG.Model.Players
 {
     public class Zombie : Player
     {
@@ -10,12 +8,12 @@ namespace JAZG.Model.Players
             Energy = 15;
         }
 
-        public override void Tick()
+        public void Tick()
         {
             base.Tick();
-            Console.WriteLine("Hello world From Zombie!");
+
             // TODO Implement simple movements
-            // TODO implement action upon meting zomie using collisionHashEnvironment  functionalities
+            // TODO implement action upon meeting zombie using collisionHashEnvironment  functionalities
         }
     }
 }
