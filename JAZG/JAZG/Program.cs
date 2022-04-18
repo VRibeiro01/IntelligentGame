@@ -25,8 +25,7 @@ namespace JAZG
             description.AddAgent<Human, FieldLayer>();
             description.AddAgent<Zombie, FieldLayer>();
             
-            // Add entities to model
-            description.AddEntity<Wall>();
+           
             
             // Get model configuration
             var file = File.ReadAllText(@"C:\Users\vivia\mars\jazg\JAZG\JAZG\config.json");

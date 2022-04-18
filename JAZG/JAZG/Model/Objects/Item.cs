@@ -6,7 +6,7 @@ using Position = Mars.Interfaces.Environments.Position;
 
 namespace JAZG.Model.Objects
 {
-    public abstract class Item : IObstacle, IEntity
+    public abstract class Item : IObstacle
     {
         public Guid ID { get; set; }
         
