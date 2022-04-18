@@ -6,6 +6,7 @@ namespace JAZG.Model.Objects
     public abstract class Item : IObstacle
     {
         public Guid ID { get; set; }
+
         public bool IsRoutable(ICharacter character)
         {
             throw new NotImplementedException();
