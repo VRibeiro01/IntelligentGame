@@ -36,7 +36,7 @@ namespace JAZG.Model
             Console.WriteLine("We created " + human_agents.Count + " human agents.");
             Console.WriteLine("We created " + zombie_agents.Count + " zombie agents.");
             
-            
+            //TODO create walls and place them on the field
             return true;
         }
     }
