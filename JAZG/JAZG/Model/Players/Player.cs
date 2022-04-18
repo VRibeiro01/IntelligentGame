@@ -1,5 +1,4 @@
 ﻿using System;
-using Mars.Components.Agents;
 using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Agents;
 using Mars.Interfaces.Environments;
@@ -15,19 +14,8 @@ namespace JAZG.Model.Players
     /// </summary>
     public abstract class Player : IAgent<FieldLayer>, ICharacter
     {
-        
-
-
-        public virtual void Init(FieldLayer layer)
-        {
-            Layer = layer;
-        }
-
-        public virtual void Tick()
-        {
-           
-        }
-
+        private int _xSpawn;
+        private int _ySpawn;
         public Guid ID { get; set; }
         
         protected FieldLayer Layer { get; set; }
@@ -36,12 +24,28 @@ namespace JAZG.Model.Players
         protected int Energy { get; set; }
 
         public Position Position { get; set; }
+       
+        public double Extent { get; set; }
+
+
+        public virtual void Init(FieldLayer layer)
+        {
+            Layer = layer;
+            Position = Position.CreatePosition(_xSpawn, _ySpawn);
+        }
+        
         public CollisionKind? HandleCollision(ICharacter other)
         {
             throw new NotImplementedException();
         }
 
-        public double Extent { get; set; }
+        public virtual void Tick()
+        {
+           
+        }
+        
+
+
     }
     
 }

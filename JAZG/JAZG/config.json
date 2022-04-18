@@ -10,7 +10,8 @@
   "agents": [
     {
       "name": "Human",
-      "count": 3
+      "count": 3,
+      "file": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\humanInit.csv"
     },
     {
       "name": "Zombie",
