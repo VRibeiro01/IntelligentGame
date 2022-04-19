@@ -23,11 +23,15 @@ namespace JAZG.Model
         {
             base.InitLayer(layerInitData, registerAgentHandle, unregisterAgentHandle); // base class requires init, too
 
-            Environment = new CollisionEnvironment<Player, Item>();
+            var inputs = layerInitData.LayerInitConfig.Inputs;
+
+            if (inputs != null && inputs.Any())
+            {
+                Environment = new CollisionEnvironment<Player, Item>();
+            }
 
             // the agent manager can create agents and initializes them as defined in the sim config
             var agentManager = layerInitData.Container.Resolve<IAgentManager>();
-
 
             //Create and register agents
             var human_agents = agentManager.Spawn<Human, FieldLayer>().ToList();

@@ -1,4 +1,5 @@
 ﻿using System;
+using Mars.Common.Core.Random;
 using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Agents;
 using Mars.Interfaces.Annotations;
@@ -13,10 +14,10 @@ namespace JAZG.Model.Players
     public abstract class Player : IAgent<FieldLayer>, ICharacter
     {
         // X coordinate where agent will spawn on collisionHashEnvironment
-        [PropertyDescription(Name = "xSpawn")] private int XSpawn { get; set; }
+        [PropertyDescription(Name = "xSpawn")] public double XSpawn { get; set; }
 
         // X coordinate where agent will spawn on collisionHashEnvironment
-        [PropertyDescription(Name = "ySpawn")] private int YSpawn { get; set; }
+        [PropertyDescription(Name = "ySpawn")] public double YSpawn { get; set; }
 
         protected FieldLayer Layer { get; set; }
 
@@ -25,6 +26,9 @@ namespace JAZG.Model.Players
 
         public Guid ID { get; set; }
 
+        public Position Position { get; set; }
+
+        public double Extent { get; set; }
 
         public virtual void Init(FieldLayer layer)
         {
@@ -35,12 +39,15 @@ namespace JAZG.Model.Players
 
         public virtual void Tick()
         {
+            
         }
 
-
-        public Position Position { get; set; }
-
-        public double Extent { get; set; }
+        protected void RandomMove()
+        {
+            var bearing = RandomHelper.Random.Next(360);
+            // TODO: implement speed
+            Position = Layer.Environment.Move(this, bearing, 1);
+        }
 
         public CollisionKind? HandleCollision(ICharacter other)
         {
