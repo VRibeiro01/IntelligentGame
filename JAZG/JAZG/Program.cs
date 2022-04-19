@@ -25,7 +25,7 @@ namespace JAZG
 
 
             // Get model configuration
-            var file = File.ReadAllText(@"C:\Users\vivia\mars\jazg\JAZG\JAZG\config.json");
+            var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
 
             // Start Simulation

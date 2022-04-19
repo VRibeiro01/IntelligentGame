@@ -11,18 +11,18 @@
     {
       "name": "Human",
       "count": 3,
-      "file": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\humanInit.csv"
+      "file": "Resources/humanInit.csv"
     },
     {
       "name": "Zombie",
       "count": 3,
-      "file": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\zombieInit.csv"
+      "file": "Resources/zombieInit.csv"
     }
   ],
   "layers": [
     {
       "name": "FieldLayer",
-      "file": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\rec1_Battleground.csv"
+      "file": "Resources/rec1_Battleground.csv"
     }
   ]
 }
