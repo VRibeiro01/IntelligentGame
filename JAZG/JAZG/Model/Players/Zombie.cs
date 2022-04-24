@@ -28,12 +28,12 @@ namespace JAZG.Model.Players
                 if (humanDistance <= 2)
                 {
                     EatHuman(nahrestHuman);
-                    Console.WriteLine("I eat human");
+                    Console.WriteLine("Chomp, chomp!");
                 }
                 else if (humanDistance <= 10)
                 {
                     MoveTowardsHuman(nahrestHuman);
-                    Console.WriteLine("I Walk to my food");
+                    Console.WriteLine("Braaaaaains...");
 
                 }
                 else
@@ -47,7 +47,7 @@ namespace JAZG.Model.Players
         private void EatHuman(Player human)
         {
             Energy += 4;
-            // human.Kill()
+            human.Kill();
             // TO DO Kill
         }
         private void MoveTowardsHuman(Player human)

@@ -4,6 +4,7 @@ using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Agents;
 using Mars.Interfaces.Annotations;
 using Mars.Interfaces.Environments;
+using Mars.Interfaces.Layers;
 
 namespace JAZG.Model.Players
 {
@@ -18,6 +19,9 @@ namespace JAZG.Model.Players
 
         // X coordinate where agent will spawn on collisionHashEnvironment
         [PropertyDescription(Name = "ySpawn")] public double YSpawn { get; set; }
+        
+        [PropertyDescription]
+        public UnregisterAgent UnregisterHandle { get; set; }
 
         protected FieldLayer Layer { get; set; }
 
@@ -52,6 +56,12 @@ namespace JAZG.Model.Players
         public CollisionKind? HandleCollision(ICharacter other)
         {
             return CollisionKind.Pass;
+        }
+
+        public virtual void Kill()
+        {
+            Layer.Environment.Remove(this);
+            UnregisterHandle.Invoke(Layer, this);
         }
     }
 }

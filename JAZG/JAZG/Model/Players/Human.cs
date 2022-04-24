@@ -8,6 +8,7 @@ namespace JAZG.Model.Players
 {
     public class Human : Player
     {
+        
         public override void Init(FieldLayer layer)
         {
             base.Init(layer);
@@ -61,6 +62,12 @@ namespace JAZG.Model.Players
             
             // TODO: implement speed
             Layer.Environment.Move(this, directionOpposite, 2);
+        }
+        
+        public override void Kill()
+        {
+            base.Kill();
+            Console.WriteLine("They got me! Leave me behind... arghhh!");
         }
     }
 }
