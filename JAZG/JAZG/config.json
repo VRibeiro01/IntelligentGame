@@ -5,7 +5,8 @@
     "deltaT": 1,
     "deltaTUnit": "seconds",
     "console": false,
-    "output": "csv"
+    "output": "csv",
+    "pythonVisualization": true
   },
   "agents": [
     {
