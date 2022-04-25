@@ -6,7 +6,10 @@ using Mars.Components.Environments.Cartesian;
 using Mars.Components.Layers;
 using Mars.Core.Data;
 using Mars.Interfaces.Data;
+using Mars.Interfaces.Environments;
 using Mars.Interfaces.Layers;
+using NetTopologySuite.Geometries;
+using Position = Mars.Interfaces.Environments.Position;
 
 namespace JAZG.Model
 {
@@ -28,6 +31,18 @@ namespace JAZG.Model
             if (inputs != null && inputs.Any())
             {
                 Environment = new CollisionEnvironment<Player, Item>();
+                
+                // TODO: improve this
+                Environment.BoundingBox =
+                    new BoundingBox(new Position(0, 0), new Position(100, 100));
+                Coordinate[] wall1 = {new(0, 0), new(0, 100)};
+                Coordinate[] wall2 = {new(0, 0), new(100, 0)};
+                Coordinate[] wall3 = {new(100, 100), new(0, 100)};
+                Coordinate[] wall4 = {new(100, 100), new(100, 0)};
+                Environment.Insert(new Wall(), new LineString(wall1));
+                Environment.Insert(new Wall(), new LineString(wall2));
+                Environment.Insert(new Wall(), new LineString(wall3));
+                Environment.Insert(new Wall(), new LineString(wall4));
             }
 
             // the agent manager can create agents and initializes them as defined in the sim config
