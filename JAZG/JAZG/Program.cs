@@ -33,8 +33,6 @@ namespace JAZG
             var task = SimulationStarter.Start(description, config);
             var loopResults = task.Run();
 
-            //var keys = loopResults.Model.ExecutionAgentTypeGroups.Keys.ToList();
-            //var count = loopResults.Model.ExecutionAgentTypeGroups[keys[0]].Count;
             Console.WriteLine("The sun rises and the night of the living dead is over...\n" + 
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."

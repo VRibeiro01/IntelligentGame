@@ -16,7 +16,7 @@ namespace JAZG.Model.Players
         }
 
         // TODO: remove
-        private bool _didWalk;
+        private int _lastAction = 0;
         
         public override void Tick()
         {
@@ -31,19 +31,22 @@ namespace JAZG.Model.Players
                 var zombieDistance = (int)Distance.Chebyshev(
                     Position.PositionArray, nextZombie.Position.PositionArray);
 
-                if (zombieDistance <= 5)
+                if (zombieDistance <= 30)
                 {
                     RunFromZombie(nextZombie);
-                    Console.WriteLine("Ah, Zombies!!!");
-                    if (_didWalk) _didWalk = false;
+                    if (_lastAction != 2)
+                    {
+                        Console.WriteLine("Ah, Zombies!!!");
+                        _lastAction = 2;
+                    }
                 }
                 else
                 {
                     RandomMove();
-                    if (!_didWalk)
+                    if (_lastAction != 1)
                     {
                         Console.WriteLine("I walk.");
-                        _didWalk = true;
+                        _lastAction = 1;
                     }
                 }
             }

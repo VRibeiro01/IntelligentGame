@@ -16,7 +16,7 @@
     },
     {
       "name": "Zombie",
-      "count": 3,
+      "count": 12,
       "file": "Resources/zombieInit.csv"
     }
   ],

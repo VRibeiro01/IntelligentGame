@@ -13,6 +13,8 @@ namespace JAZG.Model.Players
             Energy = 15;
         }
 
+        private int _lastAction = 0;
+
         public override void Tick()
         {
            
@@ -30,17 +32,23 @@ namespace JAZG.Model.Players
                     EatHuman(nahrestHuman);
                     Console.WriteLine("Chomp, chomp!");
                 }
-                else if (humanDistance <= 10)
+                else if (humanDistance <= 20)
                 {
                     MoveTowardsHuman(nahrestHuman);
-                    Console.WriteLine("Braaaaaains...");
-
+                    if (_lastAction != 2)
+                    {
+                        Console.WriteLine("Braaaaaains!");
+                        _lastAction = 2;
+                    }
                 }
                 else
                 {
                     RandomMove();
-                 //   Console.WriteLine("Iwalk without goal ");
-
+                    if (_lastAction != 1)
+                    {
+                        Console.WriteLine("Brains?");
+                        _lastAction = 1;
+                    }
                 }
             }
         }
@@ -55,7 +63,7 @@ namespace JAZG.Model.Players
             var directionToEnemy =
                 PositionHelper.CalculateBearingCartesian
                     (Position.X, Position.Y, human.Position.X, human.Position.Y);
-            Layer.Environment.Move(this, directionToEnemy, 3);
+            Layer.Environment.Move(this, directionToEnemy, 2);
         }
     }
 }

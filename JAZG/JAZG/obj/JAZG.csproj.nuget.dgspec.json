@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\acu765\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj": {}
+    "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\acu765\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj": {
+    "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\acu765\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+        "projectUniqueName": "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj",
         "projectName": "JAZG",
-        "projectPath": "C:\\Users\\acu765\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj",
-        "packagesPath": "C:\\Users\\acu765\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\acu765\\RiderProjects\\jazg\\JAZG\\JAZG\\obj\\",
+        "projectPath": "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+        "packagesPath": "C:\\Users\\acs358\\.nuget\\packages\\",
+        "outputPath": "Z:\\develop\\jazg\\JAZG\\JAZG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\acu765\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "Z:\\win\\AppData\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
