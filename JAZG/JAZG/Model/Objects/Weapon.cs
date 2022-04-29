@@ -1,28 +1,22 @@
-﻿using System;
-using Mars.Components.Environments.Cartesian;
+﻿using Mars.Components.Environments.Cartesian;
 
 namespace JAZG.Model.Objects
 {
-    public class Wall : Item
+    public class Weapon : Item
     {
         public override bool IsRoutable(ICharacter character)
         {
-            // this means that the wall cannot be passed (??? right ??)
-            return false;
+            return true;
         }
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
-            Console.WriteLine("Collision with a wall has ocurred at position " + character.Position);
-            return CollisionKind.Block;
-            
+            return CollisionKind.Pass;
         }
 
         public override VisibilityKind? HandleExploration(ICharacter explorer)
         {
             return VisibilityKind.Opaque;
         }
-
-        
     }
 }

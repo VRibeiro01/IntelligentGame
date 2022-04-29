@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
+using Mars.Common.IO.Mapped.Collections;
 using Mars.Numerics;
 
 using Mars.Components.Environments.Cartesian;
@@ -11,16 +13,17 @@ namespace JAZG.Model.Players
     public class Human : Player
     {
         private bool _dead;
+        // TODO: remove
+        private int _lastAction = 0;
+
+        private List<Weapon> weapons = new();
 
         public override void Init(FieldLayer layer)
         {
             base.Init(layer);
             Energy = 30;
         }
-
-        // TODO: remove
-        private int _lastAction = 0;
-
+        
         public override void Tick()
         {
             base.Tick();

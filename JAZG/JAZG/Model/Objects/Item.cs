@@ -18,5 +18,6 @@ namespace JAZG.Model.Objects
         public abstract VisibilityKind? HandleExploration(ICharacter explorer);
 
         public Position Position { get; set; }
+
     }
 }
