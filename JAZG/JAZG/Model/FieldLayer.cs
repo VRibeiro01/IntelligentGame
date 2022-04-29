@@ -2,6 +2,7 @@
 using System.Linq;
 using JAZG.Model.Objects;
 using JAZG.Model.Players;
+using Mars.Common.Core.Random;
 using Mars.Components.Environments.Cartesian;
 using Mars.Components.Layers;
 using Mars.Core.Data;
@@ -55,7 +56,16 @@ namespace JAZG.Model
             Console.WriteLine("We created " + zombie_agents.Count + " zombie agents.");
 
             //TODO create walls and place them on the field
+            // TODO create food class and place them on field + functionality when human finds food
+            // TODO create Weapon Gun 
             return true;
+        }
+
+        // Helper method to find random position within the bounds of the layer
+        public Position FindRandomPosition()
+        {
+            var random = RandomHelper.Random;
+            return Position.CreatePosition(random.Next(Width - 1), random.Next(Height - 1));
         }
     }
 }

@@ -10,7 +10,7 @@ using Mars.Interfaces.Model;
 namespace JAZG
 {
     /// <summary>
-    ///     Class that sets up model, configures the scenerario and starts the simulation
+    ///     Class that sets up model, configures the scenario and starts the simulation
     /// </summary>
     internal static class Program
     {

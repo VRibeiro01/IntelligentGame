@@ -4,6 +4,8 @@ using Mars.Common;
 using Mars.Common.Core.Random;
 using Mars.Numerics;
 
+using Mars.Components.Environments.Cartesian;
+
 namespace JAZG.Model.Players
 {
     public class Human : Player
@@ -22,7 +24,10 @@ namespace JAZG.Model.Players
         public override void Tick()
         {
             base.Tick();
-
+        
+            // Bewegt sich randomly
+            // Wenn er Zombie sieht --> Weg vom Zombie
+            
             var nextZombie = Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
@@ -83,7 +88,12 @@ namespace JAZG.Model.Players
             if (_dead) return;
             _dead = true;
             base.Kill();
-            Console.WriteLine(this.ID + ": They got me! Leave me behind... arghhh!");
+            Console.WriteLine("They got me! Leave me behind... arghhh!");
+        }
+        public override CollisionKind? HandleCollision(ICharacter other)
+        {
+            // Dummy Implementierung
+            return CollisionKind.Pass;
         }
     }
 }

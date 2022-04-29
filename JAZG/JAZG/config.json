@@ -11,13 +11,11 @@
   "agents": [
     {
       "name": "Human",
-      "count": 3,
-      "file": "Resources/humanInit.csv"
+      "count": 3
     },
     {
       "name": "Zombie",
-      "count": 12,
-      "file": "Resources/zombieInit.csv"
+      "count": 12
     }
   ],
   "layers": [

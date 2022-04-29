@@ -14,12 +14,7 @@ namespace JAZG.Model.Players
     /// </summary>
     public abstract class Player : IAgent<FieldLayer>, ICharacter
     {
-        // X coordinate where agent will spawn on collisionHashEnvironment
-        [PropertyDescription(Name = "xSpawn")] public double XSpawn { get; set; }
 
-        // X coordinate where agent will spawn on collisionHashEnvironment
-        [PropertyDescription(Name = "ySpawn")] public double YSpawn { get; set; }
-        
         [PropertyDescription]
         public UnregisterAgent UnregisterHandle { get; set; }
 
@@ -37,7 +32,11 @@ namespace JAZG.Model.Players
         public virtual void Init(FieldLayer layer)
         {
             Layer = layer;
-            Position = Position.CreatePosition(XSpawn, YSpawn);
+            // If position not null, set position to a random point in layer
+            Position ??= layer.FindRandomPosition();
+            
+            // All players have same extent
+            Extent = 1.8;
             Layer.Environment.Insert(this, Position);
         }
 
@@ -53,8 +52,9 @@ namespace JAZG.Model.Players
             Position = Layer.Environment.Move(this, bearing, 1);
         }
 
-        public CollisionKind? HandleCollision(ICharacter other)
+        public virtual CollisionKind? HandleCollision(ICharacter other)
         {
+            // Dummy Implementierung
             return CollisionKind.Pass;
         }
 

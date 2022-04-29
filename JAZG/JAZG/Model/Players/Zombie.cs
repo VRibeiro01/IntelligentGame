@@ -13,10 +13,9 @@ namespace JAZG.Model.Players
             Energy = 15;
         }
 
-        private int _lastAction = 0;
-
         public override void Tick()
         {
+           
             // TODO Implement simple movements
             // TODO implement action upon meeting zombie using collisionHashEnvironment  functionalities
             base.Tick();
@@ -24,57 +23,39 @@ namespace JAZG.Model.Players
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
             if (nahrestHuman != null)
             {
-                var humanDistance = (int) Distance.Chebyshev(
+                var humanDistance = (int)Distance.Chebyshev(
                     Position.PositionArray, nahrestHuman.Position.PositionArray);
                 if (humanDistance <= 2)
                 {
                     EatHuman(nahrestHuman);
                     Console.WriteLine("Chomp, chomp!");
                 }
-                else if (humanDistance <= 20)
+                else if (humanDistance <= 10)
                 {
                     MoveTowardsHuman(nahrestHuman);
-                    if (_lastAction != 2)
-                    {
-                        Console.WriteLine("Braaaaaains!");
-                        _lastAction = 2;
-                    }
+                    Console.WriteLine("Braaaaaains...");
+
                 }
                 else
                 {
                     RandomMove();
-                    if (_lastAction != 1)
-                    {
-                        Console.WriteLine("Brains?");
-                        _lastAction = 1;
-                    }
-                }
-            }
-            // TODO: remove duplicate
-            else
-            {
-                RandomMove();
-                if (_lastAction != 1)
-                {
-                    Console.WriteLine("Brains?");
-                    _lastAction = 1;
+                 //   Console.WriteLine("Iwalk without goal ");
+
                 }
             }
         }
-
         private void EatHuman(Player human)
         {
             Energy += 4;
             human.Kill();
             // TO DO Kill
         }
-
         private void MoveTowardsHuman(Player human)
         {
             var directionToEnemy =
                 PositionHelper.CalculateBearingCartesian
                     (Position.X, Position.Y, human.Position.X, human.Position.Y);
-            Layer.Environment.Move(this, directionToEnemy, 2);
+            Layer.Environment.Move(this, directionToEnemy, 3);
         }
     }
 }
