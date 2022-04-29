@@ -15,6 +15,7 @@ namespace JAZG.Model.Players
         private bool _dead;
         // TODO: remove
         private int _lastAction = 0;
+        
 
         public List<Weapon> weapons = new();
 

@@ -21,7 +21,7 @@ namespace JAZG.Model.Players
         protected FieldLayer Layer { get; set; }
 
         // ****** Attributes
-        protected int Energy { get; set; }
+        public int Energy { get; set; }
 
         public Guid ID { get; set; }
 
