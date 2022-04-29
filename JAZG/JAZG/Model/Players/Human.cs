@@ -16,7 +16,7 @@ namespace JAZG.Model.Players
         // TODO: remove
         private int _lastAction = 0;
 
-        private List<Weapon> weapons = new();
+        public List<Weapon> weapons = new();
 
         public override void Init(FieldLayer layer)
         {

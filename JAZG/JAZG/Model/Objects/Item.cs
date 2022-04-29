@@ -19,5 +19,11 @@ namespace JAZG.Model.Objects
 
         public Position Position { get; set; }
 
+        public static FieldLayer Layer;
+
+        public Item(FieldLayer layer)
+        {
+            Item.Layer = layer;
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Mars.Components.Environments.Cartesian;
+﻿using System;
+using JAZG.Model.Players;
+using Mars.Components.Environments.Cartesian;
 
 namespace JAZG.Model.Objects
 {
@@ -11,6 +13,13 @@ namespace JAZG.Model.Objects
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
+            if (character is Human)
+            {
+                var human = (Human) character;
+                human.weapons.Add(this);
+                //TODO remove weapon form environment
+                return CollisionKind.Remove;
+            }
             return CollisionKind.Pass;
         }
 
@@ -18,5 +27,7 @@ namespace JAZG.Model.Objects
         {
             return VisibilityKind.Opaque;
         }
+        
+        public Weapon() : base(Layer){}
     }
 }

@@ -22,7 +22,11 @@ namespace JAZG.Model.Objects
         {
             return VisibilityKind.Opaque;
         }
-
+        
+        public  Wall() : base(Layer)
+        {
+            
+        }
         
     }
 }
