@@ -15,7 +15,6 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-           
             // TODO Implement simple movements
             // TODO implement action upon meeting zombie using collisionHashEnvironment  functionalities
             base.Tick();
@@ -23,7 +22,7 @@ namespace JAZG.Model.Players
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
             if (nearestHuman != null)
             {
-                var humanDistance = (int)Distance.Chebyshev(
+                var humanDistance = (int) Distance.Chebyshev(
                     Position.PositionArray, nearestHuman.Position.PositionArray);
                 if (humanDistance <= 2)
                 {
@@ -34,22 +33,22 @@ namespace JAZG.Model.Players
                 {
                     MoveTowardsHuman(nearestHuman);
                     Console.WriteLine("Braaaaaains...");
-
                 }
                 else
                 {
                     RandomMove();
-                 //   Console.WriteLine("Iwalk without goal ");
-
+                    //   Console.WriteLine("Iwalk without goal ");
                 }
             }
         }
+
         private void EatHuman(Player human)
         {
             Energy += 4;
             human.Kill();
             // TO DO Kill
         }
+
         private void MoveTowardsHuman(Player human)
         {
             var directionToEnemy =

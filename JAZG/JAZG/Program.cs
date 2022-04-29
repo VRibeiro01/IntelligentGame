@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using JAZG.Model;
 using JAZG.Model.Players;
 using Mars.Components.Starter;
@@ -33,7 +31,7 @@ namespace JAZG
             var task = SimulationStarter.Start(description, config);
             var loopResults = task.Run();
 
-            Console.WriteLine("The sun rises and the night of the living dead is over...\n" + 
+            Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."
                                   : "A small group of people survived. They will rebuild civilization."));

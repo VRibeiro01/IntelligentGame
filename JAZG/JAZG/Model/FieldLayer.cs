@@ -9,7 +9,6 @@ using Mars.Core.Data;
 using Mars.Interfaces.Data;
 using Mars.Interfaces.Environments;
 using Mars.Interfaces.Layers;
-using MongoDB.Driver.Core.Events;
 using NetTopologySuite.Geometries;
 using Position = Mars.Interfaces.Environments.Position;
 
@@ -34,13 +33,14 @@ namespace JAZG.Model
             {
                 Environment = new CollisionEnvironment<Player, Item>();
                 Environment.BoundingBox =
-                    new BoundingBox(new Position(0, 0), new Position(Width-1, Height-1));
-                
+                    new BoundingBox(new Position(0, 0), new Position(Width - 1, Height - 1));
+
                 //TODO represent wall as number in BattleGround cvs file and automate wall creation by reading from cvs file (see lasertag game)
-                Coordinate[] wall1 = {new(0, Height-1), new(Width-1, Height-1)};
-                Coordinate[] wall2 = {new(0, 0), new(Width-1, 0)};
-                Coordinate[] wall3 = {new(Width-1, Height-1), new(0, Height-1)};
-                Coordinate[] wall4 = {new(Width-1, Height-1), new(Width-1, 0)};
+                //TODO same with weapons and food
+                Coordinate[] wall1 = {new(0, Height - 1), new(Width - 1, Height - 1)};
+                Coordinate[] wall2 = {new(0, 0), new(Width - 1, 0)};
+                Coordinate[] wall3 = {new(Width - 1, Height - 1), new(0, Height - 1)};
+                Coordinate[] wall4 = {new(Width - 1, Height - 1), new(Width - 1, 0)};
                 Environment.Insert(new Wall(), new LineString(wall1));
                 Environment.Insert(new Wall(), new LineString(wall2));
                 Environment.Insert(new Wall(), new LineString(wall3));
@@ -56,11 +56,6 @@ namespace JAZG.Model
             Console.WriteLine("We created " + human_agents.Count + " human agents.");
             Console.WriteLine("We created " + zombie_agents.Count + " zombie agents.");
 
-            
-            // TODO create food class and place them on field + functionality when human finds food
-            // TODO create Weapon Gun 
-            
-           
             return true;
         }
 

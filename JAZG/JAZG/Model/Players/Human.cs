@@ -4,18 +4,18 @@ using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
 using Mars.Common.IO.Mapped.Collections;
-using Mars.Numerics;
-
 using Mars.Components.Environments.Cartesian;
+using Mars.Numerics;
 
 namespace JAZG.Model.Players
 {
     public class Human : Player
     {
         private bool _dead;
+
         // TODO: remove
-        private int _lastAction = 0;
-        
+        private int _lastAction;
+
 
         public List<Weapon> weapons = new();
 
@@ -24,14 +24,18 @@ namespace JAZG.Model.Players
             base.Init(layer);
             Energy = 30;
         }
-        
+
         public override void Tick()
         {
             base.Tick();
-        
+
             // Bewegt sich randomly
             // Wenn er Zombie sieht --> Weg vom Zombie
             
+            //TODO Search for food and weapons
+            //TODO Use weapons
+            
+
             var nextZombie = Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
@@ -94,6 +98,7 @@ namespace JAZG.Model.Players
             base.Kill();
             Console.WriteLine("They got me! Leave me behind... arghhh!");
         }
+
         public override CollisionKind? HandleCollision(ICharacter other)
         {
             // Dummy Implementierung

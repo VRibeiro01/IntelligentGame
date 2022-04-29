@@ -1,5 +1,4 @@
-﻿using Mars.Components.Environments.Cartesian;
-using Mars.Interfaces.Environments;
+﻿using Mars.Interfaces.Environments;
 
 namespace JAZG.Model.Objects
 {
@@ -14,10 +13,7 @@ namespace JAZG.Model.Objects
 
         public void SetAmmo(int newVal)
         {
-            if (newVal + ammo > 10)
-            {
-                return;
-            }
+            if (newVal + ammo > 10) return;
 
             ammo = ammo + newVal;
         }
@@ -28,6 +24,5 @@ namespace JAZG.Model.Objects
             //TODO target is hit with a degree of randomness
             //TODO what happens if zombie is hit
         }
-
     }
 }

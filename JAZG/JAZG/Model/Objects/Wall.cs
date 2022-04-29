@@ -5,6 +5,10 @@ namespace JAZG.Model.Objects
 {
     public class Wall : Item
     {
+        public Wall() : base(Layer)
+        {
+        }
+
         public override bool IsRoutable(ICharacter character)
         {
             // this means that the wall cannot be passed (??? right ??)
@@ -15,18 +19,11 @@ namespace JAZG.Model.Objects
         {
             Console.WriteLine("Collision with a wall has ocurred at position " + character.Position);
             return CollisionKind.Block;
-            
         }
 
         public override VisibilityKind? HandleExploration(ICharacter explorer)
         {
             return VisibilityKind.Opaque;
         }
-        
-        public  Wall() : base(Layer)
-        {
-            
-        }
-        
     }
 }

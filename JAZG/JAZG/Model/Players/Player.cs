@@ -14,9 +14,7 @@ namespace JAZG.Model.Players
     /// </summary>
     public abstract class Player : IAgent<FieldLayer>, ICharacter
     {
-
-        [PropertyDescription]
-        public UnregisterAgent UnregisterHandle { get; set; }
+        [PropertyDescription] public UnregisterAgent UnregisterHandle { get; set; }
 
         protected FieldLayer Layer { get; set; }
 
@@ -25,16 +23,12 @@ namespace JAZG.Model.Players
 
         public Guid ID { get; set; }
 
-        public Position Position { get; set; }
-
-        public double Extent { get; set; }
-
         public virtual void Init(FieldLayer layer)
         {
             Layer = layer;
             // If position not null, set position to a random point in layer
             Position ??= layer.FindRandomPosition();
-            
+
             // All players have same extent
             Extent = 1.8;
             Layer.Environment.Insert(this, Position);
@@ -42,7 +36,16 @@ namespace JAZG.Model.Players
 
         public virtual void Tick()
         {
-            
+        }
+
+        public Position Position { get; set; }
+
+        public double Extent { get; set; }
+
+        public virtual CollisionKind? HandleCollision(ICharacter other)
+        {
+            // Dummy Implementierung
+            return CollisionKind.Pass;
         }
 
         protected void RandomMove()
@@ -50,12 +53,6 @@ namespace JAZG.Model.Players
             var bearing = RandomHelper.Random.Next(360);
             // TODO: implement speed
             Position = Layer.Environment.Move(this, bearing, 1);
-        }
-
-        public virtual CollisionKind? HandleCollision(ICharacter other)
-        {
-            // Dummy Implementierung
-            return CollisionKind.Pass;
         }
 
         public virtual void Kill()

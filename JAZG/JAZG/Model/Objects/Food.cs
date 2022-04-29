@@ -5,7 +5,8 @@ namespace JAZG.Model.Objects
 {
     public class Food : Item
     {
-        private int EnergyPoints = 2;
+        private readonly int EnergyPoints = 2;
+
         public Food(FieldLayer layer) : base(layer)
         {
         }

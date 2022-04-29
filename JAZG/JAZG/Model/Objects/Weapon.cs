@@ -1,11 +1,14 @@
-﻿using System;
-using JAZG.Model.Players;
+﻿using JAZG.Model.Players;
 using Mars.Components.Environments.Cartesian;
 
 namespace JAZG.Model.Objects
 {
     public class Weapon : Item
     {
+        public Weapon() : base(Layer)
+        {
+        }
+
         public override bool IsRoutable(ICharacter character)
         {
             return true;
@@ -20,6 +23,7 @@ namespace JAZG.Model.Objects
                 //TODO remove weapon form environment
                 return CollisionKind.Remove;
             }
+
             return CollisionKind.Pass;
         }
 
@@ -27,7 +31,5 @@ namespace JAZG.Model.Objects
         {
             return VisibilityKind.Opaque;
         }
-        
-        public Weapon() : base(Layer){}
     }
 }

@@ -6,6 +6,13 @@ namespace JAZG.Model.Objects
 {
     public abstract class Item : IObstacle, IPositionable
     {
+        public static FieldLayer Layer;
+
+        public Item(FieldLayer layer)
+        {
+            Layer = layer;
+        }
+
         public Guid ID { get; set; }
 
 
@@ -18,12 +25,5 @@ namespace JAZG.Model.Objects
         public abstract VisibilityKind? HandleExploration(ICharacter explorer);
 
         public Position Position { get; set; }
-
-        public static FieldLayer Layer;
-
-        public Item(FieldLayer layer)
-        {
-            Item.Layer = layer;
-        }
     }
 }
