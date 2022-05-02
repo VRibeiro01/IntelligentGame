@@ -1,5 +1,6 @@
 ﻿using JAZG.Model.Players;
 using Mars.Components.Environments.Cartesian;
+using Mars.Interfaces.Environments;
 
 namespace JAZG.Model.Objects
 {
@@ -30,6 +31,11 @@ namespace JAZG.Model.Objects
         public override VisibilityKind? HandleExploration(ICharacter explorer)
         {
             return VisibilityKind.Opaque;
+        }
+
+        public virtual void Use(Zombie zombie)
+        {
+            
         }
     }
 }

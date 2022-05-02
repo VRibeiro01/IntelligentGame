@@ -37,7 +37,7 @@ namespace JAZG.Model.Players
                 else
                 {
                     RandomMove();
-                    //   Console.WriteLine("Iwalk without goal ");
+                       Console.WriteLine("Iwalk without goal ");
                 }
             }
         }
@@ -48,7 +48,7 @@ namespace JAZG.Model.Players
             human.Kill();
             // TO DO Kill
         }
-
+        
         private void MoveTowardsHuman(Player human)
         {
             var directionToEnemy =

@@ -7,9 +7,11 @@ namespace JAZG.Model.Objects
     {
         private readonly int EnergyPoints = 2;
 
-        public Food(FieldLayer layer) : base(layer)
+        public Food() : base(Layer)
         {
         }
+
+       
 
         public override bool IsRoutable(ICharacter character)
         {

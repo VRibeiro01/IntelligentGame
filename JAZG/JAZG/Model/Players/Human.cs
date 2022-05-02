@@ -5,6 +5,7 @@ using Mars.Common;
 using Mars.Common.Core.Random;
 using Mars.Common.IO.Mapped.Collections;
 using Mars.Components.Environments.Cartesian;
+using Mars.Interfaces.Environments;
 using Mars.Numerics;
 
 namespace JAZG.Model.Players
@@ -33,10 +34,12 @@ namespace JAZG.Model.Players
             // Wenn er Zombie sieht --> Weg vom Zombie
             
             //TODO Search for food and weapons
-            //TODO Use weapons
+            //TODO Use weapons to kill zombie
+            // TODO Where to go? Where to hide? When to rest? When to kill? 
+            //TODO reduce speed when energy is reduced
             
 
-            var nextZombie = Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
+            var nextZombie = (Zombie)Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
 
@@ -45,14 +48,24 @@ namespace JAZG.Model.Players
                 var zombieDistance = (int) Distance.Chebyshev(
                     Position.PositionArray, nextZombie.Position.PositionArray);
 
-                if (zombieDistance <= 30)
+                if (zombieDistance <= 10)
                 {
                     RunFromZombie(nextZombie);
                     if (_lastAction != 2)
                     {
-                        Console.WriteLine("Ah, Zombies!!!");
+                        Console.WriteLine("The zombies are coming, run!!!");
                         _lastAction = 2;
                     }
+                }
+                else if (zombieDistance <= 30)
+                {
+                    UseWeapon(nextZombie);
+                    if (_lastAction != 3)
+                    {
+                        Console.WriteLine("Ah, zombies!!!");
+                        _lastAction = 3;
+                    }
+                    Console.WriteLine("Die zombie!!!");
                 }
                 else
                 {
@@ -75,7 +88,7 @@ namespace JAZG.Model.Players
                 }
             }
 
-            // TODO implement action upon meting zombie using collisionHashEnvironment  functionalities
+            
         }
 
         private void RunFromZombie(Player zombie)
@@ -87,8 +100,13 @@ namespace JAZG.Model.Players
 
             //Console.WriteLine("Moving from " + Position + " in direction of " + directionOpposite);
 
-            // TODO: implement speed
-            Layer.Environment.Move(this, directionOpposite, 2);
+            
+            Layer.Environment.Move(this, directionOpposite, Speed);
+        }
+
+        private void UseWeapon(Zombie zombie)
+        {
+            weapons[0].Use(zombie);
         }
 
         public override void Kill()
