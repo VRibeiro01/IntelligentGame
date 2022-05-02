@@ -57,7 +57,7 @@ namespace JAZG.Model.Players
                         _lastAction = 2;
                     }
                 }
-                else if (zombieDistance <= 30)
+                else if (zombieDistance <= 30 && weapons.Count > 0)
                 {
                     UseWeapon(nextZombie);
                     if (_lastAction != 3)
