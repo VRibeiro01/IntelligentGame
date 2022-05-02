@@ -33,7 +33,9 @@ namespace JAZG.Model.Players
             // Wenn er Zombie sieht --> Weg vom Zombie
             
             //TODO Search for food and weapons
-            //TODO Use weapons
+            //TODO Use weapons to kill zombie
+            // TODO Where to go? Where to hide? When to rest? When to kill? 
+            //TODO reduce speed when energy is reduced
             
 
             var nextZombie = Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
@@ -75,7 +77,7 @@ namespace JAZG.Model.Players
                 }
             }
 
-            // TODO implement action upon meting zombie using collisionHashEnvironment  functionalities
+            
         }
 
         private void RunFromZombie(Player zombie)
@@ -87,8 +89,8 @@ namespace JAZG.Model.Players
 
             //Console.WriteLine("Moving from " + Position + " in direction of " + directionOpposite);
 
-            // TODO: implement speed
-            Layer.Environment.Move(this, directionOpposite, 2);
+            
+            Layer.Environment.Move(this, directionOpposite, Speed);
         }
 
         public override void Kill()

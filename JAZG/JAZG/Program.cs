@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using JAZG.Model;
+using JAZG.Model.Objects;
 using JAZG.Model.Players;
 using Mars.Components.Starter;
 using Mars.Interfaces.Model;
@@ -22,6 +23,11 @@ namespace JAZG
             // Add agents to model
             description.AddAgent<Human, FieldLayer>();
             description.AddAgent<Zombie, FieldLayer>();
+            
+            // Add entities to model
+            description.AddEntity<Wall>();
+            description.AddEntity<Gun>();
+            description.AddEntity<Food>();
 
             // Get model configuration
             var file = File.ReadAllText("config.json");

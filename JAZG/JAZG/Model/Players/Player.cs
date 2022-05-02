@@ -23,11 +23,18 @@ namespace JAZG.Model.Players
 
         public Guid ID { get; set; }
 
+        
+        public int Speed { get; set; }
+
         public virtual void Init(FieldLayer layer)
         {
             Layer = layer;
             // If position not null, set position to a random point in layer
             Position ??= layer.FindRandomPosition();
+
+            // Every Player has random speed
+            //TODO reduce zombie speed ??
+            Speed = RandomHelper.Random.Next(10);
 
             // All players have same extent
             Extent = 1.8;
@@ -52,7 +59,7 @@ namespace JAZG.Model.Players
         {
             var bearing = RandomHelper.Random.Next(360);
             // TODO: implement speed
-            Position = Layer.Environment.Move(this, bearing, 1);
+            Position = Layer.Environment.Move(this, bearing, Speed);
         }
 
         public virtual void Kill()
