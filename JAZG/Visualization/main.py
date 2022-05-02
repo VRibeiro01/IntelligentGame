@@ -33,8 +33,9 @@ COLORS = RASTER_COLORS
 
 WINDOW_SIZE = 800, 800
 
-zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("Skull and Pizza illustration.jpg"), (32, 32)), False, True)
+zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("Skull and Pizza illustration.jpg"), (16, 16)), False, True)
 zombie_rect = zombie_image.get_rect()
+human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.jpg"), (16, 16)), False, True)
 
 class Visualization:
     def __init__(self):
@@ -222,9 +223,10 @@ class Visualization:
                 x = entity["x"]
                 y = entity["y"]
 
-                print((x,y))
-                
-                surface.blit(zombie_image, (x,y))
+                if type_key=="Human":
+                    surface.blit(human_image, (x,y))
+                else:
+                    surface.blit(zombie_image, (x,y))
 
                 #pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
                 #                   (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
