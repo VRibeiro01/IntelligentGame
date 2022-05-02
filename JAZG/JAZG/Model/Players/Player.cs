@@ -34,7 +34,7 @@ namespace JAZG.Model.Players
 
             // Every Player has random speed
             //TODO reduce zombie speed ??
-            Speed = RandomHelper.Random.Next(10);
+            Speed = RandomHelper.Random.Next(40);
 
             // All players have same extent
             Extent = 1.8;
@@ -58,7 +58,6 @@ namespace JAZG.Model.Players
         protected void RandomMove()
         {
             var bearing = RandomHelper.Random.Next(360);
-            // TODO: implement speed
             Position = Layer.Environment.Move(this, bearing, Speed);
         }
 
