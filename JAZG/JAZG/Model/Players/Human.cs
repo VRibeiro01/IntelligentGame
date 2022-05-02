@@ -5,6 +5,7 @@ using Mars.Common;
 using Mars.Common.Core.Random;
 using Mars.Common.IO.Mapped.Collections;
 using Mars.Components.Environments.Cartesian;
+using Mars.Interfaces.Environments;
 using Mars.Numerics;
 
 namespace JAZG.Model.Players
@@ -38,7 +39,7 @@ namespace JAZG.Model.Players
             //TODO reduce speed when energy is reduced
             
 
-            var nextZombie = Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
+            var nextZombie = (Zombie)Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
 
@@ -47,14 +48,24 @@ namespace JAZG.Model.Players
                 var zombieDistance = (int) Distance.Chebyshev(
                     Position.PositionArray, nextZombie.Position.PositionArray);
 
-                if (zombieDistance <= 30)
+                if (zombieDistance <= 10)
                 {
                     RunFromZombie(nextZombie);
                     if (_lastAction != 2)
                     {
-                        Console.WriteLine("Ah, Zombies!!!");
+                        Console.WriteLine("The zombies are coming, run!!!");
                         _lastAction = 2;
                     }
+                }
+                else if (zombieDistance <= 30)
+                {
+                    UseWeapon(nextZombie);
+                    if (_lastAction != 3)
+                    {
+                        Console.WriteLine("Ah, zombies!!!");
+                        _lastAction = 3;
+                    }
+                    Console.WriteLine("Die zombie!!!");
                 }
                 else
                 {
@@ -91,6 +102,11 @@ namespace JAZG.Model.Players
 
             
             Layer.Environment.Move(this, directionOpposite, Speed);
+        }
+
+        private void UseWeapon(Zombie zombie)
+        {
+            weapons[0].Use(zombie);
         }
 
         public override void Kill()

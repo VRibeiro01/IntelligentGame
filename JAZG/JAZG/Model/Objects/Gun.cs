@@ -1,4 +1,6 @@
-﻿using Mars.Interfaces.Environments;
+﻿using System;
+using JAZG.Model.Players;
+using Mars.Interfaces.Environments;
 
 namespace JAZG.Model.Objects
 {
@@ -18,9 +20,16 @@ namespace JAZG.Model.Objects
             ammo = ammo + newVal;
         }
 
-        public void shoot(Position target)
+        public override void Use(Zombie zombie)
+        {
+            shoot(zombie);
+            Console.WriteLine("BAM");
+        }
+        
+        public void shoot(Zombie zombie)
         {
             ammo--;
+            zombie.Kill();
             //TODO target is hit with a degree of randomness
             //TODO what happens if zombie is hit
         }
