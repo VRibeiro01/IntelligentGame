@@ -12,6 +12,8 @@ namespace JAZG.Model.Players
             base.Init(layer);
             Energy = 15;
         }
+        
+        private int _lastAction;
 
         public override void Tick()
         {
@@ -32,12 +34,30 @@ namespace JAZG.Model.Players
                 else if (humanDistance <= 10)
                 {
                     MoveTowardsHuman(nearestHuman);
-                    Console.WriteLine("Braaaaaains...");
+                    if (_lastAction != 2)
+                    {
+                        Console.WriteLine("Braaaaaains!");
+                        _lastAction = 2;
+                    }
+
                 }
                 else
                 {
                     RandomMove();
-                       Console.WriteLine("Iwalk without goal ");
+                    if (_lastAction != 1)
+                    {
+                        Console.WriteLine("Brains?");
+                        _lastAction = 1;
+                    }
+                }
+            }
+            else
+            {
+                RandomMove();
+                if (_lastAction != 1)
+                {
+                    Console.WriteLine("Brains?");
+                    _lastAction = 1;
                 }
             }
         }
@@ -54,7 +74,7 @@ namespace JAZG.Model.Players
             var directionToEnemy =
                 PositionHelper.CalculateBearingCartesian
                     (Position.X, Position.Y, human.Position.X, human.Position.Y);
-            Layer.Environment.Move(this, directionToEnemy, 3);
+            Layer.Environment.Move(this, directionToEnemy, 2);
         }
     }
 }
