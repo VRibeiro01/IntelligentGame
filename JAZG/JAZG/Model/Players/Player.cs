@@ -38,7 +38,7 @@ namespace JAZG.Model.Players
 
             // All players have same extent
             Extent = 1.8;
-            Layer.Environment.Insert(this, Position);
+            Layer.Environment.Insert(this, layer.FindRandomPosition());
         }
 
         public virtual void Tick()
@@ -49,16 +49,16 @@ namespace JAZG.Model.Players
 
         public double Extent { get; set; }
 
-        public virtual CollisionKind? HandleCollision(ICharacter other)
+        public CollisionKind? HandleCollision(ICharacter other)
         {
             // Dummy Implementierung
-            return CollisionKind.Pass;
+            return CollisionKind.Block;
         }
 
         protected void RandomMove()
         {
             var bearing = RandomHelper.Random.Next(360);
-            Position = Layer.Environment.Move(this, bearing, Speed);
+            Layer.Environment.Move(this, bearing, 1);
         }
 
         public virtual void Kill()

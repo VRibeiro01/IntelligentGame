@@ -223,15 +223,17 @@ class Visualization:
                 x = entity["x"]
                 y = entity["y"]
 
-                if type_key=="Human":
-                    surface.blit(human_image, (x,y))
+                if type_key==1:
+                    surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 else:
-                    surface.blit(zombie_image, (x,y))
+                    surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
 
-                #pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
-                #                   (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                #                    ((y - self.WORLD_SIZE[1]) * scale_y) ),
-                #                   line_width, 0)
+                pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
+                                   (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ),
+                                   line_width, 0)
 
         flipped = pygame.transform.flip(surface, False, True)
         self.screen.blit(flipped, (10, -50))

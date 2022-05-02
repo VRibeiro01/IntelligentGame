@@ -16,7 +16,6 @@ namespace JAZG.Model.Players
         // TODO: remove
         private int _lastAction;
 
-
         public List<Weapon> weapons = new();
 
         public override void Init(FieldLayer layer)
@@ -50,7 +49,7 @@ namespace JAZG.Model.Players
                         _lastAction = 2;
                     }
                 }
-                else if (zombieDistance <= 30 && weapons.Count > 0)
+                else if (weapons.Count > 0 && zombieDistance <= 30)
                 {
                     UseWeapon(nextZombie);
                     if (_lastAction != 3)
@@ -98,7 +97,7 @@ namespace JAZG.Model.Players
                 Position.X, Position.Y, zombie.Position.X, zombie.Position.Y);
             if (double.IsNaN(directionToEnemy)) directionToEnemy = RandomHelper.Random.Next(360);
             var directionOpposite = (directionToEnemy + 180) % 360;
-            Layer.Environment.Move(this, directionOpposite, Speed);
+            Layer.Environment.Move(this, directionOpposite, 2);
         }
 
         private void UseWeapon(Zombie zombie)
@@ -110,12 +109,6 @@ namespace JAZG.Model.Players
         {
             base.Kill();
             Console.WriteLine("They got me! Leave me behind... arghhh!");
-        }
-
-        public override CollisionKind? HandleCollision(ICharacter other)
-        {
-            // Dummy Implementierung
-            return CollisionKind.Pass;
         }
     }
 }
