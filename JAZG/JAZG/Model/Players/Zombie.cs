@@ -66,7 +66,13 @@ namespace JAZG.Model.Players
         {
             Energy += 4;
             human.Kill();
-            // TO DO Kill
+            
+        }
+
+        private void Kill()
+        {
+            base.Kill();
+            Console.WriteLine("Zombie down!");
         }
         
         private void MoveTowardsHuman(Player human)

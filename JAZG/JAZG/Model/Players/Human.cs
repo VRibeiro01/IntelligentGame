@@ -12,7 +12,6 @@ namespace JAZG.Model.Players
 {
     public class Human : Player
     {
-        private bool _dead;
 
         // TODO: remove
         private int _lastAction;
@@ -29,24 +28,18 @@ namespace JAZG.Model.Players
         public override void Tick()
         {
             base.Tick();
-
-            // Bewegt sich randomly
-            // Wenn er Zombie sieht --> Weg vom Zombie
             
             //TODO Search for food and weapons
             //TODO Use weapons to kill zombie
             // TODO Where to go? Where to hide? When to rest? When to kill? 
             //TODO reduce speed when energy is reduced
-            
 
-            var nextZombie = (Zombie)Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
-                .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
-                .FirstOrDefault();
+
+            var nextZombie = findClosestZombie();
 
             if (nextZombie != null)
             {
-                var zombieDistance = (int) Distance.Chebyshev(
-                    Position.PositionArray, nextZombie.Position.PositionArray);
+                var zombieDistance = getDistanceFromPlayer(nextZombie);
 
                 if (zombieDistance <= 10)
                 {
@@ -91,16 +84,20 @@ namespace JAZG.Model.Players
             
         }
 
+        private Zombie findClosestZombie()
+        {
+            return (Zombie)Layer.Environment.Characters.Where(c => c.GetType() == typeof(Zombie))
+                .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
+                .FirstOrDefault();   
+        }
+        
+        
         private void RunFromZombie(Player zombie)
         {
             var directionToEnemy = PositionHelper.CalculateBearingCartesian(
                 Position.X, Position.Y, zombie.Position.X, zombie.Position.Y);
             if (double.IsNaN(directionToEnemy)) directionToEnemy = RandomHelper.Random.Next(360);
             var directionOpposite = (directionToEnemy + 180) % 360;
-
-            //Console.WriteLine("Moving from " + Position + " in direction of " + directionOpposite);
-
-            
             Layer.Environment.Move(this, directionOpposite, Speed);
         }
 
@@ -111,8 +108,6 @@ namespace JAZG.Model.Players
 
         public override void Kill()
         {
-            if (_dead) return;
-            _dead = true;
             base.Kill();
             Console.WriteLine("They got me! Leave me behind... arghhh!");
         }

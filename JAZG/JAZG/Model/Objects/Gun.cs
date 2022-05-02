@@ -22,16 +22,12 @@ namespace JAZG.Model.Objects
 
         public override void Use(Zombie zombie)
         {
-            shoot(zombie);
-            Console.WriteLine("BAM");
-        }
-        
-        public void shoot(Zombie zombie)
-        {
             ammo--;
-            zombie.Kill();
+            Console.WriteLine("Shoot Shoot");
             //TODO target is hit with a degree of randomness
             //TODO what happens if zombie is hit
         }
+        
+        
     }
 }

@@ -5,6 +5,7 @@ using Mars.Interfaces.Agents;
 using Mars.Interfaces.Annotations;
 using Mars.Interfaces.Environments;
 using Mars.Interfaces.Layers;
+using Mars.Numerics;
 
 namespace JAZG.Model.Players
 {
@@ -19,11 +20,10 @@ namespace JAZG.Model.Players
         protected FieldLayer Layer { get; set; }
 
         // ****** Attributes
+        protected bool _dead;
         public int Energy { get; set; }
 
         public Guid ID { get; set; }
-
-        
         public int Speed { get; set; }
 
         public virtual void Init(FieldLayer layer)
@@ -63,8 +63,16 @@ namespace JAZG.Model.Players
 
         public virtual void Kill()
         {
+            if (_dead) return;
+            _dead = true;
             Layer.Environment.Remove(this);
             UnregisterHandle.Invoke(Layer, this);
+        }
+
+        public int getDistanceFromPlayer(Player other)
+        {
+            return (int) Distance.Chebyshev(
+                Position.PositionArray, other.Position.PositionArray);
         }
     }
 }
