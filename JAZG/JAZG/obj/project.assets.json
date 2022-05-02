@@ -8753,19 +8753,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\vivia\\.nuget\\packages\\": {}
+    "C:\\Users\\acl056\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+      "projectUniqueName": "C:\\Users\\acl056\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj",
       "projectName": "JAZG",
-      "projectPath": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\JAZG.csproj",
-      "packagesPath": "C:\\Users\\vivia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\obj\\",
+      "projectPath": "C:\\Users\\acl056\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+      "packagesPath": "C:\\Users\\acl056\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\acl056\\RiderProjects\\jazg\\JAZG\\JAZG\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\vivia\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "Z:\\win\\AppData\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -8808,30 +8808,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[5.0.0, 5.0.0]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[5.0.15, 5.0.15]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[5.0.0, 5.0.0]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[5.0.0, 5.0.0]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\vivia\\.dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
       }
     }
   }

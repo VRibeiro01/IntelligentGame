@@ -33,6 +33,8 @@ COLORS = RASTER_COLORS
 
 WINDOW_SIZE = 800, 800
 
+zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("Skull and Pizza illustration.jpg"), (32, 32)), False, True)
+zombie_rect = zombie_image.get_rect()
 
 class Visualization:
     def __init__(self):
@@ -219,10 +221,15 @@ class Visualization:
             for entity in self.entities[type_key]:
                 x = entity["x"]
                 y = entity["y"]
-                pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
-                                   (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ),
-                                   line_width, 0)
+
+                print((x,y))
+                
+                surface.blit(zombie_image, (x,y))
+
+                #pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
+                #                   (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                #                    ((y - self.WORLD_SIZE[1]) * scale_y) ),
+                #                   line_width, 0)
 
         flipped = pygame.transform.flip(surface, False, True)
         self.screen.blit(flipped, (10, -50))
