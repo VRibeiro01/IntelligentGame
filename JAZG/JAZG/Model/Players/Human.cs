@@ -17,11 +17,16 @@ namespace JAZG.Model.Players
         private int _lastAction;
 
         public List<Weapon> weapons = new();
-
+        
         public override void Init(FieldLayer layer)
         {
             base.Init(layer);
             Energy = 30;
+          //  weapons.Add(new Gun());
+           // foreach (Gun weapon in this.weapons)
+          //  {
+         //       weapon.SetAmmo(10);
+          //  }
         }
 
         public override void Tick()

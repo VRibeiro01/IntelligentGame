@@ -43,6 +43,10 @@ namespace JAZG
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."
                                   : "A small group of people survived. They will rebuild civilization."));
+            
+            Console.WriteLine("human: " + loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
+            Console.WriteLine("Zompie: " + loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
+
         }
     }
 }

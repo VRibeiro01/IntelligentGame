@@ -1,4 +1,5 @@
-﻿using JAZG.Model.Players;
+﻿using System;
+using JAZG.Model.Players;
 using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Environments;
 
@@ -21,6 +22,7 @@ namespace JAZG.Model.Objects
             {
                 var human = (Human) character;
                 human.weapons.Add(this);
+                Console.WriteLine("i got a Gun");
                 //TODO remove weapon form environment
                 return CollisionKind.Remove;
             }

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj": {}
+    "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj": {}
   },
   "projects": {
-    "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj": {
+    "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+        "projectUniqueName": "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj",
         "projectName": "JAZG",
-        "projectPath": "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj",
-        "packagesPath": "C:\\Users\\acs358\\.nuget\\packages\\",
-        "outputPath": "Z:\\develop\\jazg\\JAZG\\JAZG\\obj\\",
+        "projectPath": "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+        "packagesPath": "C:\\Users\\ahmad\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "Z:\\win\\AppData\\NuGet\\NuGet.Config"
+          "C:\\Users\\ahmad\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -57,12 +57,30 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[5.0.15, 5.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\ahmad\\.dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
         }
       }
     }

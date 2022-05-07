@@ -45,6 +45,13 @@ namespace JAZG.Model
                 Environment.Insert(new Wall(), new LineString(wall2));
                 Environment.Insert(new Wall(), new LineString(wall3));
                 Environment.Insert(new Wall(), new LineString(wall4));
+                //Environment.Insert(new Weapon(),new Point(3,3));
+                for (int i = 0; i < 100; i++)
+                {
+                    Point p = FindRandomPoint();
+                  //  Console.WriteLine("the point is " + p);
+                    Environment.Insert(new Gun(), p);
+                }
             }
 
             // the agent manager can create agents and initializes them as defined in the sim config
@@ -58,12 +65,21 @@ namespace JAZG.Model
 
             return true;
         }
-
+        
+        
         // Helper method to find random position within the bounds of the layer
         public Position FindRandomPosition()
         {
             var random = RandomHelper.Random;
             return Position.CreatePosition(random.Next(Width - 1), random.Next(Height - 1));
+        }
+
+        public Point FindRandomPoint()
+        {
+            var random = RandomHelper.Random;
+            int x = (int) random.Next(Width);
+            int y = (int) random.Next(Height);
+            return new Point(x, y);
         }
     }
 }
