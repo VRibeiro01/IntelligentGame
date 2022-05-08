@@ -1,4 +1,6 @@
 ﻿using System;
+using JAZG.Model.Objects;
+using Mars.Common;
 using Mars.Common.Core.Random;
 using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Agents;
@@ -20,7 +22,7 @@ namespace JAZG.Model.Players
         protected FieldLayer Layer { get; set; }
 
         // ****** Attributes
-        protected bool _dead;
+        protected bool Dead;
         public int Energy { get; set; }
 
         public Guid ID { get; set; }
@@ -63,16 +65,34 @@ namespace JAZG.Model.Players
 
         public virtual void Kill()
         {
-            if (_dead) return;
-            _dead = true;
+            if (Dead) return;
+            Dead = true;
             Layer.Environment.Remove(this);
             UnregisterHandle.Invoke(Layer, this);
         }
 
-        public int getDistanceFromPlayer(Player other)
+        protected int GetDistanceFromPlayer(Player other)
         {
-            return (int) Distance.Chebyshev(
+            return (int)Distance.Chebyshev(
                 Position.PositionArray, other.Position.PositionArray);
+        }
+
+        protected int GetDistanceFromItem(Item item)
+        {
+            return (int)Distance.Chebyshev(
+                Position.PositionArray, item.Position.PositionArray);
+        }
+
+        protected double GetDirectionToPlayer(Player other)
+        {
+            return PositionHelper.CalculateBearingCartesian(
+                Position.X, Position.Y, other.Position.X, other.Position.Y);
+        }
+
+        protected double GetDirectionToItem(Item item)
+        {
+            return PositionHelper.CalculateBearingCartesian(
+                Position.X, Position.Y, item.Position.X, item.Position.Y);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace JAZG.Model.Objects
         public Wall() : base(Layer)
         {
         }
-
+        
         public override bool IsRoutable(ICharacter character)
         {
             // this means that the wall cannot be passed (??? right ??)
@@ -17,6 +17,7 @@ namespace JAZG.Model.Objects
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
+            Console.WriteLine("STOP. This is a wall!");
             return CollisionKind.Block;
         }
 

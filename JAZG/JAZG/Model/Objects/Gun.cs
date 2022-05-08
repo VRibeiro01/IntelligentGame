@@ -1,35 +1,41 @@
 ﻿using System;
 using JAZG.Model.Players;
+using Mars.Common.Core.Random;
 using Mars.Interfaces.Environments;
 
 namespace JAZG.Model.Objects
 {
     public class Gun : Weapon
     {
-        private int ammo;
+        private int _ammo;
 
         public int GetAmmo()
         {
-            return ammo;
+            return _ammo;
         }
 
         public void SetAmmo(int newVal)
         {
-            if (newVal + ammo > 10) return;
+            if (newVal + _ammo > 10) return;
 
-            ammo = ammo + newVal;
+            _ammo = _ammo + newVal;
         }
 
         public override void Use(Zombie zombie)
         {
-            shoot(zombie);
-            Console.WriteLine("BAM");
+            Shoot(zombie);
         }
-        
-        public void shoot(Zombie zombie)
+
+        private void Shoot(Zombie zombie)
         {
-            ammo--;
-            zombie.Kill();
+            Console.WriteLine("BAM");
+            _ammo--;
+            if (RandomHelper.Random.Next(101) > 50)
+            {
+                Console.WriteLine("Hit.");
+                zombie.Kill();
+            }
+            else Console.WriteLine("Missed.");
             //TODO target is hit with a degree of randomness
             //TODO what happens if zombie is hit
         }

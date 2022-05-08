@@ -6,9 +6,9 @@ namespace JAZG.Model.Objects
 {
     public abstract class Item : IObstacle, IPositionable
     {
-        public static FieldLayer Layer;
+        protected static FieldLayer Layer;
 
-        public Item(FieldLayer layer)
+        protected Item(FieldLayer layer)
         {
             Layer = layer;
         }

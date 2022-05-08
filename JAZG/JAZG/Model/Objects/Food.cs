@@ -11,8 +11,6 @@ namespace JAZG.Model.Objects
         {
         }
 
-       
-
         public override bool IsRoutable(ICharacter character)
         {
             return true;

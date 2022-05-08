@@ -22,6 +22,8 @@ namespace JAZG.Model
     {
         public CollisionEnvironment<Player, Item> Environment { get; set; }
 
+        private int outerWallOffset = 10;
+
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
         {
@@ -33,24 +35,25 @@ namespace JAZG.Model
             {
                 Environment = new CollisionEnvironment<Player, Item>();
                 Environment.BoundingBox =
-                    new BoundingBox(new Position(0, 0), new Position(Width - 1, Height - 1));
+                    new BoundingBox(new Position(0 + outerWallOffset, 0 + outerWallOffset), new Position(Width - outerWallOffset, Height - outerWallOffset));
 
                 //TODO represent wall as number in BattleGround cvs file and automate wall creation by reading from cvs file (see lasertag game)
                 //TODO same with weapons and food
-                Coordinate[] wall1 = {new(0, Height - 1), new(Width - 1, Height - 1)};
-                Coordinate[] wall2 = {new(0, 0), new(Width - 1, 0)};
-                Coordinate[] wall3 = {new(Width - 1, Height - 1), new(0, Height - 1)};
-                Coordinate[] wall4 = {new(Width - 1, Height - 1), new(Width - 1, 0)};
+                Coordinate[] wall1 = {new(0 + outerWallOffset, Height - outerWallOffset), new(Width - outerWallOffset, Height - outerWallOffset)};
+                Coordinate[] wall2 = {new(0 + outerWallOffset, 0 + outerWallOffset), new(Width - outerWallOffset, 0 + outerWallOffset)};
+                Coordinate[] wall3 = {new(0 + outerWallOffset, 0 + outerWallOffset), new(0 + outerWallOffset, Height - outerWallOffset)};
+                Coordinate[] wall4 = {new(Width - outerWallOffset, Height - outerWallOffset), new(Width - outerWallOffset, 0 + outerWallOffset)};
                 Environment.Insert(new Wall(), new LineString(wall1));
                 Environment.Insert(new Wall(), new LineString(wall2));
                 Environment.Insert(new Wall(), new LineString(wall3));
                 Environment.Insert(new Wall(), new LineString(wall4));
-                //Environment.Insert(new Weapon(),new Point(3,3));
-                for (int i = 0; i < 100; i++)
+                
+                for (int i = 0; i < 500; i++)
                 {
-                    Point p = FindRandomPoint();
-                  //  Console.WriteLine("the point is " + p);
-                    Environment.Insert(new Gun(), p);
+                    var gun = new Gun();
+                    var point = FindRandomPoint();
+                    Environment.Insert(gun, point);
+                    gun.Position = new Position(point.X, point.Y);
                 }
             }
 
@@ -58,10 +61,10 @@ namespace JAZG.Model
             var agentManager = layerInitData.Container.Resolve<IAgentManager>();
 
             //Create and register agents
-            var human_agents = agentManager.Spawn<Human, FieldLayer>().ToList();
-            var zombie_agents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
-            Console.WriteLine("We created " + human_agents.Count + " human agents.");
-            Console.WriteLine("We created " + zombie_agents.Count + " zombie agents.");
+            var humanAgents = agentManager.Spawn<Human, FieldLayer>().ToList();
+            var zombieAgents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
+            Console.WriteLine("We created " + humanAgents.Count + " human agents.");
+            Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
 
             return true;
         }
@@ -71,14 +74,14 @@ namespace JAZG.Model
         public Position FindRandomPosition()
         {
             var random = RandomHelper.Random;
-            return Position.CreatePosition(random.Next(Width - 1), random.Next(Height - 1));
+            return Position.CreatePosition(random.Next(0 + outerWallOffset, Width - outerWallOffset), random.Next(0 + outerWallOffset, Height - outerWallOffset));
         }
 
-        public Point FindRandomPoint()
+        private Point FindRandomPoint()
         {
             var random = RandomHelper.Random;
-            int x = (int) random.Next(Width);
-            int y = (int) random.Next(Height);
+            int x = random.Next(0 + outerWallOffset, Width - outerWallOffset);
+            int y = random.Next(0 + outerWallOffset, Height - outerWallOffset);
             return new Point(x, y);
         }
     }

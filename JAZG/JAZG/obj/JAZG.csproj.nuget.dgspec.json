@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj": {}
+    "D:\\develop\\AI_Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj": {
+    "D:\\develop\\AI_Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+        "projectUniqueName": "D:\\develop\\AI_Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj",
         "projectName": "JAZG",
-        "projectPath": "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj",
-        "packagesPath": "C:\\Users\\ahmad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ahmad\\OneDrive\\Dokumente\\Studium\\Fünftes Semester\\Projekt\\jazg\\JAZG\\JAZG\\obj\\",
+        "projectPath": "D:\\develop\\AI_Projekt\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+        "packagesPath": "C:\\Users\\Nils\\.nuget\\packages\\",
+        "outputPath": "D:\\develop\\AI_Projekt\\jazg\\JAZG\\JAZG\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ahmad\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Nils\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -64,7 +64,7 @@
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[5.0.15, 5.0.15]"
+              "version": "[5.0.16, 5.0.16]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
@@ -80,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\ahmad\\.dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

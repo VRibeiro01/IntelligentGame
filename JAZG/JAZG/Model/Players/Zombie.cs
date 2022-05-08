@@ -12,7 +12,7 @@ namespace JAZG.Model.Players
             base.Init(layer);
             Energy = 15;
         }
-        
+
         private int _lastAction;
 
         public override void Tick()
@@ -22,11 +22,12 @@ namespace JAZG.Model.Players
             base.Tick();
             var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
+
             if (nearestHuman != null)
             {
-                var humanDistance = (int) Distance.Chebyshev(
-                    Position.PositionArray, nearestHuman.Position.PositionArray);
-                if (humanDistance <= 2)
+                var humanDistance = GetDistanceFromPlayer(nearestHuman);
+
+                if (humanDistance <= 1)
                 {
                     EatHuman(nearestHuman);
                     Console.WriteLine("Chomp, chomp!");
@@ -39,7 +40,6 @@ namespace JAZG.Model.Players
                         Console.WriteLine("Braaaaaains!");
                         _lastAction = 2;
                     }
-
                 }
                 else
                 {
@@ -66,15 +66,14 @@ namespace JAZG.Model.Players
         {
             Energy += 4;
             human.Kill();
-            
         }
 
-        private void Kill()
+        public override void Kill()
         {
             base.Kill();
             Console.WriteLine("Zombie down!");
         }
-        
+
         private void MoveTowardsHuman(Player human)
         {
             var directionToEnemy =
