@@ -7861,16 +7861,16 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\acl056\\.nuget\\packages\\": {}
+    "C:\\Users\\acs358\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\acl056\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+      "projectUniqueName": "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj",
       "projectName": "JAZG",
-      "projectPath": "C:\\Users\\acl056\\RiderProjects\\jazg\\JAZG\\JAZG\\JAZG.csproj",
-      "packagesPath": "C:\\Users\\acl056\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\acl056\\RiderProjects\\jazg\\JAZG\\JAZG\\obj\\",
+      "projectPath": "Z:\\develop\\jazg\\JAZG\\JAZG\\JAZG.csproj",
+      "packagesPath": "C:\\Users\\acs358\\.nuget\\packages\\",
+      "outputPath": "Z:\\develop\\jazg\\JAZG\\JAZG\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "Z:\\win\\AppData\\NuGet\\NuGet.Config"

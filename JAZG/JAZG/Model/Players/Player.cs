@@ -40,7 +40,12 @@ namespace JAZG.Model.Players
 
             // All players have same extent
             Extent = 1;
-            Layer.Environment.Insert(this, Position);
+
+            while (!Layer.Environment.Insert(this, Position))
+            {
+                Position = layer.FindRandomPosition();   
+            }
+            
         }
 
         public virtual void Tick()
