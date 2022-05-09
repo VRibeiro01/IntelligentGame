@@ -27,7 +27,7 @@ namespace JAZG.Model.Players
             {
                 var humanDistance = GetDistanceFromPlayer(nearestHuman);
 
-                if (humanDistance <= 1)
+                if (humanDistance <= 2)
                 {
                     EatHuman(nearestHuman);
                     Console.WriteLine("Chomp, chomp!");
