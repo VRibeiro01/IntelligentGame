@@ -36,6 +36,7 @@ WINDOW_SIZE = 800, 800
 zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("Skull and Pizza illustration.png"), (28, 28)), False, True)
 zombie_rect = zombie_image.get_rect()
 human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.png"), (15, 28)), False, True)
+weapon_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_gun-isolated-vector-silhouette-illustration-pistol-white_7095722.png"), (22,22)), False, True)
 
 class Visualization:
     def __init__(self):
@@ -230,7 +231,11 @@ class Visualization:
                 elif type_key==2:
                     surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                elif type_key==4:
+                    surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 else:
+                    print("Unknown typekey: "+ str(type_key))
                     pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
                                    (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ),
