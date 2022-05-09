@@ -1,3 +1,7 @@
+# JAZG
+
+Ein cooles, simples Zombie-Spiel, das man nicht wirklich spielen kann, weil die Spieler intelligenter als du sind.
+
 # Installation & Ausfürung
 
 1. Requirements der Visualierung installieren (pip install -r requirements.txt)
