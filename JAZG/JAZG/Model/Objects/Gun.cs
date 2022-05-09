@@ -9,6 +9,14 @@ namespace JAZG.Model.Objects
     {
         private int _ammo;
 
+        public override void Init(FieldLayer layer)
+        {
+            base.Init(layer);
+            var point = Layer.FindRandomPoint();
+            Layer.Environment.Insert(this, point);
+            Position = new Position(point.X, point.Y);
+        }
+
         public int GetAmmo()
         {
             return _ammo;
@@ -17,7 +25,6 @@ namespace JAZG.Model.Objects
         public void SetAmmo(int newVal)
         {
             if (newVal + _ammo > 10) return;
-
             _ammo = _ammo + newVal;
         }
 

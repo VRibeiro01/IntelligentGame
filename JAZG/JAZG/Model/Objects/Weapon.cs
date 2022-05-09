@@ -22,7 +22,8 @@ namespace JAZG.Model.Objects
                 var human = (Human) character;
                 human.weapons.Add(this);
                 Console.WriteLine("I got a weapon.");
-                //Layer.Environment.Remove(this);
+                Layer.Environment.Remove(this);
+                UnregisterHandle.Invoke(Layer, this);
                 return CollisionKind.Remove;
             }
 

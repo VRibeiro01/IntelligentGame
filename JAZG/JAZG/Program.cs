@@ -15,8 +15,6 @@ namespace JAZG
     {
         public static void Main(string[] args)
         {
-            
-            
             Console.WriteLine("Hello world from Main!");
             var description = new ModelDescription();
 
@@ -27,9 +25,9 @@ namespace JAZG
             description.AddAgent<Zombie, FieldLayer>();
             
             // Add entities to model
-            description.AddEntity<Wall>();
-            description.AddEntity<Gun>();
-            description.AddEntity<Food>();
+            description.AddAgent<Wall, FieldLayer>();
+            description.AddAgent<Gun, FieldLayer>();
+            description.AddAgent<Food, FieldLayer>();
 
             // Get model configuration
             var file = File.ReadAllText("config.json");

@@ -47,20 +47,14 @@ namespace JAZG.Model
                 Environment.Insert(new Wall(), new LineString(wall2));
                 Environment.Insert(new Wall(), new LineString(wall3));
                 Environment.Insert(new Wall(), new LineString(wall4));
-                
-                for (int i = 0; i < 500; i++)
-                {
-                    var gun = new Gun();
-                    var point = FindRandomPoint();
-                    Environment.Insert(gun, point);
-                    gun.Position = new Position(point.X, point.Y);
-                }
             }
 
             // the agent manager can create agents and initializes them as defined in the sim config
             var agentManager = layerInitData.Container.Resolve<IAgentManager>();
 
             //Create and register agents
+            agentManager.Spawn<Wall, FieldLayer>();
+            var gunAgents = agentManager.Spawn<Gun, FieldLayer>().ToList();
             var humanAgents = agentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
@@ -77,11 +71,11 @@ namespace JAZG.Model
             return Position.CreatePosition(random.Next(0 + outerWallOffset, Width - outerWallOffset), random.Next(0 + outerWallOffset, Height - outerWallOffset));
         }
 
-        private Point FindRandomPoint()
+        public Point FindRandomPoint()
         {
             var random = RandomHelper.Random;
-            int x = random.Next(0 + outerWallOffset, Width - outerWallOffset);
-            int y = random.Next(0 + outerWallOffset, Height - outerWallOffset);
+            int x = random.Next(0 + outerWallOffset*3, Width - outerWallOffset*3);
+            int y = random.Next(0 + outerWallOffset*3, Height - outerWallOffset*3);
             return new Point(x, y);
         }
     }

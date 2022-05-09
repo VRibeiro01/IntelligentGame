@@ -26,7 +26,7 @@ namespace JAZG.Model.Players
                 layer.Extent.UpperRight.ToCoordinate(), layer.Extent.UpperLeft.ToCoordinate(),
                 layer.Extent.LowerLeft.ToCoordinate()
             };
-            _boundaryBoxGeometry = new LinearRing(coordinates);
+            _boundaryBoxGeometry = new Polygon(new LinearRing(coordinates));
             Energy = 30;
         }
 
@@ -44,8 +44,8 @@ namespace JAZG.Model.Players
 
             if (nextZombie != null)
             {
-                var zombieDistance = GetDistanceFromPlayer(nextZombie);
-                var weaponDistance = 999;
+                double zombieDistance = GetDistanceFromPlayer(nextZombie);
+                double weaponDistance = 999;
                 if (nextWeapon != null) weaponDistance = GetDistanceFromItem(nextWeapon);
 
                 if (zombieDistance <= 10)
@@ -57,7 +57,7 @@ namespace JAZG.Model.Players
                         _lastAction = 2;
                     }
                 }
-                else if (weaponDistance <= 20)
+                else if (weapons.Count < 1 && weaponDistance <= 20)
                 {
                     CollectItem(nextWeapon);
                     if (_lastAction != 4)
@@ -107,14 +107,12 @@ namespace JAZG.Model.Players
 
         private Weapon FindClosestWeapon()
         {
-            /*return (Weapon)Layer.Environment
-                .ExploreObstacles(_boundaryBoxGeometry, item => item.GetType() == typeof(Weapon)).OrderBy(item =>
-                    Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray)).FirstOrDefault();*/
-            var enumerable = Layer.Environment
-                .ExploreObstacles(_boundaryBoxGeometry, item => item is Weapon);
-            enumerable = enumerable.OrderBy(item =>
-                Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray));
-            return (Weapon)enumerable.FirstOrDefault();
+            return (Weapon)Layer.Environment
+                .ExploreObstacles(_boundaryBoxGeometry, item => item is Weapon).OrderBy(item =>
+                    Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray)).FirstOrDefault();
+            /*var enumerable = Layer.Environment.ExploreObstacles(_boundaryBoxGeometry, item => item is Gun);
+            enumerable = enumerable.OrderBy(item => Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray));
+            return (Weapon)enumerable.FirstOrDefault();*/
         }
 
         private void RunFromZombie(Player zombie)
@@ -127,9 +125,10 @@ namespace JAZG.Model.Players
         
         private void CollectItem(Item item)
         {
+            var distanceToItem = GetDistanceFromItem(item);
             var directionToItem = GetDirectionToItem(item);
             if (double.IsNaN(directionToItem)) directionToItem = RandomHelper.Random.Next(360);
-            Layer.Environment.Move(this, directionToItem, 2);
+            Layer.Environment.Move(this, directionToItem, distanceToItem < 2? distanceToItem : 2);
         }
 
         private void UseWeapon(Zombie zombie)

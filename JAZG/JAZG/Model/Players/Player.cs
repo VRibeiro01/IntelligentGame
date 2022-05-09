@@ -39,8 +39,8 @@ namespace JAZG.Model.Players
             Speed = RandomHelper.Random.Next(40);
 
             // All players have same extent
-            Extent = 1.8;
-            Layer.Environment.Insert(this, layer.FindRandomPosition());
+            Extent = 2;
+            Layer.Environment.Insert(this, Position);
         }
 
         public virtual void Tick()
@@ -71,15 +71,15 @@ namespace JAZG.Model.Players
             UnregisterHandle.Invoke(Layer, this);
         }
 
-        protected int GetDistanceFromPlayer(Player other)
+        protected double GetDistanceFromPlayer(Player other)
         {
-            return (int)Distance.Chebyshev(
+            return Distance.Chebyshev(
                 Position.PositionArray, other.Position.PositionArray);
         }
 
-        protected int GetDistanceFromItem(Item item)
+        protected double GetDistanceFromItem(Item item)
         {
-            return (int)Distance.Chebyshev(
+            return Distance.Chebyshev(
                 Position.PositionArray, item.Position.PositionArray);
         }
 
