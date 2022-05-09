@@ -37,6 +37,8 @@ zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("S
 zombie_rect = zombie_image.get_rect()
 human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.png"), (15, 28)), False, True)
 weapon_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_gun-isolated-vector-silhouette-illustration-pistol-white_7095722.png"), (22,22)), False, True)
+wall_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("grunge brick wall texture 1201.jpg"), (32,32)), False, True)
+food_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_nigiri-sushi-japanese-food__preview_rev_1.png"), (22,22)), False, True)
 
 class Visualization:
     def __init__(self):
@@ -231,8 +233,14 @@ class Visualization:
                 elif type_key==2:
                     surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                elif type_key==3:
+                    surface.blit(wall_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 elif type_key==4:
                     surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                elif type_key==5:
+                    surface.blit(food_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 else:
                     print("Unknown typekey: "+ str(type_key))
