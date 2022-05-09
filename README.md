@@ -10,6 +10,6 @@
 Jasper Wolny,
 Vivian Ribeiro,
 Ahmad Abbas,
-Nils Martens,
+Nils Martens
 
 Images from https://www.vecteezy.com
