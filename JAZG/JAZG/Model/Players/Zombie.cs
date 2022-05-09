@@ -79,7 +79,7 @@ namespace JAZG.Model.Players
             var directionToEnemy =
                 PositionHelper.CalculateBearingCartesian
                     (Position.X, Position.Y, human.Position.X, human.Position.Y);
-            Layer.Environment.Move(this, directionToEnemy, 2);
+            Layer.Environment.Move(this, directionToEnemy, 1);
         }
     }
 }

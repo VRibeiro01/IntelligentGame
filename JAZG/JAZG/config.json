@@ -15,11 +15,11 @@
     },
     {
       "name": "Zombie",
-      "count": 12
+      "count": 30
     },
     {
       "name": "Gun",
-      "count": 10
+      "count": 5
     }
   ],
   "layers": [

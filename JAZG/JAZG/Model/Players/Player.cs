@@ -39,7 +39,7 @@ namespace JAZG.Model.Players
             Speed = RandomHelper.Random.Next(40);
 
             // All players have same extent
-            Extent = 2;
+            Extent = 1;
             Layer.Environment.Insert(this, Position);
         }
 
