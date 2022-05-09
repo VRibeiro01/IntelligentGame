@@ -33,9 +33,9 @@ COLORS = RASTER_COLORS
 
 WINDOW_SIZE = 800, 800
 
-zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("Skull and Pizza illustration.jpg"), (16, 16)), False, True)
+zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("Skull and Pizza illustration.png"), (28, 28)), False, True)
 zombie_rect = zombie_image.get_rect()
-human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.jpg"), (16, 16)), False, True)
+human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.png"), (15, 28)), False, True)
 
 class Visualization:
     def __init__(self):
@@ -105,9 +105,9 @@ class Visualization:
             self.ws = self.get_socket()
         try:
             message = re.sub('(?<=\d),(?=\d)', '.',self.ws.recv())
-            # print(message)
+            
             data = json.loads(message)
-
+            
             self.l.acquire_write()
             if "currentTick" in data:
                 self.tick_display[1] = data["currentTick"]
@@ -220,17 +220,18 @@ class Visualization:
 
         for type_key in self.entities.keys():
             for entity in self.entities[type_key]:
+                print(entity)
                 x = entity["x"]
                 y = entity["y"]
 
-                #if type_key==1:
-                #    surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                #                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
-                #else:
-                #    surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                #                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
-
-                pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
+                if type_key==1:
+                    surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                elif type_key==2:
+                    surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                else:
+                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
                                    (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ),
                                    line_width, 0)

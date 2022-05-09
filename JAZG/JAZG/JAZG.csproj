@@ -7,24 +7,24 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Mars.Components" Version="4.3.0-beta-5"/>
-        <PackageReference Include="Mars.Life.Simulations" Version="4.3.0-beta-5"/>
+        <PackageReference Include="Mars.Components" Version="4.3.1-beta" />
+        <PackageReference Include="Mars.Life.Simulations" Version="4.3.1-beta" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="config.json"/>
+        <None Remove="config.json" />
         <Content Include="config.json">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <None Remove="Resources\humanInit.csv"/>
+        <None Remove="Resources\humanInit.csv" />
         <Content Include="Resources\humanInit.csv">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <None Remove="Resources\rec1_Battleground.csv"/>
+        <None Remove="Resources\rec1_Battleground.csv" />
         <Content Include="Resources\rec1_Battleground.csv">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <None Remove="Resources\zombieInit.csv"/>
+        <None Remove="Resources\zombieInit.csv" />
         <Content Include="Resources\zombieInit.csv">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
