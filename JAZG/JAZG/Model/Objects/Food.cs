@@ -22,7 +22,7 @@ namespace JAZG.Model.Objects
             {
                 var human = (Human) character;
                 human.Energy += EnergyPoints;
-                //TODO remove food from environment
+                UnregisterHandle.Invoke(Layer, this);
                 return CollisionKind.Remove;
             }
 

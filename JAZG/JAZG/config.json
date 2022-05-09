@@ -18,6 +18,11 @@
       "count": 30
     },
     {
+    "name": "Wall",
+    "count": 3,
+    "file": "Resources/InitWall.csv"
+    },
+    {
       "name": "Gun",
       "count": 5
     }

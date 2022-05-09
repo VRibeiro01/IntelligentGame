@@ -39,26 +39,29 @@ namespace JAZG.Model
 
                 //TODO represent wall as number in BattleGround cvs file and automate wall creation by reading from cvs file (see lasertag game)
                 //TODO same with weapons and food
-                Coordinate[] wall1 = {new(0 + outerWallOffset, Height - outerWallOffset), new(Width - outerWallOffset, Height - outerWallOffset)};
+                /*Coordinate[] wall1 = {new(0 + outerWallOffset, Height - outerWallOffset), new(Width - outerWallOffset, Height - outerWallOffset)};
                 Coordinate[] wall2 = {new(0 + outerWallOffset, 0 + outerWallOffset), new(Width - outerWallOffset, 0 + outerWallOffset)};
                 Coordinate[] wall3 = {new(0 + outerWallOffset, 0 + outerWallOffset), new(0 + outerWallOffset, Height - outerWallOffset)};
                 Coordinate[] wall4 = {new(Width - outerWallOffset, Height - outerWallOffset), new(Width - outerWallOffset, 0 + outerWallOffset)};
                 Environment.Insert(new Wall(), new LineString(wall1));
                 Environment.Insert(new Wall(), new LineString(wall2));
                 Environment.Insert(new Wall(), new LineString(wall3));
-                Environment.Insert(new Wall(), new LineString(wall4));
+                Environment.Insert(new Wall(), new LineString(wall4));*/
             }
 
             // the agent manager can create agents and initializes them as defined in the sim config
             var agentManager = layerInitData.Container.Resolve<IAgentManager>();
 
             //Create and register agents
-            agentManager.Spawn<Wall, FieldLayer>();
             var gunAgents = agentManager.Spawn<Gun, FieldLayer>().ToList();
             var humanAgents = agentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
+            var wallAgents = agentManager.Spawn<Wall, FieldLayer>().ToList();
+            
+            // Debug outputs
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
+            Console.WriteLine("We created " + wallAgents.Count + " wall agents." + "\n");
 
             return true;
         }

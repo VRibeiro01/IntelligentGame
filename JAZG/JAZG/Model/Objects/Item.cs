@@ -19,6 +19,7 @@ namespace JAZG.Model.Objects
             Layer = layer;
         }
 
+        
         public Guid ID { get; set; }
 
         public abstract bool IsRoutable(ICharacter character);
