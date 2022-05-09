@@ -7,8 +7,9 @@
 5. Rider Projekt ausfhren
 
 # Authors
-Jasper Wolny
-Vivian Ribeiro
-Ahmad Abbas
+Jasper Wolny,
+Vivian Ribeiro,
+Ahmad Abbas,
+Nils Martens
 
 Images from https://www.vecteezy.com
