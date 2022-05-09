@@ -1,4 +1,4 @@
-#Installation & Ausfürung
+# Installation & Ausfürung
 
 1. Requirements der Visualierung installieren (pip install -r requirements.txt)
 2. C# Projekt in Rider öffnen
