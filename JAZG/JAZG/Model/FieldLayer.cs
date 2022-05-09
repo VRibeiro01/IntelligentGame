@@ -36,17 +36,7 @@ namespace JAZG.Model
                 Environment = new CollisionEnvironment<Player, Item>();
                 Environment.BoundingBox =
                     new BoundingBox(new Position(0 + outerWallOffset, 0 + outerWallOffset), new Position(Width - outerWallOffset, Height - outerWallOffset));
-
-                //TODO represent wall as number in BattleGround cvs file and automate wall creation by reading from cvs file (see lasertag game)
-                //TODO same with weapons and food
-                /*Coordinate[] wall1 = {new(0 + outerWallOffset, Height - outerWallOffset), new(Width - outerWallOffset, Height - outerWallOffset)};
-                Coordinate[] wall2 = {new(0 + outerWallOffset, 0 + outerWallOffset), new(Width - outerWallOffset, 0 + outerWallOffset)};
-                Coordinate[] wall3 = {new(0 + outerWallOffset, 0 + outerWallOffset), new(0 + outerWallOffset, Height - outerWallOffset)};
-                Coordinate[] wall4 = {new(Width - outerWallOffset, Height - outerWallOffset), new(Width - outerWallOffset, 0 + outerWallOffset)};
-                Environment.Insert(new Wall(), new LineString(wall1));
-                Environment.Insert(new Wall(), new LineString(wall2));
-                Environment.Insert(new Wall(), new LineString(wall3));
-                Environment.Insert(new Wall(), new LineString(wall4));*/
+                
             }
 
             // the agent manager can create agents and initializes them as defined in the sim config

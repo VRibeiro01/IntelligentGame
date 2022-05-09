@@ -21,7 +21,7 @@ namespace JAZG.Model.Objects
         private int yRight { get; set; }
         
         
-        public Guid ID { get; set; }
+       
         
         
         
@@ -54,5 +54,6 @@ namespace JAZG.Model.Objects
         {
             return VisibilityKind.Opaque;
         }
+        
     }
 }
