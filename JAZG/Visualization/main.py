@@ -227,6 +227,8 @@ class Visualization:
                 x = entity["x"]
                 y = entity["y"]
 
+                print("Type key: " + str(type_key))
+
                 if type_key==1:
                     surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
@@ -234,6 +236,7 @@ class Visualization:
                     surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 elif type_key==3:
+                    print("Wall!")
                     surface.blit(wall_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 elif type_key==4:

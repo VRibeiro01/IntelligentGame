@@ -11,10 +11,12 @@
   "agents": [
     {
       "name": "Human",
+      "pythonVisualizationWithProperties" : true,
       "count": 3
     },
     {
       "name": "Zombie",
+      "pythonVisualizationWithProperties" : true,
       "count": 30
     },
     {
@@ -24,6 +26,7 @@
     },
     {
       "name": "Gun",
+      "pythonVisualizationWithProperties" : true,
       "count": 5
     }
   ],
