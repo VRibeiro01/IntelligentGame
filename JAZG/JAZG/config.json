@@ -21,7 +21,7 @@
     },
     {
     "name": "Wall",
-    "count": 3,
+    "count": 7,
     "file": "Resources/InitWall.csv"
     },
     {
