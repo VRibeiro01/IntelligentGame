@@ -23,6 +23,8 @@ namespace JAZG.Model
         public CollisionEnvironment<Player, Item> Environment { get; set; }
 
         private int outerWallOffset = 10;
+        public IAgentManager agentManager { get; private set; }
+
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -36,22 +38,19 @@ namespace JAZG.Model
                 Environment = new CollisionEnvironment<Player, Item>();
                 Environment.BoundingBox =
                     new BoundingBox(new Position(0 + outerWallOffset, 0 + outerWallOffset), new Position(Width - outerWallOffset, Height - outerWallOffset));
-                
+
             }
 
             // the agent manager can create agents and initializes them as defined in the sim config
-            var agentManager = layerInitData.Container.Resolve<IAgentManager>();
+            agentManager = layerInitData.Container.Resolve<IAgentManager>();
 
             //Create and register agents
+            agentManager.Spawn<Wall, FieldLayer>();
             var gunAgents = agentManager.Spawn<Gun, FieldLayer>().ToList();
             var humanAgents = agentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
-            var wallAgents = agentManager.Spawn<Wall, FieldLayer>().ToList();
-            
-            // Debug outputs
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
-            Console.WriteLine("We created " + wallAgents.Count + " wall agents." + "\n");
 
             return true;
         }

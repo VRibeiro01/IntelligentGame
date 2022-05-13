@@ -2,6 +2,7 @@
 using System.Linq;
 using Mars.Common;
 using Mars.Numerics;
+using ServiceStack;
 
 namespace JAZG.Model.Players
 {
@@ -13,6 +14,7 @@ namespace JAZG.Model.Players
             Energy = 15;
         }
 
+        private static int _level { get; set; } = 1;
         private int _lastAction;
 
         public override void Tick()
@@ -72,6 +74,12 @@ namespace JAZG.Model.Players
         {
             base.Kill();
             Console.WriteLine("Zombie down!");
+            if (AllZompieDie())
+            {
+                Console.WriteLine("you got Level " + _level);
+                _level += 1 ;
+                Spawn();
+            }
         }
 
         private void MoveTowardsHuman(Player human)
@@ -81,5 +89,26 @@ namespace JAZG.Model.Players
                     (Position.X, Position.Y, human.Position.X, human.Position.Y);
             Layer.Environment.Move(this, directionToEnemy, 1);
         }
+
+        private bool AllZompieDie()
+        { 
+            var erg =Layer.Environment.Characters.Where(h => h.GetType() == typeof(Zombie)).ToList().IsEmpty();
+            return erg;
+
+        }
+
+        private void Spawn()
+        {
+            var neueZombie = Layer.agentManager.Spawn<Zombie, FieldLayer>().ToList();
+            foreach (var z in neueZombie)
+            {
+                z.Energy *= 2 * _level;
+            }
+            Console.WriteLine("We created " + neueZombie.Count + " zombie agents." + "for level " + _level + 
+                              "with Enrge " + neueZombie.First().Energy);
+
+        }
+        
+        
     }
 }
