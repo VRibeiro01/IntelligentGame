@@ -27,6 +27,8 @@ namespace JAZG.Model.Players
 
         public Guid ID { get; set; }
         public int Speed { get; set; }
+        public Position Position { get; set; }
+        public double Extent { get; set; }
 
         public virtual void Init(FieldLayer layer)
         {
@@ -45,16 +47,12 @@ namespace JAZG.Model.Players
             {
                 Position = layer.FindRandomPosition();   
             }
-            
         }
 
         public virtual void Tick()
         {
         }
 
-        public Position Position { get; set; }
-
-        public double Extent { get; set; }
 
         public CollisionKind? HandleCollision(ICharacter other)
         {

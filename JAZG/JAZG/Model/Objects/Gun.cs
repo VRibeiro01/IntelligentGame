@@ -1,7 +1,8 @@
 ﻿using System;
 using JAZG.Model.Players;
 using Mars.Common.Core.Random;
-using Mars.Interfaces.Environments;
+using NetTopologySuite.Geometries;
+using Position = Mars.Interfaces.Environments.Position;
 
 namespace JAZG.Model.Objects
 {
@@ -13,7 +14,13 @@ namespace JAZG.Model.Objects
         {
             base.Init(layer);
             var point = Layer.FindRandomPoint();
-            Layer.Environment.Insert(this, point);
+            Coordinate[] coordinates =
+            {
+                new(point.X - 1, point.Y - 1), new(point.X - 1, point.Y + 1), new(point.X + 1, point.Y + 1),
+                new(point.X + 1, point.Y - 1), new(point.X - 1, point.Y - 1)
+            };
+            Geometry geometry = new Polygon(new LinearRing(coordinates));
+            Layer.Environment.Insert(this, geometry);
             Position = new Position(point.X, point.Y);
         }
 

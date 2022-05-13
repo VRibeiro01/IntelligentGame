@@ -5,6 +5,7 @@ using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
 using Mars.Common.IO.Mapped.Collections;
+using Mars.Interfaces.Environments;
 using Mars.Numerics;
 using NetTopologySuite.Geometries;
 
@@ -111,9 +112,6 @@ namespace JAZG.Model.Players
             return (Weapon)Layer.Environment
                 .ExploreObstacles(_boundaryBoxGeometry, item => item is Weapon).OrderBy(item =>
                     Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray)).FirstOrDefault();
-            /*var enumerable = Layer.Environment.ExploreObstacles(_boundaryBoxGeometry, item => item is Gun);
-            enumerable = enumerable.OrderBy(item => Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray));
-            return (Weapon)enumerable.FirstOrDefault();*/
         }
 
         private void RunFromZombie(Player zombie)
