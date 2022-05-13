@@ -105,7 +105,7 @@ namespace JAZG.Model.Players
                 z.Energy *= 2 * _level;
             }
             Console.WriteLine("We created " + neueZombie.Count + " zombie agents." + "for level " + _level + 
-                              "with Enrge " + neueZombie.First().Energy);
+                              " with Energy " + neueZombie.First().Energy);
 
         }
         
