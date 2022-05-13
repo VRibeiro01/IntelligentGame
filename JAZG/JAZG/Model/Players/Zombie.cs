@@ -22,6 +22,10 @@ namespace JAZG.Model.Players
             // TODO Implement simple movements
             // TODO implement action upon meeting zombie using collisionHashEnvironment  functionalities
             base.Tick();
+            if (this.Energy <= 0)
+            {
+                this.Kill();
+            }
             var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
 

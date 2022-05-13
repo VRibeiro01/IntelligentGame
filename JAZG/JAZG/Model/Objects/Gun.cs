@@ -40,7 +40,7 @@ namespace JAZG.Model.Objects
             if (RandomHelper.Random.Next(101) > 50)
             {
                 Console.WriteLine("Hit.");
-                zombie.Kill();
+                zombie.Energy -= 15;
             }
             else Console.WriteLine("Missed.");
             //TODO target is hit with a degree of randomness
