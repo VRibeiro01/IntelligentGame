@@ -50,8 +50,7 @@ namespace JAZG.Model.Objects
                 zombie.Energy -= 15;
             }
             else Console.WriteLine("Missed.");
-            //TODO target is hit with a degree of randomness
-            //TODO what happens if zombie is hit
+            
         }
     }
 }

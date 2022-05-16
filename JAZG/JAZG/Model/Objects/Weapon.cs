@@ -17,7 +17,6 @@ namespace JAZG.Model.Objects
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
-            //TODO: works weird, human stands still for some time (human doesn't collide immediately with weapon?)
             if (character is Human)
             {
                 var human = (Human) character;

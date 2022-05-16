@@ -37,7 +37,7 @@ namespace JAZG.Model.Players
             };
             _boundaryBoxGeometry = new Polygon(new LinearRing(coordinates));
             Energy = 30;
-            maxSeeingDistance = 40;
+            maxSeeingDistance = 20;
             _qHumanLearning = new QHumanLearning(maxSeeingDistance);
 
         }
@@ -46,10 +46,11 @@ namespace JAZG.Model.Players
         {
             base.Tick();
             //QMovement();
-            NonQMovement();
+            //NonQMovement();
+            ExploreZombies();
+            RandomMove();
 
             //TODO Search for food and weapons
-            //TODO Use weapons to kill zombie
             // TODO Where to go? Where to hide? When to rest? When to kill? 
             //TODO reduce speed when energy is reduced
         }
@@ -61,17 +62,23 @@ namespace JAZG.Model.Players
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
         }
-        //TODO find out why no zombies are found
+        
         public List<Player> ExploreZombies()
         {
-            ConeExplorationView explorationView = new ConeExplorationView();
-            explorationView.Bearing = 90.0;
-            explorationView.Range = 99.0;
-            explorationView.Source = new double[] {Position.X, Position.Y};
-            Polygon cone = GeometryFactory.CreateCone(explorationView);
-            explorationView.Angle = 360.0;
+            ConeExplorationView explorationView = new ConeExplorationView
+            {
+                Bearing = 90.0,
+                Range = 99.0,
+                Source = new double[] {Position.X, Position.Y},
+                Angle = 180
+            };
+            TrapezoidExploration trap = new TrapezoidExploration();
+            trap.Width = 30;
+            trap.Angle = 90;
+                Polygon cone = GeometryFactory.CreateCone(explorationView);
+                Console.WriteLine(cone);
 
-            List<Player> res =  Layer.Environment.ExploreCharacters(this, cone,player => player.GetType()==typeof(Zombie)).ToList();
+            List<Player> res =  Layer.Environment.ExploreCharacters(this,cone,player => player.GetType()==typeof(Zombie)).ToList();
             Console.WriteLine("Zombies in sight... ");
            res.ForEach(Console.WriteLine);
             return res;
