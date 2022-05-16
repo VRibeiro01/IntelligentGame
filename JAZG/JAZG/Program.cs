@@ -28,6 +28,7 @@ namespace JAZG
             description.AddAgent<Wall, FieldLayer>();
             description.AddAgent<Gun, FieldLayer>();
             description.AddAgent<Food, FieldLayer>();
+            description.AddAgent<DeadPlayer, FieldLayer>();
 
             // Get model configuration
             var file = File.ReadAllText("config.json");
