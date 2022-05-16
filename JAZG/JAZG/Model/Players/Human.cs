@@ -185,6 +185,9 @@ namespace JAZG.Model.Players
             {
                 if (weapons.Count > 1)
                 {
+                    // TODO: wie wird state ermittelt
+                    // Distanz zum nächsten Zombie, Anzahl Zombies,
+                    // wo befinden sich Zombies ("entweder umzingelt oder nicht" oder "zonen mit zombies")
                     int state = (int)GetDistanceFromPlayer(closestZombie);
                     Console.WriteLine("State: " + state); 
                 
