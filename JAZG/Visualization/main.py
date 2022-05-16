@@ -237,12 +237,21 @@ class Visualization:
                     surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 elif type_key==3:
-                    print("Wall!")
-                    surface.blit(wall_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                    #wall
+                    xLeft = entity["p"]["xLeft"]
+                    xRight = entity["p"]["xRight"]
+                    yLeft = entity["p"]["yLeft"]
+                    yRight = entity["p"]["yRight"]
+		    #length = sqrt(((xLeft-xRight)^2)+(yLeft-yRight)^2)
+                    #surface.blit(pygame.transform.scale(wall_image, (abs(entity[xLeft-xRight]), abs(entity[yLeft-yRight])), False, True, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
+                    #               ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                    line_color = (255, 255, 255)
+                    pygame.draw.line(surface, line_color, (((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yLeft - self.WORLD_SIZE[1]) * scale_y)), (((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yRight - self.WORLD_SIZE[1]) * scale_y)))
+                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yLeft - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
+                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yRight - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
                 elif type_key==4:
                     surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) )) 
                 elif type_key==5:
                     surface.blit(food_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
@@ -251,11 +260,8 @@ class Visualization:
                                     ((y - self.WORLD_SIZE[1]) * scale_y) ))
                 else:
                     print("Unknown typekey: "+ str(type_key))
-                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],
-                                   (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ),
-                                   line_width, 0)
-
+                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((y - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
+		
         flipped = pygame.transform.flip(surface, False, True)
         self.screen.blit(flipped, (10, -50))
 
