@@ -74,6 +74,7 @@ namespace JAZG.Model.Players
             Dead = true;
             Layer.Environment.Remove(this);
             UnregisterHandle.Invoke(Layer, this);
+            DeadPlayer.Spawn(Layer, this);
         }
 
         protected double GetDistanceFromPlayer(Player other)

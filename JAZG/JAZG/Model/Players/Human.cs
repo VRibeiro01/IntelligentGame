@@ -108,6 +108,7 @@ namespace JAZG.Model.Players
         public override void Kill()
         {
             base.Kill();
+            Layer.Environment.
             Console.WriteLine("They got me! Leave me behind... arghhh!");
         }
 
