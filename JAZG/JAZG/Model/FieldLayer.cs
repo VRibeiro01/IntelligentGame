@@ -47,7 +47,7 @@ namespace JAZG.Model
             agentManager = layerInitData.Container.Resolve<IAgentManager>();
 
             //Create and register agents
-            agentManager.Spawn<Wall, FieldLayer>();
+            var wallAgents = agentManager.Spawn<Wall, FieldLayer>().ToList();
             var gunAgents = agentManager.Spawn<Gun, FieldLayer>().ToList();
             var humanAgents = agentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = agentManager.Spawn<Zombie, FieldLayer>().ToList();

@@ -15,10 +15,9 @@ namespace JAZG.Model.Objects
         
         [PropertyDescription(Name="xright")]
         public int xRight { get; set; }
-        
-        
+
         [PropertyDescription(Name="yright")]
-        private int yRight { get; set; }
+        public int yRight { get; set; }
         
         
        
@@ -35,6 +34,7 @@ namespace JAZG.Model.Objects
             base.Init(layer);
             Coordinate[] coordinates = {new(xLeft, xLeft), new(xRight, yRight)};
             Layer.Environment.Insert(this, new LineString(coordinates));
+            Position = Mars.Interfaces.Environments.Position.CreatePosition((xLeft+xRight)/2, (yLeft+yRight)/2);
             Console.Write("New Wall at: " + "("+xLeft+";"+yLeft+")" + "(" + xRight + ";" +yRight + ")");
         }
 
