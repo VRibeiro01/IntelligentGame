@@ -86,6 +86,7 @@ namespace JAZG.Model.Players
 
         private void RunFromZombie(Player zombie)
         {
+            // TODO: run from all zombies that are near
             var directionToEnemy = GetDirectionToPlayer(zombie);
             if (double.IsNaN(directionToEnemy)) directionToEnemy = RandomHelper.Random.Next(360);
             var directionOpposite = (directionToEnemy + 180) % 360;
@@ -229,14 +230,17 @@ namespace JAZG.Model.Players
 
         // Berechnet die Bewertungsfunktion
         //TODO Wie soll die Bewertung sein?
+        // GUT: Zombie tot, weniger Zombies in Sichtfeld, neue Distanz zum nächsten Zombie kleiner
+        // Schlecht: Zombie lebt noch, mehr Zombies in Sichtfeld, Distanz zum nächsten Zombie kleiner
         public double Reward(Zombie closestZombie, int oldDistance)
         {
             if (closestZombie.Dead)
             {
                 return 1.0;
             }
-
-            if (GetDistanceFromPlayer(closestZombie) - oldDistance > 10)
+            
+            Player newClosestZombie = FindClosestZombie();
+            if (GetDistanceFromPlayer(newClosestZombie) > oldDistance)
             {
                 return 0.5;
             }
