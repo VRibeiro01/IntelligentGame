@@ -18,13 +18,7 @@ namespace JAZG.Model.Objects
 
         [PropertyDescription(Name="yright")]
         public int yRight { get; set; }
-        
-        
-       
-        
-        
-        
-        
+
         public Wall() : base(Layer)
         {
         }

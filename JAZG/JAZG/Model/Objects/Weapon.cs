@@ -21,6 +21,7 @@ namespace JAZG.Model.Objects
             {
                 var human = (Human) character;
                 human.weapons.Add(this);
+                human.HasWeapon = true;
                 Console.WriteLine("I got a weapon.");
                 Layer.Environment.Remove(this);
                 UnregisterHandle.Invoke(Layer, this);
