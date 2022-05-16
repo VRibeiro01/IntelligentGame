@@ -11,22 +11,23 @@
   "agents": [
     {
       "name": "Human",
-      "pythonVisualizationWithProperties" : true,
+      "pythonVisualizationWithProperties": true,
       "count": 10
     },
     {
       "name": "Zombie",
-      "pythonVisualizationWithProperties" : true,
+      "pythonVisualizationWithProperties": true,
       "count": 20
     },
     {
-    "name": "Wall",
-    "count": 7,
-    "file": "Resources/InitWall.csv"
+      "name": "Wall",
+      "pythonVisualizationWithProperties": true,
+      "count": 7,
+      "file": "Resources/InitWall.csv"
     },
     {
       "name": "Gun",
-      "pythonVisualizationWithProperties" : true,
+      "pythonVisualizationWithProperties": true,
       "count": 5
     }
   ],
