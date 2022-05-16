@@ -19,8 +19,6 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-            // TODO Implement simple movements
-            // TODO implement action upon meeting zombie using collisionHashEnvironment  functionalities
             base.Tick();
             if (this.Energy <= 0)
             {
