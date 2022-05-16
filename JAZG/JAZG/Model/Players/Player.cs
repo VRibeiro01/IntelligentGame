@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
@@ -8,6 +9,7 @@ using Mars.Interfaces.Annotations;
 using Mars.Interfaces.Environments;
 using Mars.Interfaces.Layers;
 using Mars.Numerics;
+
 
 namespace JAZG.Model.Players
 {
@@ -22,7 +24,7 @@ namespace JAZG.Model.Players
         protected FieldLayer Layer { get; set; }
 
         // ****** Attributes
-        protected bool Dead;
+        public bool Dead;
         public int Energy { get; set; }
 
         public Guid ID { get; set; }
@@ -97,5 +99,7 @@ namespace JAZG.Model.Players
             return PositionHelper.CalculateBearingCartesian(
                 Position.X, Position.Y, item.Position.X, item.Position.Y);
         }
+   
+        
     }
 }

@@ -40,7 +40,7 @@ namespace JAZG.Model.Objects
 
         public override bool IsRoutable(ICharacter character)
         {
-            // this means that the wall cannot be passed (??? right ??)
+            // this means that the wall cannot be passed
             return false;
         }
 

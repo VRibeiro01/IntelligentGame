@@ -78,7 +78,7 @@ namespace JAZG.Model.Players
         {
             base.Kill();
             Console.WriteLine("Zombie down!");
-            if (AllZompieDie())
+            if (AllZombiesDead())
             {
                 Console.WriteLine("you got Level " + _level);
                 _level += 1 ;
@@ -94,7 +94,7 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, directionToEnemy, 1);
         }
 
-        private bool AllZompieDie()
+        private bool AllZombiesDead()
         { 
             var erg =Layer.Environment.Characters.Where(h => h.GetType() == typeof(Zombie)).ToList().IsEmpty();
             return erg;

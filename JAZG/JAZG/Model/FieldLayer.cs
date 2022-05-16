@@ -9,6 +9,7 @@ using Mars.Core.Data;
 using Mars.Interfaces.Data;
 using Mars.Interfaces.Environments;
 using Mars.Interfaces.Layers;
+using Mars.Numerics;
 using NetTopologySuite.Geometries;
 using Position = Mars.Interfaces.Environments.Position;
 
@@ -24,7 +25,7 @@ namespace JAZG.Model
 
         private int outerWallOffset = 10;
         public IAgentManager agentManager { get; private set; }
-
+        
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -37,9 +38,10 @@ namespace JAZG.Model
             {
                 Environment = new CollisionEnvironment<Player, Item>();
                 Environment.BoundingBox =
-                    new BoundingBox(new Position(0 + outerWallOffset, 0 + outerWallOffset), new Position(Width - outerWallOffset, Height - outerWallOffset));
+                    new BoundingBox(new Position(0 , 0), new Position(Width - outerWallOffset, Height - outerWallOffset));
 
             }
+           
 
             // the agent manager can create agents and initializes them as defined in the sim config
             agentManager = layerInitData.Container.Resolve<IAgentManager>();
@@ -51,6 +53,9 @@ namespace JAZG.Model
             var zombieAgents = agentManager.Spawn<Zombie, FieldLayer>().ToList();
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
+            
+            
+          
 
             return true;
         }
