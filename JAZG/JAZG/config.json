@@ -12,12 +12,12 @@
     {
       "name": "Human",
       "pythonVisualizationWithProperties": true,
-      "count": 10
+      "count": 3
     },
     {
       "name": "Zombie",
       "pythonVisualizationWithProperties": true,
-      "count": 20
+      "count": 10
     },
     {
       "name": "Wall",

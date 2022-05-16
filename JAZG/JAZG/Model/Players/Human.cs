@@ -63,6 +63,14 @@ namespace JAZG.Model.Players
                 .FirstOrDefault();
         }
 
+        private List<Player> FindZombies()
+        {
+            return Layer.Environment.Characters.Where(c =>
+                    c.GetType() == typeof(Zombie) &&
+                    Distance.Chebyshev(Position.PositionArray, c.Position.PositionArray) <= _maxSeeingDistance)
+                .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray)).ToList();
+        }
+
         public List<Player> ExploreZombies()
         {
             ConeExplorationView explorationView = new ConeExplorationView
@@ -101,6 +109,20 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, directionOpposite, 2);
         }
 
+        private void RunFromZombies()
+        {
+            var zombies = FindZombies();
+            double directionToEnemies = 0;
+            foreach (var zombie in zombies)
+            {
+                var directionToEnemy = GetDirectionToPlayer(zombie);
+                directionToEnemies += (directionToEnemy + 180) % 360;
+            }
+
+            directionToEnemies /= zombies.Count;
+            Layer.Environment.Move(this, directionToEnemies, 2);
+        }
+
         private void CollectItem(Item item)
         {
             var distanceToItem = GetDistanceFromItem(item);
@@ -134,7 +156,8 @@ namespace JAZG.Model.Players
 
                 if (zombieDistance <= 10)
                 {
-                    RunFromZombie(nextZombie);
+                    //RunFromZombie(nextZombie);
+                    RunFromZombies();
                     if (_lastAction != 2)
                     {
                         Console.WriteLine("The zombies are coming, run!!!");
@@ -241,7 +264,7 @@ namespace JAZG.Model.Players
         }
 
         // Berechnet die Bewertungsfunktion
-        //TODO Wie soll die Bewertung sein?
+        // TODO Wie soll die Bewertung sein?
         // GUT: Zombie tot, weniger Zombies in Sichtfeld, neue Distanz zum nächsten Zombie kleiner
         // Schlecht: Zombie lebt noch, mehr Zombies in Sichtfeld, Distanz zum nächsten Zombie kleiner
         public double Reward(Zombie closestZombie, int oldDistance)
