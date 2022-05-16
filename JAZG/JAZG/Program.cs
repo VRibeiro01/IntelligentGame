@@ -45,7 +45,6 @@ namespace JAZG
             
             Console.WriteLine("Humans: " + loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
             Console.WriteLine("Zombies: " + loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
-
         }
     }
 }

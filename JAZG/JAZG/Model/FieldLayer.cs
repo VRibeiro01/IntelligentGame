@@ -38,7 +38,7 @@ namespace JAZG.Model
             {
                 Environment = new CollisionEnvironment<Player, Item>();
                 Environment.BoundingBox =
-                    new BoundingBox(new Position(0 , 0), new Position(Width - outerWallOffset, Height - outerWallOffset));
+                    new BoundingBox(new Position(0 , 0), new Position(100, 95));
 
             }
            
