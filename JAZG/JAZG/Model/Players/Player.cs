@@ -74,7 +74,15 @@ namespace JAZG.Model.Players
             Dead = true;
             Layer.Environment.Remove(this);
             UnregisterHandle.Invoke(Layer, this);
-            DeadPlayer.Spawn(Layer, this);
+            if (this.GetType() == typeof(Zombie))
+            {
+                DeadPlayer.Spawn(Layer, this);
+            }
+            else
+            {
+                Zombie.HumanToZombie(Layer,this);
+            }
+            
         }
 
         protected double GetDistanceFromPlayer(Player other)
