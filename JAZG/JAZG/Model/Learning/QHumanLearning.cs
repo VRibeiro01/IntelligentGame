@@ -21,7 +21,7 @@ namespace JAZG.Model.Learning
 
         public QHumanLearning(int maxSeeingDistance)
         {
-            states = maxSeeingDistance;
+            states = 3;
             actions = 2;
             ExplorationPolicy = new RouletteWheelExploration();
             QLearning = new QLearning(states, actions, ExplorationPolicy);

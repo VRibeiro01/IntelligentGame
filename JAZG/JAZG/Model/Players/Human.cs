@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using Mars.Common;
-using Mars.Common.Collections;
 using Mars.Common.Core.Random;
-using Mars.Components.Environments.Cartesian;
 using Mars.Numerics;
 using NetTopologySuite.Geometries;
-using GeometryFactory = Mars.Components.Environments.Cartesian.GeometryFactory;
 
 namespace JAZG.Model.Players
 {
@@ -45,8 +41,10 @@ namespace JAZG.Model.Players
         public override void Tick()
         {
             base.Tick();
-            //QMovement();
-            NonQMovement();
+            ExploreZombies();
+            RandomMove();
+            // QMovement();
+            //NonQMovement();
 
             //TODO Search for food and weapons
             // TODO Where to go? Where to hide? When to rest? When to kill? 
@@ -73,23 +71,32 @@ namespace JAZG.Model.Players
 
         public List<Player> ExploreZombies()
         {
-            ConeExplorationView explorationView = new ConeExplorationView
-            {
-                Bearing = 90.0,
-                Range = 99.0,
-                Source = new double[] {Position.X, Position.Y},
-                Angle = 180
-            };
-            TrapezoidExploration trap = new TrapezoidExploration();
-            trap.Width = 30;
-            trap.Angle = 90;
-            Polygon cone = GeometryFactory.CreateCone(explorationView);
-            Console.WriteLine(cone);
+            var conePosition = Position.Copy();
+            var conePosition2 = Position.Copy();
 
+            var seeingAngleToRad = 60.0 * (Math.PI/180.0);
+            var seeingAngleToRad2 = 300.0 * (Math.PI/180.0);
+            
+            conePosition.X = conePosition.X + (_maxSeeingDistance * Math.Cos(seeingAngleToRad));
+            conePosition.Y = conePosition.Y + (_maxSeeingDistance * Math.Sin(seeingAngleToRad));
+          
+            conePosition2.X = conePosition2.X + (_maxSeeingDistance * Math.Cos(seeingAngleToRad2));
+            conePosition2.Y = conePosition2.Y + (_maxSeeingDistance * Math.Sin(seeingAngleToRad2));
+            
+            Coordinate[] coordinates =
+            {
+                Position.ToCoordinate(), conePosition.ToCoordinate(),
+                conePosition2.ToCoordinate(), Position.ToCoordinate()
+            };
+            var cone = new Polygon(new LinearRing(coordinates));
             List<Player> res = Layer.Environment
                 .ExploreCharacters(this, cone, player => player.GetType() == typeof(Zombie)).ToList();
+            
             Console.WriteLine("Zombies in sight... ");
-            res.ForEach(Console.WriteLine);
+            foreach (var zomb in res)
+            {
+                Console.WriteLine("Distance from zombie: " + Distance.Chebyshev(Position.PositionArray,zomb.Position.PositionArray));
+            }
             return res;
         }
 
