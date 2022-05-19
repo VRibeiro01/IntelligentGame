@@ -111,6 +111,14 @@ namespace JAZG.Model.Players
 
         }
         
+        public static void HumanToZombie(FieldLayer layer,Player human)
+        {
+            var zombie = layer.agentManager.Spawn<Zombie, FieldLayer>(null, z => {}).Take(1).First();
+            zombie.Position = human.Position;
+            Console.WriteLine("Human To Zombie at Position :" + zombie.Position);
+
+        }
+        
         
     }
 }

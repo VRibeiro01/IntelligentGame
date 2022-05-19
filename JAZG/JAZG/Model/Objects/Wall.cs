@@ -40,7 +40,7 @@ namespace JAZG.Model.Objects
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
-            Console.WriteLine("STOP. This is a wall!");
+            //Console.WriteLine("STOP. This is a wall!");
             return CollisionKind.Block;
         }
 
