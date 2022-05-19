@@ -109,18 +109,23 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, directionOpposite, 2);
         }
 
-        private void RunFromZombies()
+        private void RunFromZombies(Player closestZombie)
         {
+            var directionFromClosest = (GetDirectionToPlayer(closestZombie) + 180) % 360;
+            var directionFromEnemies = directionFromClosest;
+            var closestDistance = GetDistanceFromPlayer(closestZombie);
             var zombies = FindZombies();
-            double directionToEnemies = 0;
             foreach (var zombie in zombies)
             {
-                var directionToEnemy = GetDirectionToPlayer(zombie);
-                directionToEnemies += (directionToEnemy + 180) % 360;
+                if (zombie == closestZombie) continue;
+                var directionFromEnemy = (GetDirectionToPlayer(zombie) + 180) % 360;
+                var directionToClosest = Math.Abs(directionFromClosest - directionFromEnemy);
+                directionFromEnemies += Math.Abs(directionFromEnemy -
+                                                 closestDistance / GetDistanceFromPlayer(zombie) * directionToClosest);
             }
 
-            directionToEnemies /= zombies.Count;
-            Layer.Environment.Move(this, directionToEnemies, 2);
+            directionFromEnemies /= zombies.Count;
+            Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
         private void CollectItem(Item item)
@@ -157,7 +162,7 @@ namespace JAZG.Model.Players
                 if (zombieDistance <= 10)
                 {
                     //RunFromZombie(nextZombie);
-                    RunFromZombies();
+                    RunFromZombies(nextZombie);
                     if (_lastAction != 2)
                     {
                         Console.WriteLine("The zombies are coming, run!!!");
