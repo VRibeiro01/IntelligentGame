@@ -54,9 +54,7 @@ namespace JAZG.Model.Players
         private Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
-            return (Zombie) Layer.Environment.Characters.Where(c =>
-                    c.GetType() == typeof(Zombie) &&
-                    Distance.Chebyshev(Position.PositionArray, c.Position.PositionArray) <= _maxSeeingDistance)
+            return (Zombie) ExploreZombies()
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
         }
