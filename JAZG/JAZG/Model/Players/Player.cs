@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
@@ -10,7 +9,6 @@ using Mars.Interfaces.Environments;
 using Mars.Interfaces.Layers;
 using Mars.Numerics;
 
-
 namespace JAZG.Model.Players
 {
     /// <summary>
@@ -19,18 +17,15 @@ namespace JAZG.Model.Players
     /// </summary>
     public abstract class Player : IAgent<FieldLayer>, ICharacter
     {
+        // ****** Attributes
+        public bool Dead;
         [PropertyDescription] public UnregisterAgent UnregisterHandle { get; set; }
 
         protected FieldLayer Layer { get; set; }
-
-        // ****** Attributes
-        public bool Dead;
         public int Energy { get; set; }
+        public int Speed { get; set; }
 
         public Guid ID { get; set; }
-        public int Speed { get; set; }
-        public Position Position { get; set; }
-        public double Extent { get; set; }
 
         public virtual void Init(FieldLayer layer)
         {
@@ -45,15 +40,15 @@ namespace JAZG.Model.Players
             // All players have same extent
             Extent = 1;
 
-            while (!Layer.Environment.Insert(this, Position))
-            {
-                Position = layer.FindRandomPosition();   
-            }
+            while (!Layer.Environment.Insert(this, Position)) Position = layer.FindRandomPosition();
         }
 
         public virtual void Tick()
         {
         }
+
+        public Position Position { get; set; }
+        public double Extent { get; set; }
 
 
         public CollisionKind? HandleCollision(ICharacter other)
@@ -62,7 +57,7 @@ namespace JAZG.Model.Players
             return CollisionKind.Block;
         }
 
-        protected void RandomMove()
+        public void RandomMove()
         {
             var bearing = RandomHelper.Random.Next(360);
             Layer.Environment.Move(this, bearing, 1);
@@ -74,24 +69,19 @@ namespace JAZG.Model.Players
             Dead = true;
             Layer.Environment.Remove(this);
             UnregisterHandle.Invoke(Layer, this);
-            if (this.GetType() == typeof(Zombie))
-            {
+            if (GetType() == typeof(Zombie))
                 DeadPlayer.Spawn(Layer, this);
-            }
             else
-            {
-                Zombie.HumanToZombie(Layer,this);
-            }
-            
+                Zombie.HumanToZombie(Layer, this);
         }
 
-        protected double GetDistanceFromPlayer(Player other)
+        public double GetDistanceFromPlayer(Player other)
         {
             return Distance.Chebyshev(
                 Position.PositionArray, other.Position.PositionArray);
         }
 
-        protected double GetDistanceFromItem(Item item)
+        public double GetDistanceFromItem(Item item)
         {
             return Distance.Chebyshev(
                 Position.PositionArray, item.Position.PositionArray);
@@ -108,7 +98,5 @@ namespace JAZG.Model.Players
             return PositionHelper.CalculateBearingCartesian(
                 Position.X, Position.Y, item.Position.X, item.Position.Y);
         }
-   
-        
     }
 }

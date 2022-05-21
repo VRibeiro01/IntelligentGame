@@ -9,17 +9,8 @@ namespace JAZG.Model.Players
     public class DeadPlayer : IAgent<FieldLayer>, ICharacter
     {
         protected FieldLayer Layer { get; set; }
-        
+
         public Guid ID { get; set; }
-        
-        public Position Position { get; set; }
-        
-        public double Extent { get; set; }
-        
-        public CollisionKind? HandleCollision(ICharacter other)
-        {
-            return CollisionKind.Pass;
-        }
 
         public void Init(FieldLayer layer)
         {
@@ -31,12 +22,19 @@ namespace JAZG.Model.Players
             //do nothing
         }
 
+        public Position Position { get; set; }
+
+        public double Extent { get; set; }
+
+        public CollisionKind? HandleCollision(ICharacter other)
+        {
+            return CollisionKind.Pass;
+        }
+
         public static void Spawn(FieldLayer layer, Player oldPlayer)
         {
-            layer.agentManager.Spawn<DeadPlayer, FieldLayer>(null, player =>
-            {
-                player.Position = oldPlayer.Position;
-            }).Take(1).First();
+            layer.AgentManager.Spawn<DeadPlayer, FieldLayer>(null, player => { player.Position = oldPlayer.Position; })
+                .Take(1).First();
         }
     }
 }

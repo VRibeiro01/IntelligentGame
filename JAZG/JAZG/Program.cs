@@ -23,7 +23,7 @@ namespace JAZG
             // Add agents to model
             description.AddAgent<Human, FieldLayer>();
             description.AddAgent<Zombie, FieldLayer>();
-            
+
             // Add entities to model
             description.AddAgent<Wall, FieldLayer>();
             description.AddAgent<Gun, FieldLayer>();
@@ -42,9 +42,11 @@ namespace JAZG
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."
                                   : "A small group of people survived. They will rebuild civilization."));
-            
-            Console.WriteLine("Humans: " + loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
-            Console.WriteLine("Zombies: " + loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
+
+            Console.WriteLine("Humans: " +
+                              loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
+            Console.WriteLine("Zombies: " +
+                              loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
         }
     }
 }

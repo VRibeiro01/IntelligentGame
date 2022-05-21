@@ -5,6 +5,7 @@ using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
+using Mars.Components.Services.Learning;
 using Mars.Numerics;
 using NetTopologySuite.Geometries;
 
@@ -12,16 +13,17 @@ namespace JAZG.Model.Players
 {
     public class Human : Player
     {
+        private Geometry _boundaryBoxGeometry;
+
         // TODO: remove
         private int _lastAction;
-        private Geometry _boundaryBoxGeometry;
-        private QHumanLearning _qHumanLearning;
         private int _maxSeeingDistance;
+        public List<Weapon> weapons = new();
 
         // TODO: change to enum
         public bool HasWeapon { get; set; }
         public bool IsShooting { get; set; }
-        public List<Weapon> weapons = new();
+        
 
         public override void Init(FieldLayer layer)
         {
@@ -35,23 +37,20 @@ namespace JAZG.Model.Players
             _boundaryBoxGeometry = new Polygon(new LinearRing(coordinates));
             Energy = 30;
             _maxSeeingDistance = 20;
-            _qHumanLearning = new QHumanLearning(_maxSeeingDistance);
         }
 
         public override void Tick()
         {
             base.Tick();
-            ExploreZombies();
-            RandomMove();
-            // QMovement();
-            //NonQMovement();
+            //qLearning.QMovement();
+            NonQMovement();
 
             //TODO Search for food and weapons
             // TODO Where to go? Where to hide? When to rest? When to kill? 
             //TODO reduce speed when energy is reduced
         }
 
-        private Zombie FindClosestZombie()
+        public Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
             return (Zombie) ExploreZombies()
@@ -72,40 +71,36 @@ namespace JAZG.Model.Players
             var conePosition = Position.Copy();
             var conePosition2 = Position.Copy();
 
-            var seeingAngleToRad = 60.0 * (Math.PI/180.0);
-            var seeingAngleToRad2 = 300.0 * (Math.PI/180.0);
-            
-            conePosition.X = conePosition.X + (_maxSeeingDistance * Math.Cos(seeingAngleToRad));
-            conePosition.Y = conePosition.Y + (_maxSeeingDistance * Math.Sin(seeingAngleToRad));
-          
-            conePosition2.X = conePosition2.X + (_maxSeeingDistance * Math.Cos(seeingAngleToRad2));
-            conePosition2.Y = conePosition2.Y + (_maxSeeingDistance * Math.Sin(seeingAngleToRad2));
-            
+            // human can see a cone shape that's 120 degrees across
+            var seeingAngleToRad = 60.0 * (Math.PI / 180.0);
+            var seeingAngleToRad2 = 300.0 * (Math.PI / 180.0);
+
+            conePosition.X = conePosition.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad);
+            conePosition.Y = conePosition.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad);
+
+            conePosition2.X = conePosition2.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad2);
+            conePosition2.Y = conePosition2.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad2);
+
             Coordinate[] coordinates =
             {
                 Position.ToCoordinate(), conePosition.ToCoordinate(),
                 conePosition2.ToCoordinate(), Position.ToCoordinate()
             };
             var cone = new Polygon(new LinearRing(coordinates));
-            List<Player> res = Layer.Environment
+            var res = Layer.Environment
                 .ExploreCharacters(this, cone, player => player.GetType() == typeof(Zombie)).ToList();
-            
-            Console.WriteLine("Zombies in sight... ");
-            foreach (var zomb in res)
-            {
-                Console.WriteLine("Distance from zombie: " + Distance.Chebyshev(Position.PositionArray,zomb.Position.PositionArray));
-            }
+
             return res;
         }
 
-        private Weapon FindClosestWeapon()
+        public Weapon FindClosestWeapon()
         {
             return (Weapon) Layer.Environment
                 .ExploreObstacles(_boundaryBoxGeometry, item => item is Weapon).OrderBy(item =>
                     Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray)).FirstOrDefault();
         }
 
-        private void RunFromZombie(Player zombie)
+        public void RunFromZombie(Player zombie)
         {
             // TODO: run from all zombies that are near
             var directionToEnemy = GetDirectionToPlayer(zombie);
@@ -133,7 +128,7 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
-        private void CollectItem(Item item)
+        public void CollectItem(Item item)
         {
             var distanceToItem = GetDistanceFromItem(item);
             var directionToItem = GetDirectionToItem(item);
@@ -141,7 +136,7 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, directionToItem, distanceToItem < 2 ? distanceToItem : 2);
         }
 
-        private void UseWeapon(Zombie zombie)
+        public void UseWeapon(Zombie zombie)
         {
             weapons[0].Use(zombie);
         }
@@ -160,7 +155,7 @@ namespace JAZG.Model.Players
 
             if (nextZombie != null)
             {
-                double zombieDistance = GetDistanceFromPlayer(nextZombie);
+                var zombieDistance = GetDistanceFromPlayer(nextZombie);
                 double weaponDistance = 999;
                 if (nextWeapon != null) weaponDistance = GetDistanceFromItem(nextWeapon);
 
@@ -215,82 +210,6 @@ namespace JAZG.Model.Players
                     _lastAction = 1;
                 }
             }
-        }
-
-        // Wenn Zombies gesehen werde und Waffe vorhanden ist: Entscheidung ob laufen oder schießen anhand des QLearning-Algorithmus
-        public void QMovement()
-        {
-            var closestZombie = FindClosestZombie();
-            var nextWeapon = FindClosestWeapon();
-
-
-            if (closestZombie != null)
-            {
-                if (weapons.Count > 1)
-                {
-                    // TODO: wie wird state ermittelt
-                    // Distanz zum nächsten Zombie, Anzahl Zombies,
-                    // wo befinden sich Zombies ("entweder umzingelt oder nicht" oder "zonen mit zombies")
-                    int state = (int) GetDistanceFromPlayer(closestZombie);
-                    Console.WriteLine("State: " + state);
-
-                    // action anhand der Q-Werte für Aktionen im aktuellen Zustand
-                    // Wahrscheinlichkeit nach Roulette Wheel Policy
-                    int action = QHumanLearning.QLearning.GetAction(state);
-                    Act(action, closestZombie);
-
-                    int nextState = (int) GetDistanceFromPlayer(closestZombie);
-                    QHumanLearning.QLearning.UpdateState(state, action, Reward(closestZombie, state), nextState);
-                }
-                else
-                {
-                    RunFromZombie(closestZombie);
-                }
-            }
-            else if (weapons.Count < 1 && GetDistanceFromItem(nextWeapon) < 20)
-            {
-                CollectItem(nextWeapon);
-            }
-            else
-            {
-                RandomMove();
-            }
-        }
-
-        // Übersetzung des Action-Index in Aktion
-        public void Act(int actionIndex, Zombie closestZombie)
-        {
-            Console.WriteLine("action index: " + actionIndex);
-            switch (actionIndex)
-            {
-                case > 0:
-                    UseWeapon(closestZombie);
-                    break;
-
-                default:
-                    RunFromZombie(closestZombie);
-                    break;
-            }
-        }
-
-        // Berechnet die Bewertungsfunktion
-        // TODO Wie soll die Bewertung sein?
-        // GUT: Zombie tot, weniger Zombies in Sichtfeld, neue Distanz zum nächsten Zombie kleiner
-        // Schlecht: Zombie lebt noch, mehr Zombies in Sichtfeld, Distanz zum nächsten Zombie kleiner
-        public double Reward(Zombie closestZombie, int oldDistance)
-        {
-            if (closestZombie.Dead)
-            {
-                return 1.0;
-            }
-
-            Player newClosestZombie = FindClosestZombie();
-            if (GetDistanceFromPlayer(newClosestZombie) > oldDistance)
-            {
-                return 0.5;
-            }
-
-            return 0.0;
         }
     }
 }

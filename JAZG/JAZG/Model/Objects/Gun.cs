@@ -8,7 +8,7 @@ namespace JAZG.Model.Objects
 {
     public class Gun : Weapon
     {
-        private int _ammo;
+        public int _ammo;
 
         public override void Init(FieldLayer layer)
         {
@@ -43,14 +43,16 @@ namespace JAZG.Model.Objects
         private void Shoot(Zombie zombie)
         {
             Console.WriteLine("BAM");
-            _ammo--;
+           // _ammo--;
             if (RandomHelper.Random.Next(101) > 50)
             {
                 Console.WriteLine("Hit.");
                 zombie.Energy -= 15;
             }
-            else Console.WriteLine("Missed.");
-            
+            else
+            {
+                Console.WriteLine("Missed.");
+            }
         }
     }
 }

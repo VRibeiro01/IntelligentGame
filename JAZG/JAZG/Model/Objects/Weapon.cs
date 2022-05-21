@@ -9,7 +9,7 @@ namespace JAZG.Model.Objects
         protected Weapon() : base(Layer)
         {
         }
-        
+
         public override bool IsRoutable(ICharacter character)
         {
             return true;
@@ -38,7 +38,6 @@ namespace JAZG.Model.Objects
 
         public virtual void Use(Zombie zombie)
         {
-            
         }
     }
 }

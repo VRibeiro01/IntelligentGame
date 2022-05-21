@@ -8,22 +8,20 @@ namespace JAZG.Model.Players
 {
     public class Zombie : Player
     {
+        private int _lastAction;
+
+        private static int _level { get; set; } = 1;
+
         public override void Init(FieldLayer layer)
         {
             base.Init(layer);
             Energy = 15;
         }
 
-        private static int _level { get; set; } = 1;
-        private int _lastAction;
-
         public override void Tick()
         {
             base.Tick();
-            if (this.Energy <= 0)
-            {
-                this.Kill();
-            }
+            if (Energy <= 0) Kill();
             var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
 
@@ -79,7 +77,7 @@ namespace JAZG.Model.Players
             if (AllZombiesDead())
             {
                 Console.WriteLine("you got Level " + _level);
-                _level += 1 ;
+                _level += 1;
                 Spawn();
             }
         }
@@ -93,32 +91,24 @@ namespace JAZG.Model.Players
         }
 
         private bool AllZombiesDead()
-        { 
-            var erg =Layer.Environment.Characters.Where(h => h.GetType() == typeof(Zombie)).ToList().IsEmpty();
+        {
+            var erg = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Zombie)).ToList().IsEmpty();
             return erg;
-
         }
 
         private void Spawn()
         {
-            var neueZombie = Layer.agentManager.Spawn<Zombie, FieldLayer>().ToList();
-            foreach (var z in neueZombie)
-            {
-                z.Energy *= 2 * _level;
-            }
-            Console.WriteLine("We created " + neueZombie.Count + " zombie agents." + "for level " + _level + 
+            var neueZombie = Layer.AgentManager.Spawn<Zombie, FieldLayer>().ToList();
+            foreach (var z in neueZombie) z.Energy *= 2 * _level;
+            Console.WriteLine("We created " + neueZombie.Count + " zombie agents." + "for level " + _level +
                               " with Energy " + neueZombie.First().Energy);
-
         }
-        
-        public static void HumanToZombie(FieldLayer layer,Player human)
+
+        public static void HumanToZombie(FieldLayer layer, Player human)
         {
-            var zombie = layer.agentManager.Spawn<Zombie, FieldLayer>(null, z => {}).Take(1).First();
+            var zombie = layer.AgentManager.Spawn<Zombie, FieldLayer>(null, z => { }).Take(1).First();
             zombie.Position = human.Position;
             Console.WriteLine("Human To Zombie at Position :" + zombie.Position);
-
         }
-        
-        
     }
 }
