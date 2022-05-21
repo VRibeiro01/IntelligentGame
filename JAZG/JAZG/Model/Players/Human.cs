@@ -119,12 +119,14 @@ namespace JAZG.Model.Players
             {
                 if (zombie == closestZombie) continue;
                 var directionFromEnemy = (GetDirectionToPlayer(zombie) + 180) % 360;
-                var directionToClosest = Math.Abs(directionFromClosest - directionFromEnemy);
+                /*var directionToClosest = Math.Abs(directionFromClosest - directionFromEnemy);
                 directionFromEnemies += Math.Abs(directionFromEnemy -
-                                                 closestDistance / GetDistanceFromPlayer(zombie) * directionToClosest);
+                                                 closestDistance / GetDistanceFromPlayer(zombie) * directionToClosest);*/
+                var directionToClosest = directionFromEnemy - directionFromClosest;
+                directionFromEnemies += closestDistance / GetDirectionToPlayer(zombie) * directionToClosest;
             }
 
-            directionFromEnemies /= zombies.Count;
+            //directionFromEnemies /= zombies.Count;
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
