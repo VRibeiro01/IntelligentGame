@@ -1,6 +1,6 @@
 # JAZG
 
-Ein cooles, simples Zombie-Spiel, das man nicht wirklich spielen kann, weil die Spieler intelligenter als du sind.
+Ein cooles, simples Zombie-Spiel, das man nicht wirklich spielen kann, weil die Spieler intelligenter sind als du.
 
 # Installation & Ausfürung
 
@@ -12,6 +12,6 @@ Ein cooles, simples Zombie-Spiel, das man nicht wirklich spielen kann, weil die 
 
 # Authors
 
-Jasper Wolny, Vivian Ribeiro, Ahmad Abbas, Nils Martens
+Jasper Wolny, Viviam Ribeiro, Ahmad Abbas, Nils Martens
 
 Images from https://www.vecteezy.com
