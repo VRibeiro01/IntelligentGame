@@ -27,6 +27,9 @@ namespace JAZG.Model
 
         public QHumanLearning QLearning;
 
+        // TODO get from config file
+        public int learningMode = 0;
+
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -45,6 +48,9 @@ namespace JAZG.Model
 
             // the agent manager can create agents and initializes them as defined in the sim config
             AgentManager = layerInitData.Container.Resolve<IAgentManager>();
+            
+            // initialize QLearning of humans
+            initQHumanLearning();
 
             //Create and register agents
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
@@ -58,6 +64,18 @@ namespace JAZG.Model
             return true;
         }
 
+        public void initQHumanLearning()
+        {
+           
+            if (learningMode==0)
+            {
+                QLearning = new QHumanLearning();
+                Console.WriteLine("New QTable created");
+                return;
+            }
+
+            QLearning = QHumanLearning.Deserialize("HumanLearning.bin");
+        }
 
         // Helper method to find random position within the bounds of the layer
         public Position FindRandomPosition()

@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 using JAZG.Model.Players;
 using Mars.Components.Services.Explorations;
 using Mars.Components.Services.Learning;
@@ -7,27 +11,29 @@ using Mars.Numerics;
 
 namespace JAZG.Model.Learning
 {
+    [Serializable]
     public class QHumanLearning
     {
         // amount of possible actions: run or shoot
-        public int actions;
+        public int Actions;
 
         //implements method to choose next action according to Roulette Wheel 
-        public IExplorationPolicy ExplorationPolicy;
+        public RouletteWheelExploration ExplorationPolicy;
         
         // possible distances from zombie
-        public int states;
+        public int States;
 
        
         // QLearning class contains table with states and a zero-initialized double array where length=actions
         public static QLearning QLearning { get; set; }
+        
 
         public QHumanLearning()
         {
-            states = 4;
-            actions = 2;
+            States = 4;
+            Actions = 2;
             ExplorationPolicy = new RouletteWheelExploration();
-            QLearning = new QLearning(states, actions, ExplorationPolicy);
+            QLearning = new QLearning(States, Actions, ExplorationPolicy);
         }
         
 
@@ -56,7 +62,7 @@ namespace JAZG.Model.Learning
                     var action = QLearning.GetAction(state);
                     Act(action, closestZombie, human);
 
-                    var nextState = (int) human.GetDistanceFromPlayer(closestZombie);
+                    var nextState = GetState(closestZombie, human);
                     QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human), nextState);
                 }
                 else
@@ -131,10 +137,15 @@ namespace JAZG.Model.Learning
             return reward;
         }
 
-        public void trainQAlg()
+        public void Serialize(String filePath)
         {
-            
+
         }
-        
+
+        public static QHumanLearning Deserialize(String filePath)
+        {
+            return null;
+        }
+
     }
 }

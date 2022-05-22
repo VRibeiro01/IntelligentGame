@@ -32,10 +32,8 @@ namespace JAZG.Model.Players
             Layer = layer;
             // If position not null, set position to a random point in layer
             Position ??= layer.FindRandomPosition();
-
-            // Every Player has random speed
-            //TODO reduce zombie speed ??
-            Speed = RandomHelper.Random.Next(40);
+            
+            Speed = 1;
 
             // All players have same extent
             Extent = 1;
@@ -60,7 +58,7 @@ namespace JAZG.Model.Players
         public void RandomMove()
         {
             var bearing = RandomHelper.Random.Next(360);
-            Layer.Environment.Move(this, bearing, 1);
+            Layer.Environment.Move(this, bearing, Speed);
         }
 
         public virtual void Kill()
