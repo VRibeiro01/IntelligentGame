@@ -53,7 +53,7 @@ namespace JAZG.Model.Players
         public Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
-            return (Zombie) ExploreZombies()
+            return (Zombie)ExploreZombies()
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
         }
@@ -66,7 +66,7 @@ namespace JAZG.Model.Players
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray)).ToList();
         }
 
-        public List<Player> ExploreZombies()
+        public List<Player> _ExploreZombies()
         {
             var conePosition = Position.Copy();
             var conePosition2 = Position.Copy();
@@ -93,9 +93,23 @@ namespace JAZG.Model.Players
             return res;
         }
 
+        public List<Player> ExploreZombies()
+        {
+            Coordinate[] coordinates =
+            {
+                new(Position.X - _maxSeeingDistance, Position.Y - _maxSeeingDistance),
+                new(Position.X - _maxSeeingDistance, Position.Y + _maxSeeingDistance),
+                new(Position.X + _maxSeeingDistance, Position.Y + _maxSeeingDistance),
+                new(Position.X + _maxSeeingDistance, Position.Y - _maxSeeingDistance),
+                new(Position.X - _maxSeeingDistance, Position.Y - _maxSeeingDistance)
+            };
+            var fieldOfView = new Polygon(new LinearRing(coordinates));
+            return Layer.Environment.ExploreCharacters(this, fieldOfView, player => player is Zombie).ToList();
+        }
+
         public Weapon FindClosestWeapon()
         {
-            return (Weapon) Layer.Environment
+            return (Weapon)Layer.Environment
                 .ExploreObstacles(_boundaryBoxGeometry, item => item is Weapon).OrderBy(item =>
                     Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray)).FirstOrDefault();
         }
@@ -123,7 +137,8 @@ namespace JAZG.Model.Players
                 directionFromEnemies += Math.Abs(directionFromEnemy -
                                                  closestDistance / GetDistanceFromPlayer(zombie) * directionToClosest);*/
                 var directionToClosest = directionFromEnemy - directionFromClosest;
-                directionFromEnemies += closestDistance / GetDirectionToPlayer(zombie) * directionToClosest;
+                directionFromEnemies =
+                    (directionFromEnemies + closestDistance / GetDirectionToPlayer(zombie) * directionToClosest) % 360;
             }
 
             //directionFromEnemies /= zombies.Count;
@@ -163,8 +178,8 @@ namespace JAZG.Model.Players
 
                 if (zombieDistance <= 10)
                 {
-                    //RunFromZombie(nextZombie);
-                    RunFromZombies(nextZombie);
+                    RunFromZombie(nextZombie);
+                    //RunFromZombies(nextZombie);
                     if (_lastAction != 2)
                     {
                         Console.WriteLine("The zombies are coming, run!!!");
