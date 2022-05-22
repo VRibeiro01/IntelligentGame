@@ -12,23 +12,22 @@
     {
       "name": "Human",
       "pythonVisualizationWithProperties": true,
-      "count": 20
+      "count": 5
     },
     {
       "name": "Zombie",
       "pythonVisualizationWithProperties": true,
-      "count": 40
+      "count": 10
     },
     {
       "name": "Wall",
       "pythonVisualizationWithProperties": true,
-      "count": 7,
       "file": "Resources/InitWall.csv"
     },
     {
       "name": "Gun",
       "pythonVisualizationWithProperties": true,
-      "count": 40
+      "count": 0
     }
   ],
   "layers": [

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
+using Mars.Components.Services.Learning;
 using Mars.Numerics;
 using NetTopologySuite.Geometries;
 
@@ -40,7 +42,7 @@ namespace JAZG.Model.Players
         public override void Tick()
         {
             base.Tick();
-            Layer.QLearning.QMovement(this);
+            //qLearning.QMovement();
             NonQMovement();
 
             //TODO Search for food and weapons
@@ -104,10 +106,9 @@ namespace JAZG.Model.Players
             var directionToEnemy = GetDirectionToPlayer(zombie);
             if (double.IsNaN(directionToEnemy)) directionToEnemy = RandomHelper.Random.Next(360);
             var directionOpposite = (directionToEnemy + 180) % 360;
-            Layer.Environment.Move(this, directionOpposite, Speed);
+            Layer.Environment.Move(this, directionOpposite, 2);
         }
 
-        // TODO fix bug: directionFromEnemies gets over 360 and can become NaN!
         private void RunFromZombies(Player closestZombie)
         {
             var directionFromClosest = (GetDirectionToPlayer(closestZombie) + 180) % 360;
@@ -118,13 +119,15 @@ namespace JAZG.Model.Players
             {
                 if (zombie == closestZombie) continue;
                 var directionFromEnemy = (GetDirectionToPlayer(zombie) + 180) % 360;
-                var directionToClosest = Math.Abs(directionFromClosest - directionFromEnemy);
+                /*var directionToClosest = Math.Abs(directionFromClosest - directionFromEnemy);
                 directionFromEnemies += Math.Abs(directionFromEnemy -
-                                                 closestDistance / GetDistanceFromPlayer(zombie) * directionToClosest);
+                                                 closestDistance / GetDistanceFromPlayer(zombie) * directionToClosest);*/
+                var directionToClosest = directionFromEnemy - directionFromClosest;
+                directionFromEnemies += closestDistance / GetDirectionToPlayer(zombie) * directionToClosest;
             }
 
-            directionFromEnemies /= zombies.Count;
-            Layer.Environment.Move(this, directionFromEnemies, Speed);
+            //directionFromEnemies /= zombies.Count;
+            Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
         public void CollectItem(Item item)
