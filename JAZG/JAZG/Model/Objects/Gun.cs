@@ -43,7 +43,7 @@ namespace JAZG.Model.Objects
         private void Shoot(Zombie zombie)
         {
             Console.WriteLine("BAM");
-           // _ammo--;
+            // _ammo--;
             if (RandomHelper.Random.Next(101) > 50)
             {
                 Console.WriteLine("Hit.");

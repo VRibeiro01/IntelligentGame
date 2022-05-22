@@ -48,7 +48,7 @@ namespace JAZG.Model
 
             // the agent manager can create agents and initializes them as defined in the sim config
             AgentManager = layerInitData.Container.Resolve<IAgentManager>();
-            
+
             // initialize QLearning of humans
             initQHumanLearning();
 
@@ -66,8 +66,7 @@ namespace JAZG.Model
 
         public void initQHumanLearning()
         {
-           
-            if (learningMode==0)
+            if (learningMode == 0)
             {
                 QLearning = new QHumanLearning();
                 Console.WriteLine("New QTable created");

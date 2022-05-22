@@ -36,7 +36,8 @@
       "file": "Resources/rec1_Battleground.csv",
       "mapping": [
         {
-          "parameter": "learningMode", "value": "true"
+          "parameter": "learningMode",
+          "value": "true"
         }
       ]
     }

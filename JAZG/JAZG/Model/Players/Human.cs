@@ -23,7 +23,7 @@ namespace JAZG.Model.Players
         // TODO: change to enum
         public bool HasWeapon { get; set; }
         public bool IsShooting { get; set; }
-        
+
 
         public override void Init(FieldLayer layer)
         {

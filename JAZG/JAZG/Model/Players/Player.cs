@@ -32,7 +32,7 @@ namespace JAZG.Model.Players
             Layer = layer;
             // If position not null, set position to a random point in layer
             Position ??= layer.FindRandomPosition();
-            
+
             Speed = 1;
 
             // All players have same extent

@@ -43,16 +43,16 @@ namespace JAZG
 
             // Serialize QTable //TODO How to serialize table?
             FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
-           if (layer.learningMode>0)
-           {
-               QHumanLearning qHumanLearning = layer.QLearning;
-               qHumanLearning.Serialize("C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");
-           }
+            if (layer.learningMode > 0)
+            {
+                QHumanLearning qHumanLearning = layer.QLearning;
+                qHumanLearning.Serialize("C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");
+            }
 
-           Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
-                             (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
-                                 ? "All humans were killed. All hope is gone."
-                                 : "A small group of people survived. They will rebuild civilization."));
+            Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
+                              (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
+                                  ? "All humans were killed. All hope is gone."
+                                  : "A small group of people survived. They will rebuild civilization."));
 
             Console.WriteLine("Humans: " +
                               loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);

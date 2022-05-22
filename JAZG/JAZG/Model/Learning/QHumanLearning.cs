@@ -19,14 +19,14 @@ namespace JAZG.Model.Learning
 
         //implements method to choose next action according to Roulette Wheel 
         public RouletteWheelExploration ExplorationPolicy;
-        
+
         // possible distances from zombie
         public int States;
 
-       
+
         // QLearning class contains table with states and a zero-initialized double array where length=actions
         public static QLearning QLearning { get; set; }
-        
+
 
         public QHumanLearning()
         {
@@ -35,7 +35,7 @@ namespace JAZG.Model.Learning
             ExplorationPolicy = new RouletteWheelExploration();
             QLearning = new QLearning(States, Actions, ExplorationPolicy);
         }
-        
+
 
         // Wenn Zombies gesehen werde und Waffe vorhanden ist: Entscheidung ob laufen oder schießen anhand des QLearning-Algorithmus
         public void QMovement(Human human)
@@ -63,7 +63,8 @@ namespace JAZG.Model.Learning
                     Act(action, closestZombie, human);
 
                     var nextState = GetState(closestZombie, human);
-                    QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human), nextState);
+                    QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
+                        nextState);
                 }
                 else
                 {
@@ -139,13 +140,11 @@ namespace JAZG.Model.Learning
 
         public void Serialize(String filePath)
         {
-
         }
 
         public static QHumanLearning Deserialize(String filePath)
         {
             return null;
         }
-
     }
 }

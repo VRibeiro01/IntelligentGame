@@ -1,6 +1,6 @@
 # Installation
 
-Open your terminal and navigate into this directory. 
+Open your terminal and navigate into this directory.
 
 Install `python3.8` (getting from [Python](https://www.python.org/downloads/))
 
@@ -18,7 +18,8 @@ Start the mini visualization by calling:
 python3 main.py
 ```
 
-Start you desired simulation and activate the visualization output in your configuration by setting the field `pythonVisualization` to `true`
+Start you desired simulation and activate the visualization output in your configuration by setting the
+field `pythonVisualization` to `true`
 
 ```json
 {
@@ -32,7 +33,8 @@ Start you desired simulation and activate the visualization output in your confi
 }
 ```
 
-If the model is configured from within the `Program.cs` file, then setting the field `EnableSimpleVisualization` to `true` enables the visualization mode.
+If the model is configured from within the `Program.cs` file, then setting the field `EnableSimpleVisualization`
+to `true` enables the visualization mode.
 
 ```c#
 Globals =

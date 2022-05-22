@@ -11,9 +11,7 @@ Ein cooles, simples Zombie-Spiel, das man nicht wirklich spielen kann, weil die 
 5. Rider Projekt ausfhren
 
 # Authors
-Jasper Wolny,
-Vivian Ribeiro,
-Ahmad Abbas,
-Nils Martens
+
+Jasper Wolny, Vivian Ribeiro, Ahmad Abbas, Nils Martens
 
 Images from https://www.vecteezy.com
