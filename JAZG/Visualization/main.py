@@ -74,7 +74,7 @@ class Visualization:
 
         self.clock = pygame.time.Clock()
         self.WINDOW_SIZE = [800, 800]
-        self.WORLD_SIZE = 0, 0, 100, 100  # used for scaling
+        self.WORLD_SIZE = -10, -10, 110, 110  # used for scaling
         self.BORDER_WIDTH_PIXEL = -20
         self.font = pygame.font.Font('freesansbold.ttf', 12)
         self.text = self.font.render('Tick: 0', True, YELLOW)
@@ -132,7 +132,7 @@ class Visualization:
             self.ws = self.get_socket()
         try:
             message = re.sub('(?<=\d),(?=\d)', '.',self.ws.recv())
-            print(message)
+            #print(message)
             data = json.loads(message)
             
             self.l.acquire_write()
@@ -247,18 +247,19 @@ class Visualization:
 
         for type_key in self.entities.keys():
             for entity in self.entities[type_key]:
-                print(entity)
+                #print(entity)
                 x = entity["x"]
                 y = entity["y"]
 
-                print("Type key: " + str(type_key))
+                #print("Type key: " + str(type_key))
 
                 if type_key==1:
-                    surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                    #15,28
+                    surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - (15/2),
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) - (28/2)))
                 elif type_key==2:
-                    surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                    surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - 14,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) - 14))
                 elif type_key==3:
                     #wall
                     xLeft = entity["p"]["xLeft"]
@@ -276,17 +277,21 @@ class Visualization:
                     #pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yLeft - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
                     #pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yRight - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
                 elif type_key==4:
-                    surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) )) 
+                    surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -11,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) -11)) 
                 elif type_key==5:
-                    surface.blit(food_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                    x+=11
+                    y+=11
+                    surface.blit(food_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL-11,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) -11))
                 elif type_key==6:
-                    surface.blit(corpse_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
-                                    ((y - self.WORLD_SIZE[1]) * scale_y) ))
+                    x+=11
+                    y+=11
+                    surface.blit(corpse_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL-11,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) -11))
                 else:
                     print("Unknown typekey: "+ str(type_key))
-                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((y - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
+                pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((y - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
 		
         flipped = pygame.transform.flip(surface, False, True)
         self.screen.blit(flipped, (10, -50))
