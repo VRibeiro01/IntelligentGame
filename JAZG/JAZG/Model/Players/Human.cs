@@ -59,7 +59,7 @@ namespace JAZG.Model.Players
         public Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
-            return (Zombie)_ExploreZombies()
+            return (Zombie) FindZombies()
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
         }
@@ -67,71 +67,14 @@ namespace JAZG.Model.Players
         private List<Player> FindZombies()
         {
             return Layer.Environment.Characters.Where(c =>
-                    c.GetType() == typeof(Zombie) &&
-                    Distance.Chebyshev(Position.PositionArray, c.Position.PositionArray) <= _maxSeeingDistance)
+                    c is Zombie && Distance.Chebyshev(Position.PositionArray, c.Position.PositionArray) <=
+                    _maxSeeingDistance)
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray)).ToList();
-        }
-
-        public List<Player> _ExploreZombies()
-        {
-            var conePosition = Position.Copy();
-            var conePosition2 = Position.Copy();
-            var conePosition3 = Position.Copy();
-
-            // human can see a cone shape that's 360 degrees across
-            var seeingAngleToRad = 0.0 * (Math.PI / 180.0);
-            var seeingAngleToRad2 = 180.0 * (Math.PI / 180.0);
-            var seeingAngleToRad3 = 360.0 * (Math.PI / 180.0);
-
-            conePosition.X += _maxSeeingDistance * Math.Cos(seeingAngleToRad);
-            conePosition.Y += conePosition.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad);
-
-            conePosition2.X += conePosition2.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad2);
-            conePosition2.Y += conePosition2.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad2);
-            
-            conePosition3.X += conePosition3.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad3);
-            conePosition3.Y += conePosition3.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad3);
-
-            Coordinate[] coordinates =
-            {
-                Position.ToCoordinate(), conePosition.ToCoordinate(),
-                conePosition2.ToCoordinate(), conePosition3.ToCoordinate(),
-                Position.ToCoordinate()
-            };
-            var cone = new Polygon(new LinearRing(coordinates));
-            var res = Layer.Environment
-                .ExploreCharacters(this, cone, player => player is Zombie).ToList();
-
-            if (res.Count > 0)
-            {
-                foreach (var player in res)
-                {
-                    //Console.WriteLine("Distance: " + GetDistanceFromPlayer(player));
-                }
-                {
-                    
-                }
-            }
-            return res;
-        }
-
-        public List<Player> ExploreZombies()
-        {
-            Coordinate[] coordinates =
-            {
-                new(Position.X - _maxSeeingDistance, Position.Y - _maxSeeingDistance),
-                new(Position.X - _maxSeeingDistance, Position.Y + _maxSeeingDistance),
-                new(Position.X + _maxSeeingDistance, Position.Y + _maxSeeingDistance),
-                new(Position.X + _maxSeeingDistance, Position.Y - _maxSeeingDistance),
-                new(Position.X - _maxSeeingDistance, Position.Y - _maxSeeingDistance)
-            };
-            var fieldOfView = new Polygon(new LinearRing(coordinates));
-            return Layer.Environment.ExploreCharacters(this, fieldOfView, player => player is Zombie).ToList();
         }
 
         public Weapon FindClosestWeapon()
         {
-            return (Weapon)Layer.Environment
+            return (Weapon) Layer.Environment
                 .ExploreObstacles(_boundaryBoxGeometry, item => item is Weapon).OrderBy(item =>
                     Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray)).FirstOrDefault();
         }
@@ -164,7 +107,7 @@ namespace JAZG.Model.Players
             }
 
             //directionFromEnemies /= zombies.Count;
-            if (double.IsNaN(directionFromEnemies)) 
+            if (double.IsNaN(directionFromEnemies))
                 directionFromEnemies = RandomHelper.Random.Next(360);
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
