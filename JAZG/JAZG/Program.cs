@@ -46,7 +46,7 @@ namespace JAZG
             if (layer.learningMode > 0)
             {
                 layer.QHumanLearning.Serialize(
-                    "JAZG/Resources/HumanLearning.txt");
+                    "Resources/HumanLearning.txt");
             }
 
 

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Xml.Serialization;
 using JAZG.Model.Players;
 using Mars.Common.IO;
@@ -41,7 +42,7 @@ namespace JAZG.Model.Learning
         // Wenn Zombies gesehen werde und Waffe vorhanden ist: Entscheidung ob laufen oder schießen anhand des QLearning-Algorithmus
         public void QMovement(Human human)
         {
-            var zombiesNearMe = human.ExploreZombies();
+            var zombiesNearMe = human.FindZombies();
             var closestZombie = (Zombie) zombiesNearMe.OrderBy(zombie =>
                     Distance.Chebyshev(human.Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
@@ -61,11 +62,15 @@ namespace JAZG.Model.Learning
                     // action anhand der Q-Werte für Aktionen im aktuellen Zustand
                     // Wahrscheinlichkeit nach Roulette Wheel Policy
                     var action = QLearning.GetAction(state);
+                    Console.WriteLine("I will get action");
                     Act(action, closestZombie, human);
 
                     var nextState = GetState(closestZombie, human);
-                    QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
-                        nextState);
+                    lock(QLearning)
+                    {
+                        QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
+                            nextState);
+                    }
                 }
                 else
                 {
@@ -107,6 +112,7 @@ namespace JAZG.Model.Learning
 
                 default:
                     human.RunFromZombie(closestZombie);
+                    Console.WriteLine("Running");
                     break;
             }
         }
@@ -141,15 +147,15 @@ namespace JAZG.Model.Learning
 
         public void Serialize(String filePath)
         {
-            var byteArray = QLearning.Serialize();
-            File.WriteAllBytes(filePath,byteArray);
-            
+            var bytes = QLearning.Serialize();
+            File.WriteAllBytes(filePath,bytes);
+
         }
 
         public static QLearning Deserialize(String filePath)
         {
-            var byteArray = File.ReadAllBytes(filePath);
-            var qLearning = (QLearning) byteArray.DeSerialize();
+            var bytes = File.ReadAllBytes(filePath);
+            var qLearning = (QLearning) bytes.DeSerialize();
             return qLearning;
         }
     }

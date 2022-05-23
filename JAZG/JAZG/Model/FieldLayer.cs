@@ -28,7 +28,7 @@ namespace JAZG.Model
         public QHumanLearning QHumanLearning;
 
         // TODO get from config file
-        public int learningMode = 0;
+        public int learningMode = 1;
 
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
@@ -77,7 +77,7 @@ namespace JAZG.Model
                 return;
             }
 
-            QHumanLearning.QLearning = QHumanLearning.Deserialize("JAZG/Resources/HumanLearning.txt");
+            QHumanLearning.QLearning = QHumanLearning.Deserialize("Resources/HumanLearning.txt");
         }
 
         // Helper method to find random position within the bounds of the layer

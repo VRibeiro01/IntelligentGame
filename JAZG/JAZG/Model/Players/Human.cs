@@ -64,7 +64,7 @@ namespace JAZG.Model.Players
                 .FirstOrDefault();
         }
 
-        private List<Player> FindZombies()
+        public List<Player> FindZombies()
         {
             return Layer.Environment.Characters.Where(c =>
                     c.GetType() == typeof(Zombie) &&
