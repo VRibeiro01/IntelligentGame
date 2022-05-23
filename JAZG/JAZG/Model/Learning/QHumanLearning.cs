@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
 using JAZG.Model.Players;
+using Mars.Common.IO;
 using Mars.Components.Services.Explorations;
 using Mars.Components.Services.Learning;
 using Mars.Numerics;
@@ -140,11 +141,16 @@ namespace JAZG.Model.Learning
 
         public void Serialize(String filePath)
         {
+            var byteArray = QLearning.Serialize();
+            File.WriteAllBytes(filePath,byteArray);
+            
         }
 
-        public static QHumanLearning Deserialize(String filePath)
+        public static QLearning Deserialize(String filePath)
         {
-            return null;
+            var byteArray = File.ReadAllBytes(filePath);
+            var qLearning = (QLearning) byteArray.DeSerialize();
+            return qLearning;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace JAZG.Model
         public CollisionEnvironment<Player, Item> Environment { get; set; }
         public IAgentManager AgentManager { get; private set; }
 
-        public QHumanLearning QLearning;
+        public QHumanLearning QHumanLearning;
 
         // TODO get from config file
         public int learningMode = 0;
@@ -66,14 +66,18 @@ namespace JAZG.Model
 
         public void initQHumanLearning()
         {
+            QHumanLearning = new QHumanLearning();
             if (learningMode == 0)
             {
-                QLearning = new QHumanLearning();
+                return;
+            }
+            if (learningMode == 1)
+            {
                 Console.WriteLine("New QTable created");
                 return;
             }
 
-            QLearning = QHumanLearning.Deserialize("HumanLearning.bin");
+            QHumanLearning.QLearning = QHumanLearning.Deserialize("JAZG/Resources/HumanLearning.txt");
         }
 
         // Helper method to find random position within the bounds of the layer

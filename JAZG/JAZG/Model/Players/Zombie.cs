@@ -31,14 +31,14 @@ namespace JAZG.Model.Players
                 if (humanDistance <= 2)
                 {
                     EatHuman(nearestHuman);
-                    Console.WriteLine("Chomp, chomp!");
+                    //Console.WriteLine("Chomp, chomp!");
                 }
                 else if (humanDistance <= 20)
                 {
                     MoveTowardsHuman(nearestHuman);
                     if (_lastAction != 2)
                     {
-                        Console.WriteLine("Braaaaaains!");
+                       // Console.WriteLine("Braaaaaains!");
                         _lastAction = 2;
                     }
                 }
@@ -47,7 +47,7 @@ namespace JAZG.Model.Players
                     RandomMove();
                     if (_lastAction != 1)
                     {
-                        Console.WriteLine("Brains?");
+                        //Console.WriteLine("Brains?");
                         _lastAction = 1;
                     }
                 }
@@ -57,7 +57,7 @@ namespace JAZG.Model.Players
                 RandomMove();
                 if (_lastAction != 1)
                 {
-                    Console.WriteLine("Brains?");
+                    //Console.WriteLine("Brains?");
                     _lastAction = 1;
                 }
             }

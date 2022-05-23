@@ -41,13 +41,14 @@ namespace JAZG
             var task = SimulationStarter.Start(description, config);
             var loopResults = task.Run();
 
-            // Serialize QTable //TODO How to serialize table?
+            // Serialize QTable 
             FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
             if (layer.learningMode > 0)
             {
-                QHumanLearning qHumanLearning = layer.QLearning;
-                qHumanLearning.Serialize("C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");
+                layer.QHumanLearning.Serialize(
+                    "JAZG/Resources/HumanLearning.txt");
             }
+
 
             Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0

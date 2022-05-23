@@ -8,6 +8,7 @@ using Mars.Common.Core.Random;
 using Mars.Components.Services.Learning;
 using Mars.Numerics;
 using NetTopologySuite.Geometries;
+using ServiceStack.Text;
 
 namespace JAZG.Model.Players
 {
@@ -41,8 +42,14 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-            //qLearning.QMovement();
-            NonQMovement();
+            if (Layer.learningMode > 0)
+            {
+                Layer.QHumanLearning.QMovement(this);
+            }
+            else
+            {
+                NonQMovement();
+            }
 
             //TODO Search for food and weapons
             // TODO Where to go? Where to hide? When to rest? When to kill? 
@@ -52,7 +59,7 @@ namespace JAZG.Model.Players
         public Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
-            return (Zombie)ExploreZombies()
+            return (Zombie)_ExploreZombies()
                 .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
         }
@@ -69,26 +76,42 @@ namespace JAZG.Model.Players
         {
             var conePosition = Position.Copy();
             var conePosition2 = Position.Copy();
+            var conePosition3 = Position.Copy();
 
-            // human can see a cone shape that's 120 degrees across
-            var seeingAngleToRad = 60.0 * (Math.PI / 180.0);
-            var seeingAngleToRad2 = 300.0 * (Math.PI / 180.0);
+            // human can see a cone shape that's 360 degrees across
+            var seeingAngleToRad = 0.0 * (Math.PI / 180.0);
+            var seeingAngleToRad2 = 180.0 * (Math.PI / 180.0);
+            var seeingAngleToRad3 = 360.0 * (Math.PI / 180.0);
 
-            conePosition.X = conePosition.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad);
-            conePosition.Y = conePosition.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad);
+            conePosition.X += _maxSeeingDistance * Math.Cos(seeingAngleToRad);
+            conePosition.Y += conePosition.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad);
 
-            conePosition2.X = conePosition2.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad2);
-            conePosition2.Y = conePosition2.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad2);
+            conePosition2.X += conePosition2.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad2);
+            conePosition2.Y += conePosition2.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad2);
+            
+            conePosition3.X += conePosition3.X + _maxSeeingDistance * Math.Cos(seeingAngleToRad3);
+            conePosition3.Y += conePosition3.Y + _maxSeeingDistance * Math.Sin(seeingAngleToRad3);
 
             Coordinate[] coordinates =
             {
                 Position.ToCoordinate(), conePosition.ToCoordinate(),
-                conePosition2.ToCoordinate(), Position.ToCoordinate()
+                conePosition2.ToCoordinate(), conePosition3.ToCoordinate(),
+                Position.ToCoordinate()
             };
             var cone = new Polygon(new LinearRing(coordinates));
             var res = Layer.Environment
-                .ExploreCharacters(this, cone, player => player.GetType() == typeof(Zombie)).ToList();
+                .ExploreCharacters(this, cone, player => player is Zombie).ToList();
 
+            if (res.Count > 0)
+            {
+                foreach (var player in res)
+                {
+                    //Console.WriteLine("Distance: " + GetDistanceFromPlayer(player));
+                }
+                {
+                    
+                }
+            }
             return res;
         }
 
@@ -180,6 +203,7 @@ namespace JAZG.Model.Players
                 if (zombieDistance <= 10)
                 {
                     RunFromZombie(nextZombie);
+                    Console.WriteLine("Running");
                     //RunFromZombies(nextZombie);
                     if (_lastAction != 2)
                     {
@@ -213,7 +237,7 @@ namespace JAZG.Model.Players
                     RandomMove();
                     if (_lastAction != 1)
                     {
-                        Console.WriteLine("I walk.");
+                        //Console.WriteLine("I walk.");
                         _lastAction = 1;
                     }
                 }
