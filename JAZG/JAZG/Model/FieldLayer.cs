@@ -28,7 +28,7 @@ namespace JAZG.Model
         public QHumanLearning QHumanLearning;
 
         // TODO get from config file
-        public int learningMode = 1;
+        public int learningMode = 0;
 
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,

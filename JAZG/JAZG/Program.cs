@@ -49,7 +49,6 @@ namespace JAZG
                     "Resources/HumanLearning.txt");
             }
 
-
             Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."

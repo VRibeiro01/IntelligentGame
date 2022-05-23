@@ -145,9 +145,8 @@ namespace JAZG.Model.Players
 
                 if (zombieDistance <= 10)
                 {
-                    RunFromZombie(nextZombie);
+                    RunFromZombies(nextZombie);
                     Console.WriteLine("Running");
-                    //RunFromZombies(nextZombie);
                     if (_lastAction != 2)
                     {
                         Console.WriteLine("The zombies are coming, run!!!");
