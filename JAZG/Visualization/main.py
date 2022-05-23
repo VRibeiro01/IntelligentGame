@@ -4,7 +4,10 @@ import time
 import re
 import pygame
 from pygame import RESIZABLE, DOUBLEBUF, HWSURFACE
+import pygame.gfxdraw
+
 from websocket import create_connection, WebSocketConnectionClosedException
+from math import atan2, cos, degrees, radians, sin
 
 import lock
 
@@ -40,6 +43,26 @@ weapon_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("v
 wall_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("grunge brick wall texture 1201.jpg"), (32,32)), False, True)
 food_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_nigiri-sushi-japanese-food__preview_rev_1.png"), (22,22)), False, True)
 corpse_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_halloween-zombie-hand-coming-out-from-grave_.png"), (22,22)), False, True)
+
+
+#https://stackoverflow.com/a/67509308
+def Move(rotation, steps, position):
+    """Return coordinate position of an amount of steps in a direction."""
+    xPosition = cos(radians(rotation)) * steps + position[0]
+    yPosition = sin(radians(rotation)) * steps + position[1]
+    return (xPosition, yPosition)
+
+def DrawThickLine(surface, point1, point2, thickness, color):
+    angle = degrees(atan2(point1[1] - point2[1], point1[0] - point2[0]))
+
+    vertices = list()
+    vertices.append(Move(angle-90, thickness, point1))
+    vertices.append(Move(angle+90, thickness, point1))
+    vertices.append(Move(angle+90, thickness, point2))
+    vertices.append(Move(angle-90, thickness, point2))
+
+    pygame.gfxdraw.aapolygon(surface, vertices, color)
+    pygame.gfxdraw.filled_polygon(surface, vertices, color)
 
 class Visualization:
     def __init__(self):
@@ -246,9 +269,12 @@ class Visualization:
                     #surface.blit(pygame.transform.scale(wall_image, (abs(entity[xLeft-xRight]), abs(entity[yLeft-yRight])), False, True, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                     #               ((y - self.WORLD_SIZE[1]) * scale_y) ))
                     line_color = (255, 255, 255)
-                    pygame.draw.line(surface, line_color, (((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yLeft - self.WORLD_SIZE[1]) * scale_y)), (((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yRight - self.WORLD_SIZE[1]) * scale_y)))
-                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yLeft - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
-                    pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yRight - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
+                    #pygame.draw.line(surface, line_color, (((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yLeft - self.WORLD_SIZE[1]) * scale_y)), (((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yRight - self.WORLD_SIZE[1]) * scale_y)))
+                    #thickness = 1
+                    calc_thickness = 3
+                    DrawThickLine(surface, (((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yLeft - self.WORLD_SIZE[1]) * scale_y)), (((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL, ((yRight - self.WORLD_SIZE[1]) * scale_y)), calc_thickness, line_color)
+                    #pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xLeft - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yLeft - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
+                    #pygame.draw.circle(surface, COLORS[type_key % len(COLORS)],(((xRight - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,((yRight - self.WORLD_SIZE[1]) * scale_y) ),line_width, 0)
                 elif type_key==4:
                     surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) )) 
