@@ -20,7 +20,6 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-            base.Tick();
             if (Energy <= 0) Kill();
             var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
@@ -34,7 +33,7 @@ namespace JAZG.Model.Players
                     EatHuman(nearestHuman);
                     Console.WriteLine("Chomp, chomp!");
                 }
-                else if (humanDistance <= 10)
+                else if (humanDistance <= 20)
                 {
                     MoveTowardsHuman(nearestHuman);
                     if (_lastAction != 2)

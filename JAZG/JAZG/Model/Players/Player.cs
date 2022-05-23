@@ -52,7 +52,7 @@ namespace JAZG.Model.Players
         public CollisionKind? HandleCollision(ICharacter other)
         {
             // Dummy Implementierung
-            return CollisionKind.Block;
+            return CollisionKind.Pass;
         }
 
         public void RandomMove()

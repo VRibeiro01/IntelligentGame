@@ -41,7 +41,6 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-            base.Tick();
             //qLearning.QMovement();
             NonQMovement();
 
@@ -142,6 +141,8 @@ namespace JAZG.Model.Players
             }
 
             //directionFromEnemies /= zombies.Count;
+            if (double.IsNaN(directionFromEnemies)) 
+                directionFromEnemies = RandomHelper.Random.Next(360);
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
