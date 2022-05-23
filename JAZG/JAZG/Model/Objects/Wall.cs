@@ -23,7 +23,10 @@ namespace JAZG.Model.Objects
         public override void Init(FieldLayer layer)
         {
             base.Init(layer);
-            Coordinate[] coordinates = {new(xLeft, xLeft), new(xRight, yRight)};
+            Coordinate[] coordinates =
+            {
+                new(xLeft, yLeft), new(xRight, yRight)
+            };
             Layer.Environment.Insert(this, new LineString(coordinates));
             Position = Position.CreatePosition((xLeft + xRight) / 2, (yLeft + yRight) / 2);
             Console.Write("New Wall at: " + "(" + xLeft + ";" + yLeft + ")" + "(" + xRight + ";" + yRight + ")");
@@ -37,7 +40,7 @@ namespace JAZG.Model.Objects
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
-            //Console.WriteLine("STOP. This is a wall!");
+            Console.WriteLine("STOP. This is a wall!");
             return CollisionKind.Block;
         }
 

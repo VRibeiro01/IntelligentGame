@@ -12,12 +12,12 @@
     {
       "name": "Human",
       "pythonVisualizationWithProperties": true,
-      "count": 20
+      "count": 10
     },
     {
       "name": "Zombie",
       "pythonVisualizationWithProperties": true,
-      "count": 25
+      "count": 20
     },
     {
       "name": "Wall",
@@ -27,7 +27,7 @@
     {
       "name": "Gun",
       "pythonVisualizationWithProperties": true,
-      "count": 23
+      "count": 0
     }
   ],
   "layers": [
