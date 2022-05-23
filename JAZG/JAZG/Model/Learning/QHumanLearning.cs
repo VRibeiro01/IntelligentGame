@@ -135,7 +135,7 @@ namespace JAZG.Model.Learning
             else if (human.GetDistanceFromPlayer(newClosestZombie) < oldDistance) reward -= 0.5;
 
 
-            if (human.ExploreZombies().Count < oldClosestZombiesCount)
+            if (human.FindZombies().Count < oldClosestZombiesCount)
                 reward += 0.5;
             else
                 reward -= 0.5;
