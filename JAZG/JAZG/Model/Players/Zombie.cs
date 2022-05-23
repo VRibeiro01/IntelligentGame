@@ -33,7 +33,7 @@ namespace JAZG.Model.Players
                     EatHuman(nearestHuman);
                     //Console.WriteLine("Chomp, chomp!");
                 }
-                else if (humanDistance <= 20)
+                else if (humanDistance <= _level * 10)
                 {
                     MoveTowardsHuman(nearestHuman);
                     if (_lastAction != 2)
