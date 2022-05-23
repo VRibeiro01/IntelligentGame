@@ -83,10 +83,11 @@ namespace JAZG.Model.Players
 
         private void MoveTowardsHuman(Player human)
         {
+            var distanceToHuman = GetDistanceFromPlayer(human);
             var directionToEnemy =
                 PositionHelper.CalculateBearingCartesian
                     (Position.X, Position.Y, human.Position.X, human.Position.Y);
-            Layer.Environment.Move(this, directionToEnemy, 1);
+            Layer.Environment.Move(this, directionToEnemy, distanceToHuman > 2 ? Speed : 1);
         }
 
         private bool AllZombiesDead()
@@ -98,7 +99,11 @@ namespace JAZG.Model.Players
         private void Spawn()
         {
             var neueZombie = Layer.AgentManager.Spawn<Zombie, FieldLayer>().ToList();
-            foreach (var z in neueZombie) z.Energy *= 2 * _level;
+            foreach (var z in neueZombie)
+            {
+                z.Energy *= 2 * _level;
+                z.Speed = _level;
+            }
             Console.WriteLine("We created " + neueZombie.Count + " zombie agents." + "for level " + _level +
                               " with Energy " + neueZombie.First().Energy);
         }
