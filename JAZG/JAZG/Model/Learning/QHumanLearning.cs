@@ -61,8 +61,8 @@ namespace JAZG.Model.Learning
 
                     // action anhand der Q-Werte für Aktionen im aktuellen Zustand
                     // Wahrscheinlichkeit nach Roulette Wheel Policy
+                    // TODO Find out why program doesnt get past this line when using deserialized qtable!!!
                     var action = QLearning.GetAction(state);
-                    Console.WriteLine("I will get action");
                     Act(action, closestZombie, human);
 
                     var nextState = GetState(closestZombie, human);
@@ -147,6 +147,7 @@ namespace JAZG.Model.Learning
 
         public void Serialize(String filePath)
         {
+            Console.WriteLine("Serializing...");
             var bytes = QLearning.Serialize();
             File.WriteAllBytes(filePath,bytes);
 
@@ -154,6 +155,7 @@ namespace JAZG.Model.Learning
 
         public static QLearning Deserialize(String filePath)
         {
+            Console.WriteLine("Deserializing..");
             var bytes = File.ReadAllBytes(filePath);
             var qLearning = (QLearning) bytes.DeSerialize();
             return qLearning;

@@ -46,7 +46,7 @@ namespace JAZG
             if (layer.learningMode > 0)
             {
                 layer.QHumanLearning.Serialize(
-                    "Resources/HumanLearning.txt");
+                    "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");
             }
 
             Console.WriteLine("The sun rises and the night of the living dead is over...\n" +

@@ -77,7 +77,7 @@ namespace JAZG.Model
                 return;
             }
 
-            QHumanLearning.QLearning = QHumanLearning.Deserialize("Resources/HumanLearning.txt");
+            QHumanLearning.QLearning = QHumanLearning.Deserialize("C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");
         }
 
         // Helper method to find random position within the bounds of the layer
