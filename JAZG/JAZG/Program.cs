@@ -18,6 +18,7 @@ namespace JAZG
     {
         public static void Main(string[] args)
         {
+            // TODO Für das Training: for-Schleife um Spiel mehrmels zu starten
             Console.WriteLine("Hello world from Main!");
             var description = new ModelDescription();
 
@@ -49,6 +50,7 @@ namespace JAZG
                     "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");
             }
 
+            // TODO Statistiken zu Spielen automatisch in Datei speichern
             Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."
