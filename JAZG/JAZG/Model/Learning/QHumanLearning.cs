@@ -1,10 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Xml.Serialization;
 using JAZG.Model.Players;
 using Mars.Common.IO;
 using Mars.Components.Services.Explorations;
@@ -17,24 +15,21 @@ namespace JAZG.Model.Learning
     public class QHumanLearning
     {
         // amount of possible actions: run or shoot
-        public int Actions;
+        public static int Actions = 2;
 
         //implements method to choose next action according to Roulette Wheel 
-        public RouletteWheelExploration ExplorationPolicy;
+        public static RouletteWheelExploration ExplorationPolicy = new RouletteWheelExploration();
 
         // possible distances from zombie
-        public int States;
+        public static int States = 4;
 
 
         // QLearning class contains table with states and a zero-initialized double array where length=actions
-        public static QLearning QLearning { get; set; }
+        public QLearning QLearning { get; set; }
 
 
         public QHumanLearning()
         {
-            States = 4;
-            Actions = 2;
-            ExplorationPolicy = new RouletteWheelExploration();
             QLearning = new QLearning(States, Actions, ExplorationPolicy);
         }
 
@@ -62,15 +57,16 @@ namespace JAZG.Model.Learning
                     // action anhand der Q-Werte für Aktionen im aktuellen Zustand
                     // Wahrscheinlichkeit nach Roulette Wheel Policy
                     // TODO Find out why program doesnt get past this line when using deserialized qtable!!!
-                    var action = QLearning.GetAction(state);
-                    Act(action, closestZombie, human);
-
-                    var nextState = GetState(closestZombie, human);
-                    lock(QLearning)
+                    
+                    lock (QLearning)
                     {
-                        QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
-                            nextState);
+                       var action = QLearning.GetAction(state);
+                       Act(action, closestZombie, human);
+                       var nextState = GetState(closestZombie, human);
+                       QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
+                           nextState);
                     }
+                    
                 }
                 else
                 {
@@ -118,7 +114,6 @@ namespace JAZG.Model.Learning
         }
 
         // Berechnet die Bewertungsfunktion
-        // TODO Wie soll die Bewertung sein?
         // GUT: Zombie tot, weniger Zombies in Sichtfeld, neue Distanz zum nächsten Zombie kleiner
         // Schlecht: Zombie lebt noch, mehr Zombies in Sichtfeld, Distanz zum nächsten Zombie kleiner
         public double Reward(Player closestZombie, int oldDistance, int oldClosestZombiesCount, Human human)
@@ -148,8 +143,9 @@ namespace JAZG.Model.Learning
         public void Serialize(String filePath)
         {
             Console.WriteLine("Serializing...");
+            using FileStream fs = File.Create(filePath);
             var bytes = QLearning.Serialize();
-            File.WriteAllBytes(filePath,bytes);
+          fs.Write(bytes, 0, bytes.Length);
 
         }
 
@@ -157,8 +153,10 @@ namespace JAZG.Model.Learning
         {
             Console.WriteLine("Deserializing..");
             var bytes = File.ReadAllBytes(filePath);
-            var qLearning = (QLearning) bytes.DeSerialize();
+            var qLearning = (QLearning) ObjectSerialize.DeSerialize(bytes);
+            qLearning.ExplorationPolicy = new RouletteWheelExploration();
             return qLearning;
         }
+        
     }
 }

@@ -28,7 +28,12 @@ namespace JAZG.Model
         public QHumanLearning QHumanLearning;
 
         // TODO get from config file
-        public int learningMode = 0;
+        /// <summary>
+        // 0 --> The agents will move without the QLearning algorithm
+        // 1 --> A new Qtable will be created 
+        // 2 --> A previously trained Qtable will be obtained from a file 
+        /// </summary>
+        public int learningMode = 2;
 
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
@@ -75,6 +80,11 @@ namespace JAZG.Model
             {
                 Console.WriteLine("New QTable created");
                 return;
+            }
+
+            if (learningMode < 0)
+            {
+                throw new ArgumentException("learningMode must equal 0 or be larger than 0");
             }
 
             QHumanLearning.QLearning = QHumanLearning.Deserialize("C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");

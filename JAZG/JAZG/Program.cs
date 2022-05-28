@@ -18,7 +18,7 @@ namespace JAZG
     {
         public static void Main(string[] args)
         {
-            // TODO Für das Training: for-Schleife um Spiel mehrmels zu starten
+            // TODO Für das Training: for-Schleife um Spiel mehrmals zu starten
             Console.WriteLine("Hello world from Main!");
             var description = new ModelDescription();
 
