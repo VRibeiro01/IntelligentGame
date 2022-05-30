@@ -47,7 +47,7 @@ namespace JAZG
             if (layer.learningMode > 0)
             {
                 layer.QHumanLearning.Serialize(
-                    @"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning.txt");
+                    @"Resources\HumanLearning.txt");
             }
 
             // TODO Statistiken zu Spielen automatisch in Datei speichern

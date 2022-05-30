@@ -46,6 +46,7 @@ weapon_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("v
 wall_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("grunge brick wall texture 1201.jpg"), (32,32)), False, True)
 food_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_nigiri-sushi-japanese-food__preview_rev_1.png"), (22,22)), False, True)
 corpse_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_halloween-zombie-hand-coming-out-from-grave_.png"), (22,22)), False, True)
+muzzle_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("muzzleflash.png"), (20,20)), False, True)
 
 
 #https://stackoverflow.com/a/67509308
@@ -262,10 +263,14 @@ class Visualization:
                                     ((y - self.WORLD_SIZE[1]) * scale_y) - (28/2)))
                     if(entity["p"]["IsShooting"]):
                        print("shooting")
-                       mixer.music.load("GunShotSnglShotIn PE1097906.mp3")
-                       mixer.music.play()
+                       #mixer.music.load("GunShotSnglShotIn PE1097906.mp3")
+                       mixer.Sound("GunShotSnglShotIn PE1097906.mp3").play()
                     if(entity["p"]["HasWeapon"]):
                        surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y)-11))
+                       
+                    if(entity["p"]["IsShooting"]):
+                       surface.blit(muzzle_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
                                     ((y - self.WORLD_SIZE[1]) * scale_y)-11))
                 elif type_key==2:
                     surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - 14,
