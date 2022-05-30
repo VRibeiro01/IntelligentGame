@@ -60,6 +60,8 @@ namespace JAZG.Model
             //Create and register agents
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
             var gunAgents = AgentManager.Spawn<Gun, FieldLayer>().ToList();
+            var m16Agents = AgentManager.Spawn<M16, FieldLayer>().ToList();
+
             var humanAgents = AgentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
@@ -87,7 +89,7 @@ namespace JAZG.Model
                 throw new ArgumentException("learningMode must equal 0 or be larger than 0");
             }
 
-            QHumanLearning.QLearning = QHumanLearning.Deserialize(@"Resources\HumanLearning.txt");
+            QHumanLearning.QLearning = QHumanLearning.Deserialize("Resources\\HumanLearning.txt");
         }
 
         // Helper method to find random position within the bounds of the layer
