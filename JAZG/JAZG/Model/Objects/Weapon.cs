@@ -21,7 +21,14 @@ namespace JAZG.Model.Objects
             {
                 var human = (Human) character;
                 human.weapons.Add(this);
-                human.HasWeapon = true;
+                if (this is Gun)
+                {
+                    human.HasWeapon = 4;
+                }
+                else
+                {
+                    human.HasWeapon = 7;
+                }
                 Console.WriteLine("I got a weapon.");
                 Layer.Environment.Remove(this);
                 UnregisterHandle.Invoke(Layer, this);

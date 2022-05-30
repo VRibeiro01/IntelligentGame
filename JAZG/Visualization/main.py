@@ -47,7 +47,7 @@ wall_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("gru
 food_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_nigiri-sushi-japanese-food__preview_rev_1.png"), (22,22)), False, True)
 corpse_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_halloween-zombie-hand-coming-out-from-grave_.png"), (22,22)), False, True)
 muzzle_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("muzzleflash.png"), (20,20)), False, True)
-m16_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_m16-usa-automatic-machine-assault-rifle-silhouette-flat_.png"), (20,20)), False, True)
+m16_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_m16-usa-automatic-machine-assault-rifle-silhouette-flat_.png"), (32,32)), False, True)
 
 #https://stackoverflow.com/a/67509308
 def Move(rotation, steps, position):
@@ -266,9 +266,13 @@ class Visualization:
                        print("shooting")
                        #mixer.music.load("GunShotSnglShotIn PE1097906.mp3")
                        mixer.Sound("GunShotSnglShotIn PE1097906.mp3").play()
-                    if(entity["p"]["HasWeapon"]):
-                       surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
+                    if(entity["p"]["HasWeapon"] > 0):
+                        if(entity["p"]["HasWeapon"] == 4):
+                           surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
                                     ((y - self.WORLD_SIZE[1]) * scale_y)-11))
+                        else:
+                           surface.blit(m16_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL-5,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y) -11))
                        
                     if(entity["p"]["IsShooting"]):
                        surface.blit(muzzle_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,

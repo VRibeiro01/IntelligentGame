@@ -22,7 +22,7 @@ namespace JAZG.Model.Players
         public List<Weapon> weapons = new();
 
         // TODO: change to enum
-        public bool HasWeapon { get; set; }
+        public int HasWeapon { get; set; }
         public bool IsShooting { get; set; }
 
 
