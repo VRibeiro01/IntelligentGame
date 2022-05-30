@@ -85,7 +85,7 @@ namespace JAZG.Model.Players
                 Position.PositionArray, item.Position.PositionArray);
         }
 
-        protected double GetDirectionToPlayer(Player other)
+        public double GetDirectionToPlayer(Player other)
         {
             return PositionHelper.CalculateBearingCartesian(
                 Position.X, Position.Y, other.Position.X, other.Position.Y);

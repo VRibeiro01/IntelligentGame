@@ -57,16 +57,15 @@ namespace JAZG.Model.Learning
                     // action anhand der Q-Werte für Aktionen im aktuellen Zustand
                     // Wahrscheinlichkeit nach Roulette Wheel Policy
                     // TODO Find out why program doesnt get past this line when using deserialized qtable!!!
-                    
+
                     lock (QLearning)
                     {
-                       var action = QLearning.GetAction(state);
-                       Act(action, closestZombie, human);
-                       var nextState = GetState(closestZombie, human);
-                       QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
-                           nextState);
+                        var action = QLearning.GetAction(state);
+                        Act(action, closestZombie, human);
+                        var nextState = GetState(closestZombie, human);
+                        QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
+                            nextState);
                     }
-                    
                 }
                 else
                 {
@@ -94,6 +93,61 @@ namespace JAZG.Model.Learning
             if (distanceFromZombie <= 15) return 2;
 
             return 3;
+        }
+
+        public int _GetState(Player closestZombie, Human human)
+        {
+            var distanceFromZombie =
+                Distance.Chebyshev(human.Position.PositionArray, closestZombie.Position.PositionArray);
+            int d1 = 0, d2 = 0, d3 = 0;
+            switch (distanceFromZombie)
+            {
+                case <= 5:
+                    d1 = 1;
+                    break;
+                case <= 10:
+                    d2 = 1;
+                    break;
+                case <= 15:
+                    d3 = 1;
+                    break;
+            }
+
+            var closeZombies = human.FindZombies();
+            var closeZombiesCount = human.FindZombies().Count;
+            int zn1 = 0, zn2 = 0, zn3 = 0, zn4 = 0;
+            //TODO: welche Anzahlen von Zombies
+            switch (closeZombiesCount)
+            {
+                case <= 5:
+                    zn1 = 1;
+                    break;
+                case <= 10:
+                    zn2 = 1;
+                    break;
+                case <= 20:
+                    zn3 = 1;
+                    break;
+                case > 20:
+                    zn4 = 1;
+                    break;
+            }
+
+            var zombiesNorthEast = closeZombies.FindAll(zombie => human.GetDirectionToPlayer(zombie) < 90);
+            var zombiesSouthEast = closeZombies.FindAll(zombie =>
+                human.GetDirectionToPlayer(zombie) >= 90 && human.GetDirectionToPlayer(zombie) < 180);
+            var zombiesSouthWest = closeZombies.FindAll(zombie =>
+                human.GetDirectionToPlayer(zombie) >= 180 && human.GetDirectionToPlayer(zombie) < 270);
+            var zombiesNorthWest = closeZombies.FindAll(zombie => human.GetDirectionToPlayer(zombie) >= 270);
+            int zl1 = 0, zl2 = 0, zl3 = 0, zl4 = 0;
+            //TODO: wieviele Zombies pro Zone?
+            if (zombiesNorthEast.Count > 2) zl1 = 1;
+            if (zombiesSouthEast.Count > 2) zl2 = 1;
+            if (zombiesSouthWest.Count > 2) zl3 = 1;
+            if (zombiesNorthWest.Count > 2) zl4 = 1;
+
+            return d1 | (d2 << 1) | (d3 << 2) | (zn1 << 3) | (zn2 << 4) | (zn3 << 5) | (zn4 << 6) | (zl1 << 7) |
+                   (zl2 << 8) | (zl3 << 9) | (zl4 << 10);
         }
 
         // Übersetzung des Action-Index in Aktion
@@ -145,8 +199,7 @@ namespace JAZG.Model.Learning
             Console.WriteLine("Serializing...");
             using FileStream fs = File.Create(filePath);
             var bytes = QLearning.Serialize();
-          fs.Write(bytes, 0, bytes.Length);
-
+            fs.Write(bytes, 0, bytes.Length);
         }
 
         public static QLearning Deserialize(String filePath)
@@ -157,6 +210,5 @@ namespace JAZG.Model.Learning
             qLearning.ExplorationPolicy = new RouletteWheelExploration();
             return qLearning;
         }
-        
     }
 }
