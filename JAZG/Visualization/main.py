@@ -4,6 +4,7 @@ import time
 import re
 import pygame
 from pygame import RESIZABLE, DOUBLEBUF, HWSURFACE
+from pygame import mixer
 import pygame.gfxdraw
 
 from websocket import create_connection, WebSocketConnectionClosedException
@@ -35,6 +36,8 @@ VECTOR_COLORS = [RED, WHITE, BLUE, ORANGE, YELLOW]
 COLORS = RASTER_COLORS
 
 WINDOW_SIZE = 800, 800
+
+mixer.init()
 
 zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("Skull and Pizza illustration.png"), (28, 28)), False, True)
 zombie_rect = zombie_image.get_rect()
@@ -257,6 +260,13 @@ class Visualization:
                     #15,28
                     surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - (15/2),
                                     ((y - self.WORLD_SIZE[1]) * scale_y) - (28/2)))
+                    if(entity["p"]["IsShooting"]):
+                       print("shooting")
+                       mixer.music.load("GunShotSnglShotIn PE1097906.mp3")
+                       mixer.music.play()
+                    if(entity["p"]["HasWeapon"]):
+                       surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
+                                    ((y - self.WORLD_SIZE[1]) * scale_y)-11))
                 elif type_key==2:
                     surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - 14,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) - 14))
