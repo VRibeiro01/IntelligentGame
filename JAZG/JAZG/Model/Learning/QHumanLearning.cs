@@ -69,7 +69,7 @@ namespace JAZG.Model.Learning
                 }
                 else
                 {
-                    human.RunFromZombie(closestZombie);
+                    human.RunFromZombies(closestZombie);
                 }
             }
             else if (human.weapons.Count < 1 && human.GetDistanceFromItem(nextWeapon) < 20)
@@ -161,7 +161,7 @@ namespace JAZG.Model.Learning
                     break;
 
                 default:
-                    human.RunFromZombie(closestZombie);
+                    human.RunFromZombies(closestZombie);
                     Console.WriteLine("Running");
                     break;
             }

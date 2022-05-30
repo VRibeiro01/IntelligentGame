@@ -88,8 +88,9 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, directionOpposite, 2);
         }
 
-        private void RunFromZombies(Player closestZombie)
+        public void RunFromZombies(Player closestZombie)
         {
+            // TODO: do not run into walls
             var directionFromClosest = (GetDirectionToPlayer(closestZombie) + 180) % 360;
             var directionFromEnemies = directionFromClosest;
             var closestDistance = GetDistanceFromPlayer(closestZombie);
@@ -98,9 +99,6 @@ namespace JAZG.Model.Players
             {
                 if (zombie == closestZombie) continue;
                 var directionFromEnemy = (GetDirectionToPlayer(zombie) + 180) % 360;
-                /*var directionToClosest = Math.Abs(directionFromClosest - directionFromEnemy);
-                directionFromEnemies += Math.Abs(directionFromEnemy -
-                                                 closestDistance / GetDistanceFromPlayer(zombie) * directionToClosest);*/
                 var directionToClosest = directionFromEnemy - directionFromClosest;
                 directionFromEnemies =
                     (directionFromEnemies + closestDistance / GetDirectionToPlayer(zombie) * directionToClosest) % 360;
