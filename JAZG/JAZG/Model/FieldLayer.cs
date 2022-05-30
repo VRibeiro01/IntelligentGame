@@ -33,7 +33,7 @@ namespace JAZG.Model
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
         /// </summary>
-        public int learningMode = 0;
+        public int learningMode = 2;
 
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
@@ -60,8 +60,6 @@ namespace JAZG.Model
             //Create and register agents
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
             var gunAgents = AgentManager.Spawn<Gun, FieldLayer>().ToList();
-            var m16Agents = AgentManager.Spawn<M16, FieldLayer>().ToList();
-
             var humanAgents = AgentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
@@ -89,7 +87,9 @@ namespace JAZG.Model
                 throw new ArgumentException("learningMode must equal 0 or be larger than 0");
             }
 
-            QHumanLearning.QLearning = QHumanLearning.Deserialize("Resources\\HumanLearning.txt");
+            // TODO: Pfad anpassen
+            // TODO: Ein File (qtable) pro Human, Files in Init File zuordnen, wenn mehr Humans als Zeilen in Init -> Zeilen öfter durchlaufen
+            QHumanLearning.QLearning = QHumanLearning.Deserialize(@"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning.txt");
         }
 
         // Helper method to find random position within the bounds of the layer

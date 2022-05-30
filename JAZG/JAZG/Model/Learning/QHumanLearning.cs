@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -43,15 +44,11 @@ namespace JAZG.Model.Learning
                 .FirstOrDefault();
             var nextWeapon = human.FindClosestWeapon();
 
-
             if (closestZombie != null)
             {
                 if (human.weapons.Count > 1)
                 {
-                    //TODO states erweitern
-                    // Distanz zum nächsten Zombie, Anzahl Zombies,
-                    // wo befinden sich Zombies ("entweder umzingelt oder nicht" oder "zonen mit zombies")
-                    var state = GetState(closestZombie, human);
+                    var state = GetState(closestZombie, zombiesNearMe, human);
                     Console.WriteLine("State: " + state);
 
                     // action anhand der Q-Werte für Aktionen im aktuellen Zustand
@@ -62,7 +59,7 @@ namespace JAZG.Model.Learning
                     {
                         var action = QLearning.GetAction(state);
                         Act(action, closestZombie, human);
-                        var nextState = GetState(closestZombie, human);
+                        var nextState = GetState(closestZombie, zombiesNearMe, human);
                         QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
                             nextState);
                     }
@@ -95,7 +92,7 @@ namespace JAZG.Model.Learning
             return 3;
         }
 
-        public int GetState(Player closestZombie, Human human)
+        public int GetState(Player closestZombie, List<Player> closeZombies, Human human)
         {
             var distanceFromZombie =
                 Distance.Chebyshev(human.Position.PositionArray, closestZombie.Position.PositionArray);
@@ -113,8 +110,7 @@ namespace JAZG.Model.Learning
                     break;
             }
 
-            var closeZombies = human.FindZombies();
-            var closeZombiesCount = human.FindZombies().Count;
+            var closeZombiesCount = closeZombies.Count;
             int zn1 = 0, zn2 = 0, zn3 = 0, zn4 = 0;
             //TODO: welche Anzahlen von Zombies
             switch (closeZombiesCount)
