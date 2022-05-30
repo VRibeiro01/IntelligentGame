@@ -3,6 +3,7 @@ using System.Linq;
 using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using JAZG.Model.Players;
+using Mars.Common.Core.Collections;
 using Mars.Common.Core.Random;
 using Mars.Components.Environments.Cartesian;
 using Mars.Components.Layers;
@@ -33,7 +34,7 @@ namespace JAZG.Model
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
         /// </summary>
-        public int learningMode = 2;
+        public int learningMode = 0;
 
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
@@ -60,7 +61,10 @@ namespace JAZG.Model
             //Create and register agents
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
             var gunAgents = AgentManager.Spawn<Gun, FieldLayer>().ToList();
-            var humanAgents = AgentManager.Spawn<Human, FieldLayer>().ToList();
+            var humanAgents = AgentManager.Spawn<Human, FieldLayer>().Do((human, i) =>
+            {
+                human.BrainNr = i % 5;
+            }).ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
@@ -69,6 +73,7 @@ namespace JAZG.Model
             return true;
         }
 
+        // TODO: init im Human
         public void initQHumanLearning()
         {
             QHumanLearning = new QHumanLearning();

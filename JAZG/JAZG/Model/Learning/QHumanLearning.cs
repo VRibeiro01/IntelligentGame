@@ -137,10 +137,10 @@ namespace JAZG.Model.Learning
             var zombiesNorthWest = closeZombies.FindAll(zombie => human.GetDirectionToPlayer(zombie) >= 270);
             int zl1 = 0, zl2 = 0, zl3 = 0, zl4 = 0;
             //TODO: wieviele Zombies pro Zone?
-            if (zombiesNorthEast.Count > 2) zl1 = 1;
-            if (zombiesSouthEast.Count > 2) zl2 = 1;
-            if (zombiesSouthWest.Count > 2) zl3 = 1;
-            if (zombiesNorthWest.Count > 2) zl4 = 1;
+            if (zombiesNorthEast.Count > 4) zl1 = 1;
+            if (zombiesSouthEast.Count > 4) zl2 = 1;
+            if (zombiesSouthWest.Count > 4) zl3 = 1;
+            if (zombiesNorthWest.Count > 4) zl4 = 1;
 
             return d1 | (d2 << 1) | (d3 << 2) | (zn1 << 3) | (zn2 << 4) | (zn3 << 5) | (zn4 << 6) | (zl1 << 7) |
                    (zl2 << 8) | (zl3 << 9) | (zl4 << 10);

@@ -20,6 +20,7 @@ namespace JAZG.Model.Players
         private int _lastAction;
         private int _maxSeeingDistance;
         public List<Weapon> weapons = new();
+        public int BrainNr;
 
         // TODO: change to enum
         public int HasWeapon { get; set; }
