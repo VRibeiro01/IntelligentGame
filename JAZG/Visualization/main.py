@@ -178,7 +178,7 @@ class Visualization:
             self.entities.clear()
             if self.l.get_active_writer() > 0:
                 self.l.release_write()
-            self.screen.fill(BLACK)
+            self.screen.fill(GREEN)
             self.ws = None
 
     def visualize_content(self):
@@ -189,7 +189,7 @@ class Visualization:
         if not self.tick_display[0]:
             return
 
-        self.screen.fill(BLACK)
+        self.screen.fill(GREEN)
 
         #window_area = (10, 10,self.WINDOW_SIZE[0] - 10, self.WINDOW_SIZE[1] - 10)
 
@@ -209,6 +209,7 @@ class Visualization:
         line_width = 1
 
         surface = pygame.Surface(self.WINDOW_SIZE)
+        surface.fill(GREEN)
 
         for raster_key in self.raster_metadata.keys():
             raster = self.raster_metadata[raster_key]
