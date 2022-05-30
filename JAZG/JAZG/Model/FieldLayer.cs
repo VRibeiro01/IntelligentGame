@@ -33,7 +33,7 @@ namespace JAZG.Model
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
         /// </summary>
-        public int learningMode = 0;
+        public int learningMode = 2;
 
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
@@ -87,7 +87,7 @@ namespace JAZG.Model
                 throw new ArgumentException("learningMode must equal 0 or be larger than 0");
             }
 
-            QHumanLearning.QLearning = QHumanLearning.Deserialize("C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources\\HumanLearning.txt");
+            QHumanLearning.QLearning = QHumanLearning.Deserialize(@"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning.txt");
         }
 
         // Helper method to find random position within the bounds of the layer

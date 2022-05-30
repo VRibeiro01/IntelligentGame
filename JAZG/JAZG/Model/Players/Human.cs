@@ -132,6 +132,8 @@ namespace JAZG.Model.Players
 
         public void NonQMovement()
         {
+            IsShooting = false;
+            
             var nextZombie = FindClosestZombie();
             var nextWeapon = FindClosestWeapon();
 

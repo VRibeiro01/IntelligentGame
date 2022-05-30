@@ -82,7 +82,7 @@ namespace JAZG.Model.Learning
             }
         }
 
-        public int GetState(Player closestZombie, Human human)
+        public int _GetState(Player closestZombie, Human human)
         {
             var distanceFromZombie =
                 Distance.Chebyshev(human.Position.PositionArray, closestZombie.Position.PositionArray);
@@ -95,7 +95,7 @@ namespace JAZG.Model.Learning
             return 3;
         }
 
-        public int _GetState(Player closestZombie, Human human)
+        public int GetState(Player closestZombie, Human human)
         {
             var distanceFromZombie =
                 Distance.Chebyshev(human.Position.PositionArray, closestZombie.Position.PositionArray);
@@ -196,7 +196,7 @@ namespace JAZG.Model.Learning
 
         public void Serialize(String filePath)
         {
-            Console.WriteLine("Serializing...");
+            Console.WriteLine("Serializing... " + filePath);
             using FileStream fs = File.Create(filePath);
             var bytes = QLearning.Serialize();
             fs.Write(bytes, 0, bytes.Length);
