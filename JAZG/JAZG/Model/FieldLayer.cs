@@ -36,7 +36,6 @@ namespace JAZG.Model
         /// </summary>
         public int learningMode = 0;
 
-
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
         {
