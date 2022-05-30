@@ -33,7 +33,7 @@ namespace JAZG
             description.AddAgent<Gun, FieldLayer>();
             description.AddAgent<Food, FieldLayer>();
             description.AddAgent<DeadPlayer, FieldLayer>();
-
+            description.AddAgent<M16, FieldLayer>();
             // Get model configuration
             var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
@@ -47,7 +47,7 @@ namespace JAZG
             if (layer.learningMode > 0)
             {
                 layer.QHumanLearning.Serialize(
-                    @"Resources\HumanLearning.txt");
+                    "Resources\\HumanLearning.txt");
             }
 
             // TODO Statistiken zu Spielen automatisch in Datei speichern
