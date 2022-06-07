@@ -29,7 +29,40 @@ Dafür können alle Hilfsmethoden der Klasse Player und der Klasse Human genutzt
 5. Dein Agent im "Fieldlayer" unter dem entsprechenden TODO in der initLayer-Methode
 5. Dein Agent in der "config.json"-Datei gemäß den anderen Agenten eintragen
 
-Deine Agenten werden in der Visualisierug anhand ihrer roten T-shirts erkennbar sein.
+Deine Agenten werden in der Visualisierung anhand ihrer roten T-shirts erkennbar sein.
+
+# Feld
+Das Feld ist 100x100 groß. Das Feld ist von Wänden umgeben, sodass die Spieler nicht aus dem Feld hinauslaufen können.
+
+# Spieler und Items
+
+#### Zombies
+Zombies sind die Gegner der Menschen. Sie verlieren Energie während der Ticks und sterben, wenn ihre Energie auf 0 ist.
+Sie bewegen sich immer zu den Menschen hin, wenn welche in der Nähe sind. Wenn sie nah genug sind, fressen sie den nächsten Menschen. Damit wird ihren Energiewert erhöht.
+
+#### Menschen
+Das Ziel der Menschen ist, möglichst lange zu überleben und Zombies zu töten. Dafür dürfen sie nicht von Zombies gefressen werden.
+Sie können weglaufen und können Waffen einsetzen. Um Waffen einzusetzen müssen diese erstmal gesammelt werden.
+
+Es stehen folgende Waffen zur Verfügung:
+1. Gun
+Gun trifft einen Zombie mit 50% Wahrscheinlichkeit und entnimmt dem getroffenen Zombie 15 Energiepunkte.
+Ein Gun kann beliebig von einem Menschen abgeschossen werden, aber es hat nur alle 8 Ticks einen Effekt.
+
+2. M16
+Eine M16 trifft einem Zombie mit 30% Wahrscheinlichkeit und entnimmt dem getroffenen Zombie 30 Energiepunkte.
+Eine M16 kann beliebig von einem Menschen abgeschossen werden, aber es hat nur alle 5 Ticks einen Effekt.
+
+# Hilfsmethoden aus Player und Human
+
+#### RandomMove()
+
+Der Agent bewegt sich um ein Feld in eine zufällige Richtung
+
+#### GetDistanceFromPlayer(Player other), GetDistanceFromItem(Item item), GetDirectionFromPlayer(Player other), GetDirectionFromItem(Item item)
+
+Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines anderen Spielers(Menschen und Zombies sind Spieler),
+Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines Items(Wall, Food, Gun, M16 sind Items).
 
 
 # Authors 
