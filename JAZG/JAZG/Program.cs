@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using JAZG.Model;
@@ -18,6 +19,20 @@ namespace JAZG
         {
             // TODO Für das Training: for-Schleife um Spiel mehrmals zu starten
             Console.WriteLine("Hello world from Main!");
+            
+            
+            //TODO change basePath
+            var basePath = @"..\..\..\Resources";
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
+            bool exists = File.Exists(start.FileName);
+            start.Arguments = "";
+            //start.WorkingDirectory = "..\\..\\..\\..\\Visualization";
+            start.UseShellExecute = true;
+            using (Process process = Process.Start(start))
+            {
+            }
+            
             var description = new ModelDescription();
 
             description.AddLayer<FieldLayer>();
@@ -42,8 +57,7 @@ namespace JAZG
 
             // Serialize QTable 
             FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
-            //TODO change basePath
-            var basePath = @"..\..\..\Resources";
+            
             if (layer.learningMode > 0)
             {
                 for (int i = 0; i < layer.amountOfMinds; i++)
