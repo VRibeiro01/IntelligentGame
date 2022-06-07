@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using JAZG.Model.Players;
 using Mars.Components.Environments.Cartesian;
+using ServiceStack;
 
 namespace JAZG.Model.Objects
 {
@@ -22,21 +24,30 @@ namespace JAZG.Model.Objects
             if (character is Human)
             {
                 var human = (Human) character;
-                human.weapons.Add(this);
-                if (this is Gun)
+                var gunhuman = human.weapons.Exists(i => i is Gun);
+                var m16human = human.weapons.Exists(i => i is M16);
+                
+                if ( !gunhuman && this is Gun)
                 {
+                    human.weapons.Add(this);
+                    Layer.Environment.Remove(this);
+                    UnregisterHandle.Invoke(Layer, this);
+                    Console.WriteLine("I got a Gun.");
                     human.HasWeapon = 4;
-                }
-                else
-                {
-                    human.HasWeapon = 7;
-                }
-                Console.WriteLine("I got a weapon.");
-                Layer.Environment.Remove(this);
-                UnregisterHandle.Invoke(Layer, this);
-                return CollisionKind.Remove;
-            }
+                    return CollisionKind.Remove;
 
+                }
+                if(!m16human && this is M16)
+                {
+                    human.weapons.Add(this);
+                    Layer.Environment.Remove(this);
+                    UnregisterHandle.Invoke(Layer, this);
+                    Console.WriteLine("I got a M16.");
+                    human.HasWeapon = 7;
+                    return CollisionKind.Remove;
+
+                }
+            }
             return CollisionKind.Pass;
         }
 
