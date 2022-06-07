@@ -43,13 +43,14 @@ Sie bewegen sich immer zu den Menschen hin, wenn welche in der Nähe sind. Wenn 
 #### Menschen
 Das Ziel der Menschen ist, möglichst lange zu überleben und Zombies zu töten. Dafür dürfen sie nicht von Zombies gefressen werden.
 Sie können weglaufen und können Waffen einsetzen. Um Waffen einzusetzen müssen diese erstmal gesammelt werden.
+Die gesammelten Waffen werden in der Liste "weapons" festgehalten.
 
 Es stehen folgende Waffen zur Verfügung:
-1. Gun
+##### Gun
 Gun trifft einen Zombie mit 50% Wahrscheinlichkeit und entnimmt dem getroffenen Zombie 15 Energiepunkte.
 Ein Gun kann beliebig von einem Menschen abgeschossen werden, aber es hat nur alle 8 Ticks einen Effekt.
 
-2. M16
+##### M16
 Eine M16 trifft einem Zombie mit 30% Wahrscheinlichkeit und entnimmt dem getroffenen Zombie 30 Energiepunkte.
 Eine M16 kann beliebig von einem Menschen abgeschossen werden, aber es hat nur alle 5 Ticks einen Effekt.
 
@@ -63,6 +64,27 @@ Der Agent bewegt sich um ein Feld in eine zufällige Richtung
 
 Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines anderen Spielers(Menschen und Zombies sind Spieler),
 Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines Items(Wall, Food, Gun, M16 sind Items).
+
+
+#### FindClosestWeapon()
+Liefert eine Referenz auf die nächste Waffe, die sich in einem Umkreis von 20 Feldern befindet. Liefert null, wenn keine Waffe in der Nähe ist.
+
+#### FindClosestZombie()
+Liefert eine Referenz auf den nächsten Zombie, der sich in einem Umkreis von 20 Feldern befindet. Liefert null, wenn kein Zombie in der Nähe ist.
+
+#### FindZombies()
+Liefert eine Liste von Zombies, die sich in einem Umkreis von 20 Feldern befinden. Die Liste ist leer, wenn sich keine Zombies in der Umgebung befinden.
+
+#### UseWeapon(Zombie zombie)
+
+TODO
+
+#### CollectItem(Item item)
+Der Mensch bewegt sich in die Richtung von item (z.B. Gun). 
+Sobald der Mensch mit dem Item "kollidiert", wird es eingesammelt.
+
+#### RunFromZombies(Player closestZombie)
+Der Mensch bewegt sich um zwei Felder weg von allen Zombies um sich herum (soweit möglich).
 
 
 # Authors 
