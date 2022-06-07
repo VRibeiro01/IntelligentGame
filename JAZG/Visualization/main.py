@@ -266,8 +266,9 @@ class Visualization:
                                     ((y - self.WORLD_SIZE[1]) * scale_y) - (28/2)))
                     if(entity["p"]["IsShooting"]):
                        print("shooting")
-                       #mixer.music.load("GunShotSnglShotIn PE1097906.mp3")
-                       mixer.Sound("GunShotSnglShotIn PE1097906.mp3").play()
+                       #mixer.music.load("..\..\..\..\Visualization\\GunShotSnglShotIn PE1097906.mp3")
+                       mixer.Sound("..\..\..\..\Visualization\\GunShotSnglShotIn PE1097906.mp3").play()
+                       entity["p"]["IsShooting"] = False
                     if(entity["p"]["HasWeapon"] > 0):
                         if(entity["p"]["HasWeapon"] == 4):
                            surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
@@ -279,7 +280,6 @@ class Visualization:
                     if(entity["p"]["IsShooting"]):
                        surface.blit(muzzle_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
                                     ((y - self.WORLD_SIZE[1]) * scale_y)-11))
-                       entity["p"]["IsShooting"] = False
                 elif type_key==2:
                     surface.blit(zombie_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - 14,
                                     ((y - self.WORLD_SIZE[1]) * scale_y) - 14))
