@@ -6,6 +6,8 @@ namespace JAZG.Model.Objects
 {
     public abstract class Weapon : Item
     {
+        protected int _cooldown = 0;
+        
         protected Weapon() : base(Layer)
         {
         }

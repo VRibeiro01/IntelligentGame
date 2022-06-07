@@ -61,33 +61,21 @@ namespace JAZG.Model.Players
         public Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
-            return (Zombie) FindZombies()
-                .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray))
-                .FirstOrDefault();
+            return (Zombie) FindZombies().OrderBy(GetDistanceFromPlayer).FirstOrDefault();
         }
 
         public List<Player> FindZombies()
         {
-            return Layer.Environment.Characters.Where(c =>
-                    c is Zombie && Distance.Chebyshev(Position.PositionArray, c.Position.PositionArray) <=
-                    _maxSeeingDistance)
-                .OrderBy(zombie => Distance.Chebyshev(Position.PositionArray, zombie.Position.PositionArray)).ToList();
+            return Layer.Environment.Characters
+                .Where(c => c is Zombie && GetDistanceFromPlayer(c) <= _maxSeeingDistance).ToList();
         }
 
         public Weapon FindClosestWeapon()
         {
             return (Weapon) Layer.Environment
-                .ExploreObstacles(_boundaryBoxGeometry, item => item is Weapon).OrderBy(item =>
-                    Distance.Chebyshev(Position.PositionArray, item.Position.PositionArray)).FirstOrDefault();
-        }
-
-        public void RunFromZombie(Player zombie)
-        {
-            // TODO: run from all zombies that are near
-            var directionToEnemy = GetDirectionToPlayer(zombie);
-            if (double.IsNaN(directionToEnemy)) directionToEnemy = RandomHelper.Random.Next(360);
-            var directionOpposite = (directionToEnemy + 180) % 360;
-            Layer.Environment.Move(this, directionOpposite, 2);
+                .ExploreObstacles(_boundaryBoxGeometry,
+                    item => item is Weapon && GetDistanceFromItem(item) <= _maxSeeingDistance)
+                .OrderBy(GetDistanceFromItem).FirstOrDefault();
         }
 
         public void RunFromZombies(Player closestZombie)
@@ -106,9 +94,10 @@ namespace JAZG.Model.Players
                     (directionFromEnemies + closestDistance / GetDirectionToPlayer(zombie) * directionToClosest) % 360;
             }
 
-            //directionFromEnemies /= zombies.Count;
             if (double.IsNaN(directionFromEnemies))
                 directionFromEnemies = RandomHelper.Random.Next(360);
+
+
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
@@ -136,7 +125,7 @@ namespace JAZG.Model.Players
         public void NonQMovement()
         {
             IsShooting = false;
-            
+
             var nextZombie = FindClosestZombie();
             var nextWeapon = FindClosestWeapon();
 
@@ -144,7 +133,6 @@ namespace JAZG.Model.Players
             {
                 var zombieDistance = GetDistanceFromPlayer(nextZombie);
                 double weaponDistance = 999;
-                if (nextWeapon != null) weaponDistance = GetDistanceFromItem(nextWeapon);
 
                 if (zombieDistance <= 10)
                 {
@@ -156,7 +144,7 @@ namespace JAZG.Model.Players
                         _lastAction = 2;
                     }
                 }
-                else if (weapons.Count < 1 && weaponDistance <= 20)
+                else if (weapons.Count < 1 && nextWeapon != null)
                 {
                     CollectItem(nextWeapon);
                     if (_lastAction != 4)
@@ -165,7 +153,7 @@ namespace JAZG.Model.Players
                         _lastAction = 4;
                     }
                 }
-                else if (weapons.Count > 0 && zombieDistance <= 20)
+                else if (weapons.Count > 0)
                 {
                     UseWeapon(nextZombie);
                     IsShooting = true;
@@ -179,11 +167,23 @@ namespace JAZG.Model.Players
                 }
                 else
                 {
-                    RandomMove();
-                    if (_lastAction != 1)
+                    if (weapons.Count < 1 && nextWeapon != null)
                     {
-                        //Console.WriteLine("I walk.");
-                        _lastAction = 1;
+                        CollectItem(nextWeapon);
+                        if (_lastAction != 4)
+                        {
+                            Console.WriteLine("I saw a weapon.");
+                            _lastAction = 4;
+                        }
+                    }
+                    else
+                    {
+                        RandomMove();
+                        if (_lastAction != 1)
+                        {
+                            //Console.WriteLine("I walk.");
+                            _lastAction = 1;
+                        }
                     }
                 }
             }

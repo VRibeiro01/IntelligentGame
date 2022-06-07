@@ -44,16 +44,25 @@ namespace JAZG.Model.Objects
         // Die Treffenwahrscheinlichkeit und schaden mehr als bei Gun
         private void Shoot(Zombie zombie)
         {
-            Console.WriteLine("BAAAM");
-            // _ammo--;
-            if (RandomHelper.Random.Next(101) > 30)
+            if (_cooldown == 0)
             {
-                Console.WriteLine("Hit.");
-                zombie.Energy -= 30;
+                Console.WriteLine("BAAAM");
+                // _ammo--;
+                if (RandomHelper.Random.Next(101) > 30)
+                {
+                    Console.WriteLine("Hit.");
+                    zombie.Energy -= 30;
+                }
+                else
+                {
+                    Console.WriteLine("M16 Missed.");
+                }
+
+                _cooldown = 5;
             }
             else
             {
-                Console.WriteLine("M16 Missed.");
+                _cooldown--;
             }
         }
     }

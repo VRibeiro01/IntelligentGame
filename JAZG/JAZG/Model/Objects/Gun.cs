@@ -42,16 +42,25 @@ namespace JAZG.Model.Objects
 
         private void Shoot(Zombie zombie)
         {
-            Console.WriteLine("BAM");
-            // _ammo--;
-            if (RandomHelper.Random.Next(101) > 50)
+            if (_cooldown == 0)
             {
-                Console.WriteLine("Hit.");
-                zombie.Energy -= 15;
+                Console.WriteLine("BAM");
+                // _ammo--;
+                if (RandomHelper.Random.Next(101) > 50)
+                {
+                    Console.WriteLine("Hit.");
+                    zombie.Energy -= 15;
+                }
+                else
+                {
+                    Console.WriteLine("Missed.");
+                }
+
+                _cooldown = 10;
             }
             else
             {
-                Console.WriteLine("Missed.");
+                _cooldown--;
             }
         }
     }

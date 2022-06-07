@@ -1,7 +1,7 @@
 ﻿{
   "globals": {
     "startPoint": "2020-01-01T00:00:00",
-    "endPoint": "2020-01-01T00:01:00",
+    "endPoint": "2020-01-01T00:10:00",
     "deltaT": 1,
     "deltaTUnit": "seconds",
     "console": false,
@@ -27,12 +27,12 @@
     {
       "name": "Gun",
       "pythonVisualizationWithProperties": true,
-      "count": 0
+      "count": 3
     },
     {
       "name": "M16",
       "pythonVisualizationWithProperties": true,
-      "count": 0
+      "count": 5
     }
   ],
   "layers": [

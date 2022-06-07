@@ -43,7 +43,7 @@ namespace JAZG
             // Serialize QTable 
             FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
             //TODO change basePath
-            var basePath = "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources";
+            var basePath = @"..\..\..\Resources";
             if (layer.learningMode > 0)
             {
                 for (int i = 0; i < layer.amountOfMinds; i++)

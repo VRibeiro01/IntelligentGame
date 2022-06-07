@@ -75,7 +75,8 @@ namespace JAZG.Model
 
             //Create and register agents
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
-            var gunAgents = AgentManager.Spawn<Gun, FieldLayer>().ToList();
+            var gunAgents = AgentManager.Spawn<Gun, FieldLayer>().ToList();            
+            var m16Agents = AgentManager.Spawn<M16, FieldLayer>().ToList();
             var humanAgents = AgentManager.Spawn<Human, FieldLayer>().Do((human, i) =>
             {
                 human.BrainNr = i % 5;
@@ -114,7 +115,7 @@ namespace JAZG.Model
             }
 
             // TODO: Pfad anpassen
-            var basePath = "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources";
+            var basePath = @"..\..\..\Resources";
             for (int i = 0; i < amountOfMinds; i++)
             {
                 QHumanLearningList[i].QLearning = QHumanLearning.Deserialize(Path.Combine(basePath,"HumanLearning" + i + ".txt"));

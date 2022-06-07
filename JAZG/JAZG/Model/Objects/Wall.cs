@@ -29,7 +29,7 @@ namespace JAZG.Model.Objects
             };
             Layer.Environment.Insert(this, new LineString(coordinates));
             Position = Position.CreatePosition((xLeft + xRight) / 2, (yLeft + yRight) / 2);
-            Console.Write("New Wall at: " + "(" + xLeft + ";" + yLeft + ")" + "(" + xRight + ";" + yRight + ")");
+            //Console.Write("New Wall at: " + "(" + xLeft + ";" + yLeft + ")" + "(" + xRight + ";" + yRight + ")");
         }
 
         public override bool IsRoutable(ICharacter character)
@@ -41,7 +41,8 @@ namespace JAZG.Model.Objects
         public override CollisionKind? HandleCollision(ICharacter character)
         {
            // Console.WriteLine("STOP. This is a wall!");
-            return CollisionKind.Block;
+           
+           return CollisionKind.Block;
         }
 
         public override VisibilityKind? HandleExploration(ICharacter explorer)
