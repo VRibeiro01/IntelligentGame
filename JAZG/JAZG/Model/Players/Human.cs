@@ -111,6 +111,16 @@ namespace JAZG.Model.Players
 
         public bool UseWeapon(Zombie zombie)
         {
+            if (weapons.Count == 0)
+            {
+              Console.WriteLine("there is no Weapons ");
+              return false;
+            }
+            var weaponIndex = weapons.FindIndex(e => e is M16);
+            if (weaponIndex < 0)
+            {
+             return weapons[weaponIndex].Use(zombie);
+            }
             return weapons[0].Use(zombie);
         }
 
