@@ -111,7 +111,15 @@ namespace JAZG.Model.Players
 
         public void UseWeapon(Zombie zombie)
         {
-            weapons[0].Use(zombie);
+            var weaponIndex = weapons.FindIndex(e => e is M16);
+            if (weaponIndex < 0)
+            {
+                weapons[weaponIndex].Use(zombie);
+            }
+            else
+            {
+                weapons[0].Use(zombie);
+            }
         }
 
         public override void Kill()
