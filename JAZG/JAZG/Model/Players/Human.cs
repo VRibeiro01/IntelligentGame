@@ -109,17 +109,9 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, directionToItem, distanceToItem < 2 ? distanceToItem : 2);
         }
 
-        public void UseWeapon(Zombie zombie)
+        public bool UseWeapon(Zombie zombie)
         {
-            var weaponIndex = weapons.FindIndex(e => e is M16);
-            if (weaponIndex < 0)
-            {
-                weapons[weaponIndex].Use(zombie);
-            }
-            else
-            {
-                weapons[0].Use(zombie);
-            }
+            return weapons[0].Use(zombie);
         }
 
         public override void Kill()
@@ -140,7 +132,6 @@ namespace JAZG.Model.Players
             if (nextZombie != null)
             {
                 var zombieDistance = GetDistanceFromPlayer(nextZombie);
-                double weaponDistance = 999;
 
                 if (zombieDistance <= 10)
                 {
@@ -163,8 +154,7 @@ namespace JAZG.Model.Players
                 }
                 else if (weapons.Count > 0)
                 {
-                    UseWeapon(nextZombie);
-                    IsShooting = true;
+                    IsShooting = UseWeapon(nextZombie);
                     if (_lastAction != 3)
                     {
                         Console.WriteLine("Ah, zombies!!!");

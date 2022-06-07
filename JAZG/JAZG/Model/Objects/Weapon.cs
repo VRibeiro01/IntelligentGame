@@ -45,8 +45,9 @@ namespace JAZG.Model.Objects
             return VisibilityKind.Opaque;
         }
 
-        public virtual void Use(Zombie zombie)
+        public virtual bool Use(Zombie zombie)
         {
+            return false;
         }
     }
 }

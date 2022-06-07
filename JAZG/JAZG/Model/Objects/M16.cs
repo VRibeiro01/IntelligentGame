@@ -35,14 +35,14 @@ namespace JAZG.Model.Objects
             _ammo = _ammo + newVal;
         }
 
-        public override void Use(Zombie zombie)
+        public override bool Use(Zombie zombie)
         {
-            Shoot(zombie);
+            return Shoot(zombie);
         }
 
         
         // Die Treffenwahrscheinlichkeit und schaden mehr als bei Gun
-        private void Shoot(Zombie zombie)
+        private bool Shoot(Zombie zombie)
         {
             if (_cooldown == 0)
             {
@@ -59,11 +59,11 @@ namespace JAZG.Model.Objects
                 }
 
                 _cooldown = 5;
+                return true;
             }
-            else
-            {
-                _cooldown--;
-            }
+
+            _cooldown--;
+            return false;
         }
     }
 }
