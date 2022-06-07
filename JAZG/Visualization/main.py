@@ -268,6 +268,7 @@ class Visualization:
                        print("shooting")
                        #mixer.music.load("GunShotSnglShotIn PE1097906.mp3")
                        mixer.Sound("GunShotSnglShotIn PE1097906.mp3").play()
+                       entity["p"]["IsShooting"] = False
                     if(entity["p"]["HasWeapon"] > 0):
                         if(entity["p"]["HasWeapon"] == 4):
                            surface.blit(weapon_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL -5,
