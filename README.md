@@ -14,8 +14,9 @@ Wenn alle Zombies tot sind, fängt das neue Level an und es werden weitere Zombi
 1. Requirements der Visualierung installieren (pip install -r requirements.txt)
 2. C# Projekt in Rider öffnen
 3. Nuget Packet von Mars installieren
-4. Main.py der Visualisierung ausführen (in JAZG/Visualization, NICHT die offizielle)
-5. Rider Projekt ausführen
+4. Rider Projekt ausführen
+
+Beim Ausführen des Projekts wird die Visualisierung automatisch gestartet. Wenn das nicht gewünscht ist, kann die Programmzeile in "Program.cs" auskommentiert werden. Die betroffene Zeile ist im Projekt gekennzeichnet.
 
 # Eigene Logik implementieren
 
@@ -77,7 +78,8 @@ Liefert eine Liste von Zombies, die sich in einem Umkreis von 20 Feldern befinde
 
 #### UseWeapon(Zombie zombie)
 
-TODO
+Wenn der Mensch eine M16 eingesammelt hat, wird diese Waffe einsetzt, ansonsten wird Gun eingesetzt.
+Wenn der Mensch noch keine Waffen einsammelt hat, liefert die Methode false.
 
 #### CollectItem(Item item)
 Der Mensch bewegt sich in die Richtung von item (z.B. Gun). 
