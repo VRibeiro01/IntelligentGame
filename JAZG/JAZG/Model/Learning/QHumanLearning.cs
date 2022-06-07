@@ -202,6 +202,7 @@ namespace JAZG.Model.Learning
         // Übersetzung des Action-Index in Aktion
         public void Act(int actionIndex, Zombie closestZombie, Weapon nextWeapon, Human human)
         {
+            human.IsShooting = false;
             Console.WriteLine("action index: " + actionIndex);
             switch (actionIndex)
             {
@@ -212,7 +213,7 @@ namespace JAZG.Model.Learning
                     break;
                 case 1:
                     if (closestZombie == null || human.weapons.Count == 0) break;
-                    human.UseWeapon(closestZombie);
+                    human.IsShooting = human.UseWeapon(closestZombie);
                     break;
                 case 2:
                     if (nextWeapon == null) break;
