@@ -48,6 +48,7 @@ food_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vec
 corpse_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_halloween-zombie-hand-coming-out-from-grave_.png"), (22,22)), False, True)
 muzzle_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("muzzleflash.png"), (20,20)), False, True)
 m16_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_m16-usa-automatic-machine-assault-rifle-silhouette-flat_.png"), (32,32)), False, True)
+custom_human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_vector-design-with-the-theme-of-people-s-characters-such-as_7971120.png"), (32,32)), False, True)
 
 #https://stackoverflow.com/a/67509308
 def Move(rotation, steps, position):
@@ -178,7 +179,7 @@ class Visualization:
             self.entities.clear()
             if self.l.get_active_writer() > 0:
                 self.l.release_write()
-            self.screen.fill(GREEN)
+            self.screen.fill(BLUE_LIGHT)
             self.ws = None
 
     def visualize_content(self):
@@ -189,7 +190,7 @@ class Visualization:
         if not self.tick_display[0]:
             return
 
-        self.screen.fill(GREEN)
+        self.screen.fill(BLUE_LIGHT)
 
         #window_area = (10, 10,self.WINDOW_SIZE[0] - 10, self.WINDOW_SIZE[1] - 10)
 
@@ -209,7 +210,7 @@ class Visualization:
         line_width = 1
 
         surface = pygame.Surface(self.WINDOW_SIZE)
-        surface.fill(GREEN)
+        surface.fill(BLUE_LIGHT)
 
         for raster_key in self.raster_metadata.keys():
             raster = self.raster_metadata[raster_key]
@@ -258,9 +259,10 @@ class Visualization:
 
                 #print("Type key: " + str(type_key))
 
-                if type_key==1:
+                if type_key==1 or type_key==8:
                     #15,28
-                    surface.blit(human_image, (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - (15/2),
+                    
+                    surface.blit((human_image if type_key==1 else custom_human_image), (((x - self.WORLD_SIZE[0]) * scale_x) + self.BORDER_WIDTH_PIXEL - (15/2),
                                     ((y - self.WORLD_SIZE[1]) * scale_y) - (28/2)))
                     if(entity["p"]["IsShooting"]):
                        print("shooting")
