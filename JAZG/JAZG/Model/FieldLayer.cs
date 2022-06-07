@@ -122,7 +122,7 @@ namespace JAZG.Model
           //  QHumanLearning.Deserialize(@"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning1.txt");
         }
 
-        // Helper method to find random position within the bounds of the layer
+        // Helper method to find random position within the bounds of the layeröoöo
         public Position FindRandomPosition()
         {
             var random = RandomHelper.Random;
