@@ -56,7 +56,7 @@ namespace JAZG.Model.Objects
                     Console.WriteLine("Missed.");
                 }
 
-                _cooldown = 10;
+                _cooldown = 8;
                 return true;
             }
 
