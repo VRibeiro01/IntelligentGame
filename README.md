@@ -26,10 +26,13 @@ Dafür können alle Hilfsmethoden der Klasse Player und der Klasse Human genutzt
 2. Klasse "PleaseRenameYourHuman" umbenennen
 3. Tick-Methode mit eigener Logik füllen
 4. Dein Agent im "Program.cs" zur Model Description unter dem entsprechenden TODO!!! hinzufügen
+5. Dein Agent im "Fieldlayer" unter dem entsprechenden TODO in der initLayer-Methode
 5. Dein Agent in der "config.json"-Datei gemäß den anderen Agenten eintragen
 
+Deine Agenten werden in der Visualisierug anhand ihrer roten T-shirts erkennbar sein.
 
-# Authors
+
+# Authors 
 
 Jasper Wolny, Viviam Ribeiro, Ahmad Abbas, Nils Martens
 
