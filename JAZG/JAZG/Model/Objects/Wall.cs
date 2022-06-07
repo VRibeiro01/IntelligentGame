@@ -1,4 +1,6 @@
 ﻿using System;
+using JAZG.Model.Players;
+using Mars.Common;
 using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Annotations;
 using NetTopologySuite.Geometries;
@@ -40,8 +42,6 @@ namespace JAZG.Model.Objects
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
-           // Console.WriteLine("STOP. This is a wall!");
-           
            return CollisionKind.Block;
         }
 

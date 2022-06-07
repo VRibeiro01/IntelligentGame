@@ -81,22 +81,22 @@ namespace JAZG.Model.Players
         public void RunFromZombies(Player closestZombie)
         {
             // TODO: do not run into walls
-            var directionFromClosest = (GetDirectionToPlayer(closestZombie) + 180) % 360;
+            var directionFromClosest = Modulo(GetDirectionToPlayer(closestZombie) + 180, 360);
             var directionFromEnemies = directionFromClosest;
             var closestDistance = GetDistanceFromPlayer(closestZombie);
             var zombies = FindZombies();
             foreach (var zombie in zombies)
             {
                 if (zombie == closestZombie) continue;
-                var directionFromEnemy = (GetDirectionToPlayer(zombie) + 180) % 360;
+                var directionFromEnemy = Modulo(GetDirectionToPlayer(zombie) + 180, 360);
                 var directionToClosest = directionFromEnemy - directionFromClosest;
                 directionFromEnemies =
-                    (directionFromEnemies + closestDistance / GetDirectionToPlayer(zombie) * directionToClosest) % 360;
+                    Modulo(directionFromEnemies + closestDistance / GetDirectionToPlayer(zombie) * directionToClosest,
+                        360);
             }
 
             if (double.IsNaN(directionFromEnemies))
                 directionFromEnemies = RandomHelper.Random.Next(360);
-
 
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
@@ -205,6 +205,13 @@ namespace JAZG.Model.Players
                     _lastAction = 1;
                 }
             }
+        }
+
+        private static double Modulo(double a, double b)
+        {
+            var div = b / a;
+            var rest = div - Math.Truncate(div);
+            return a * rest;
         }
     }
 }

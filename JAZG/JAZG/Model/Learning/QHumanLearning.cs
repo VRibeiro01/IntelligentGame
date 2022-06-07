@@ -204,6 +204,7 @@ namespace JAZG.Model.Learning
         {
             human.IsShooting = false;
             Console.WriteLine("action index: " + actionIndex);
+            // TODO: add explore action
             switch (actionIndex)
             {
                 case 0:
