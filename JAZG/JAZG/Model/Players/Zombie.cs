@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mars.Common;
 using Mars.Numerics;
@@ -72,6 +73,7 @@ namespace JAZG.Model.Players
         public override void Kill()
         {
             base.Kill();
+            Layer.ZombiesKilled++;
             Console.WriteLine("Zombie down!");
             if (AllZombiesDead())
             {
@@ -98,20 +100,22 @@ namespace JAZG.Model.Players
 
         private void Spawn()
         {
-            var neueZombie = Layer.AgentManager.Spawn<Zombie, FieldLayer>().ToList();
-            foreach (var z in neueZombie)
+            var newZombies = Layer.AgentManager.Spawn<Zombie, FieldLayer>().ToList();
+            foreach (var z in newZombies)
             {
                 z.Energy *= 2 * _level;
                 z.Speed = _level;
             }
-            Console.WriteLine("We created " + neueZombie.Count + " zombie agents." + "for level " + _level +
-                              " with Energy " + neueZombie.First().Energy);
+            Console.WriteLine("We created " + newZombies.Count + " zombie agents." + "for level " + _level +
+                              " with Energy " + newZombies.First().Energy);
+            Layer.ZombiesSpawned += newZombies.Count;
         }
 
         public static void HumanToZombie(FieldLayer layer, Player human)
         {
             var zombie = layer.AgentManager.Spawn<Zombie, FieldLayer>(null, z => { }).Take(1).First();
             zombie.Position = human.Position;
+            layer.ZombiesSpawned++;
             Console.WriteLine("Human To Zombie at Position :" + zombie.Position);
         }
     }

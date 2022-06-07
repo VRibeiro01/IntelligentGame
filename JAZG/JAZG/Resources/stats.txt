@@ -1,0 +1,1 @@
+﻿percentage_human_survival;percentage_zombies_killed

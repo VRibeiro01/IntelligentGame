@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using JAZG.Model.Learning;
 using JAZG.Model.Objects;
@@ -26,9 +28,23 @@ namespace JAZG.Model
         public CollisionEnvironment<Player, Item> Environment { get; set; }
         public IAgentManager AgentManager { get; private set; }
 
-        public QHumanLearning QHumanLearning;
+        public List<QHumanLearning> QHumanLearningList=new();
+      // TODO get from config file
+        public int amountOfMinds=5;
 
-        // TODO get from config file
+        // if true gaming statistics will be saved on to file stats.txt
+        public bool SaveStats = true;
+
+        //-------------------- Needed for statistics---------------------------------
+        public int ZombiesKilled = 0;
+
+        public int HumansKilled = 0;
+
+        public int ZombiesSpawned;
+
+        public int HumansSpawned;
+      //-----------------------------------------------------------------------------
+        
         /// <summary>
         // 0 --> The agents will move without the QLearning algorithm
         // 1 --> A new Qtable will be created 
@@ -55,7 +71,7 @@ namespace JAZG.Model
             AgentManager = layerInitData.Container.Resolve<IAgentManager>();
 
             // initialize QLearning of humans
-            initQHumanLearning();
+            InitQHumanLearning();
 
             //Create and register agents
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
@@ -65,24 +81,30 @@ namespace JAZG.Model
                 human.BrainNr = i % 5;
             }).ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
+
+            HumansSpawned = humanAgents.Count;
+            ZombiesSpawned = zombieAgents.Count;
+            
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
 
 
             return true;
         }
-
-        // TODO: init im Human
-        public void initQHumanLearning()
+        
+        public void  InitQHumanLearning()
         {
-            QHumanLearning = new QHumanLearning();
+            for (int i = 0; i < amountOfMinds; i++)
+            {
+                QHumanLearningList.Add(new QHumanLearning());
+            }
             if (learningMode == 0)
             {
                 return;
             }
             if (learningMode == 1)
             {
-                Console.WriteLine("New QTable created");
+                Console.WriteLine("New QTables created");
                 return;
             }
 
@@ -92,14 +114,19 @@ namespace JAZG.Model
             }
 
             // TODO: Pfad anpassen
-            // TODO: Ein File (qtable) pro Human, Files in Init File zuordnen, wenn mehr Humans als Zeilen in Init -> Zeilen öfter durchlaufen
-            QHumanLearning.QLearning = QHumanLearning.Deserialize(@"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning.txt");
+            var basePath = "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources";
+            for (int i = 0; i < amountOfMinds; i++)
+            {
+                QHumanLearningList[i].QLearning = QHumanLearning.Deserialize(Path.Combine(basePath,"HumanLearning" + i + ".txt"));
+            }
+          //  QHumanLearning.Deserialize(@"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning1.txt");
         }
 
         // Helper method to find random position within the bounds of the layer
         public Position FindRandomPosition()
         {
             var random = RandomHelper.Random;
+            //TODO Fix Position out of bounds when inserting into environment
             return Position.CreatePosition(random.Next(0 + outerWallOffset, Width - outerWallOffset),
                 random.Next(0 + outerWallOffset, Height - outerWallOffset));
         }

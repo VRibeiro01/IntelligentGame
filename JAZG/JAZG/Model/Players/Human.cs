@@ -45,7 +45,8 @@ namespace JAZG.Model.Players
         {
             if (Layer.learningMode > 0)
             {
-                Layer.QHumanLearning.QMovement(this);
+                var mindIndex = RandomHelper.Random.Next(Layer.amountOfMinds);
+                Layer.QHumanLearningList[mindIndex].QMovement(this);
             }
             else
             {
@@ -127,6 +128,7 @@ namespace JAZG.Model.Players
         public override void Kill()
         {
             base.Kill();
+            Layer.HumansKilled++;
             Console.WriteLine("They got me! Leave me behind... arghhh!");
         }
 

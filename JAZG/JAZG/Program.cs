@@ -2,10 +2,8 @@
 using System.IO;
 using System.Linq;
 using JAZG.Model;
-using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using JAZG.Model.Players;
-using Mars.Components.Services.Learning;
 using Mars.Components.Starter;
 using Mars.Interfaces.Model;
 
@@ -44,13 +42,27 @@ namespace JAZG
 
             // Serialize QTable 
             FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
+            //TODO change basePath
+            var basePath = "C:\\Users\\vivia\\mars\\jazg\\JAZG\\JAZG\\Resources";
             if (layer.learningMode > 0)
             {
-                layer.QHumanLearning.Serialize(
-                    "Resources\\HumanLearning.txt");
+                for (int i = 0; i < layer.amountOfMinds; i++)
+                {
+                    layer.QHumanLearningList[i].Serialize(
+                        Path.Combine(basePath, "HumanLearning" + i + ".txt"));
+                }
             }
 
-            // TODO Statistiken zu Spielen automatisch in Datei speichern
+            // TODO Add training loop to program and current learning interation to statistics
+            // Save game statistics in file
+            if (layer.SaveStats)
+            {
+                var statsText = "\n" + (double)(layer.HumansSpawned - layer.HumansKilled) / layer.HumansSpawned +";"+
+                                (double) layer.ZombiesKilled / layer.ZombiesSpawned ;
+                File.AppendAllText(Path.Combine(basePath, "stats.txt"), statsText);
+                Console.WriteLine("Statistics saved!");
+                
+            }
             Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."
