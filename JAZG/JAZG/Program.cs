@@ -29,9 +29,7 @@ namespace JAZG
             start.Arguments = "";
             //start.WorkingDirectory = "..\\..\\..\\..\\Visualization";
             start.UseShellExecute = true;
-            using (Process process = Process.Start(start))
-            {
-            }
+            Process.Start(start); //Comment this for no visualization
             
             var description = new ModelDescription();
 
