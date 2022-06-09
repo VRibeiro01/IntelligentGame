@@ -23,13 +23,13 @@ namespace JAZG
             
             //TODO change basePath
             var basePath = @"..\..\..\Resources";
-            ProcessStartInfo start = new ProcessStartInfo();
+            /*ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
             bool exists = File.Exists(start.FileName);
             start.Arguments = "";
             //start.WorkingDirectory = "..\\..\\..\\..\\Visualization";
             start.UseShellExecute = true;
-            Process.Start(start); //Comment this for no visualization
+            Process.Start(start); //Comment this for no visualization*/
             
             var description = new ModelDescription();
 

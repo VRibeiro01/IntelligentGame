@@ -211,9 +211,7 @@ namespace JAZG.Model.Players
 
         private static double Modulo(double a, double b)
         {
-            var div = b / a;
-            var rest = div - Math.Truncate(div);
-            return a * rest;
+            return (a % b + b) % b;
         }
     }
 }

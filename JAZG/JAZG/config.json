@@ -27,12 +27,12 @@
     {
       "name": "Gun",
       "pythonVisualizationWithProperties": true,
-      "count": 10
+      "count": 0
     },
     {
       "name": "M16",
       "pythonVisualizationWithProperties": true,
-      "count": 7
+      "count": 0
     }
   ],
   "layers": [
