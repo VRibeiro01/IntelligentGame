@@ -98,6 +98,8 @@ namespace JAZG.Model.Players
             if (double.IsNaN(directionFromEnemies))
                 directionFromEnemies = RandomHelper.Random.Next(360);
 
+            Layer.Environment.FindRoute(this, Mars.Interfaces.Environments.Position.CreatePosition(50, 50));
+
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
@@ -113,14 +115,16 @@ namespace JAZG.Model.Players
         {
             if (weapons.Count == 0)
             {
-              Console.WriteLine("there is no Weapons ");
-              return false;
+                Console.WriteLine("there is no Weapons ");
+                return false;
             }
+
             var weaponIndex = weapons.FindIndex(e => e is M16);
-            if (weaponIndex < 0)
+            if (weaponIndex > 0)
             {
-             return weapons[weaponIndex].Use(zombie);
+                return weapons[weaponIndex].Use(zombie);
             }
+
             return weapons[0].Use(zombie);
         }
 
