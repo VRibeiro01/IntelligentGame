@@ -98,8 +98,6 @@ namespace JAZG.Model.Players
             if (double.IsNaN(directionFromEnemies))
                 directionFromEnemies = RandomHelper.Random.Next(360);
 
-            Layer.Environment.FindRoute(this, Mars.Interfaces.Environments.Position.CreatePosition(50, 50));
-
             Layer.Environment.Move(this, directionFromEnemies, 2);
         }
 
