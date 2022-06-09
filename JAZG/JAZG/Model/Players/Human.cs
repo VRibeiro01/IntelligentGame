@@ -21,6 +21,8 @@ namespace JAZG.Model.Players
         private int _maxSeeingDistance;
         public List<Weapon> weapons = new();
         public int BrainNr;
+        public bool WallCollision;
+        public Wall BlockingWall;
 
         // TODO: change to enum
         public int HasWeapon { get; set; }
@@ -61,7 +63,7 @@ namespace JAZG.Model.Players
         public Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
-            return (Zombie) FindZombies().OrderBy(GetDistanceFromPlayer).FirstOrDefault();
+            return (Zombie)FindZombies().OrderBy(GetDistanceFromPlayer).FirstOrDefault();
         }
 
         public List<Player> FindZombies()
@@ -72,7 +74,7 @@ namespace JAZG.Model.Players
 
         public Weapon FindClosestWeapon()
         {
-            return (Weapon) Layer.Environment
+            return (Weapon)Layer.Environment
                 .ExploreObstacles(_boundaryBoxGeometry,
                     item => item is Weapon && GetDistanceFromItem(item) <= _maxSeeingDistance)
                 .OrderBy(GetDistanceFromItem).FirstOrDefault();
@@ -99,6 +101,20 @@ namespace JAZG.Model.Players
                 directionFromEnemies = RandomHelper.Random.Next(360);
 
             Layer.Environment.Move(this, directionFromEnemies, 2);
+
+            if (WallCollision)
+            {
+                WallCollision = false;
+
+                var wallBearing = BlockingWall.bearing;
+                var otherBearing = (wallBearing + 180) % 360;
+                var finalBearing =
+                    BearingDif(directionFromEnemies, wallBearing) < BearingDif(directionFromClosest, otherBearing)
+                        ? wallBearing
+                        : otherBearing;
+
+                Layer.Environment.Move(this, finalBearing, 2);
+            }
         }
 
         public void CollectItem(Item item)
@@ -212,6 +228,13 @@ namespace JAZG.Model.Players
         private static double Modulo(double a, double b)
         {
             return (a % b + b) % b;
+        }
+
+        private static double BearingDif(double a, double b)
+        {
+            var dif = Math.Abs(a - b) % 360;
+            if (dif > 180) dif = 360 - dif;
+            return dif;
         }
     }
 }
