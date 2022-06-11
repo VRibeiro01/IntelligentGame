@@ -22,14 +22,13 @@ namespace JAZG
             
             
            // ----------------------------- Start visualization -------------------------------------------------------- 
-            /*
+            
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
             bool exists = File.Exists(start.FileName);
             start.Arguments = "";
-            start.WorkingDirectory = "..\\..\\..\\..\\Visualization";
             start.UseShellExecute = true;
-            Process.Start(start);*/ //Comment this for no visualization*/
+            Process.Start(start); //Comment this for no visualization*/
             
             
             
@@ -78,7 +77,7 @@ namespace JAZG
             //----------------------------- Save game statistics in file------------------------------------------------
             if (layer.SaveStats)
             {
-                var statsText = (double)(layer.HumansSpawned - layer.HumansKilled) / layer.HumansSpawned +","+
+                var statsText = (double)(layer.HumansSpawned - layer.HumansKilled) / layer.HumansSpawned +";"+
                                 (double)layer.ZombiesKilled / layer.ZombiesSpawned +"\n";
                 File.AppendAllText(Path.Combine(basePath, "stats.txt"), statsText);
                 Console.WriteLine("Statistics saved!");
