@@ -1,9 +1,10 @@
-# JAZG
+# JAZG: Just Another Zombie Game
 
 Ein cooles, simples Zombie-Spiel, das man nicht wirklich spielen kann, weil die Spieler intelligenter sind als du.
 
+In diesem Spiel gibt es Menschen und Zombies:
 Das Ziel der Menschen ist es, möglichst viele Zombies zu töten und möglichst lange zu überleben.
-Wenn ein Mensch gefressen wird, wird er selber zum Zombie.
+Wenn ein Mensch gefressen wird, wird er selber zum Zombie. Dabei lernen die Menschen mit jedem Spielvon selbst, wie sie besser werden!
 
 Das Ziel der Zombies ist es, so viele Menschen wie möglich zu fressen, sonst sterben sie.
 Wenn alle Zombies tot sind, fängt das neue Level an und es werden weitere Zombies ins Leben geweckt.
