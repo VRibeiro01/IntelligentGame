@@ -52,8 +52,8 @@ namespace JAZG
             // ----------------------------- Start Simulation ----------------------------------------------------------
             var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
-            int learningIterations = 1;
-            for (int iterationIndex=1; iterationIndex <= learningIterations; iterationIndex++)
+            int learningIterations = 2;
+            for (int iterationIndex=2; iterationIndex <= learningIterations; iterationIndex++)
             {
                 var task = SimulationStarter.Start(description, config);
                 var loopResults = task.Run(); 

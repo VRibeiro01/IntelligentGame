@@ -50,7 +50,7 @@ namespace JAZG.Model
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
         /// </summary>
-        public int learningMode = 1;
+        public int learningMode = 2;
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
