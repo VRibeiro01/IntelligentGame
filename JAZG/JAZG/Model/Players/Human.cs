@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
-using Mars.Components.Services.Learning;
-using Mars.Numerics;
 using NetTopologySuite.Geometries;
-using ServiceStack.Text;
+
 
 namespace JAZG.Model.Players
 {
@@ -20,7 +17,6 @@ namespace JAZG.Model.Players
         private int _lastAction;
         private int _maxSeeingDistance;
         public List<Weapon> weapons = new();
-        public int BrainNr;
         public bool WallCollision;
         public Wall BlockingWall;
 
@@ -54,10 +50,6 @@ namespace JAZG.Model.Players
             {
                 NonQMovement();
             }
-
-            //TODO Search for food and weapons
-            // TODO Where to go? Where to hide? When to rest? When to kill? 
-            //TODO reduce speed when energy is reduced
         }
 
         public Zombie FindClosestZombie()
@@ -129,7 +121,7 @@ namespace JAZG.Model.Players
         {
             if (weapons.Count == 0)
             {
-                Console.WriteLine("there is no Weapons ");
+                Console.WriteLine("I don't have a weapon");
                 return false;
             }
 
@@ -213,7 +205,6 @@ namespace JAZG.Model.Players
                     }
                 }
             }
-            // TODO: remove duplicate
             else
             {
                 RandomMove();

@@ -10,27 +10,30 @@ using Mars.Interfaces.Model;
 
 namespace JAZG
 {
-    /// <summary>
-    ///     Class that sets up model, configures the scenario and starts the simulation
-    /// </summary>
+   
+    //   Class that sets up model, configures the scenario and starts the simulation
     internal static class Program
     {
         public static void Main(string[] args)
         {
             // TODO Für das Training: for-Schleife um Spiel mehrmals zu starten
-            Console.WriteLine("Hello world from Main!");
-            
-            
-            //TODO change basePath
             var basePath = @"..\..\..\Resources";
-            /*ProcessStartInfo start = new ProcessStartInfo();
+            
+            
+            
+           // ----------------------------- Start visualization -------------------------------------------------------- 
+            /*
+            ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
             bool exists = File.Exists(start.FileName);
             start.Arguments = "";
-            //start.WorkingDirectory = "..\\..\\..\\..\\Visualization";
+            start.WorkingDirectory = "..\\..\\..\\..\\Visualization";
             start.UseShellExecute = true;
-            Process.Start(start); //Comment this for no visualization*/
+            Process.Start(start);*/ //Comment this for no visualization*/
             
+            
+            
+            //----------------------------- Set up model description ---------------------------------------------------
             var description = new ModelDescription();
 
             description.AddLayer<FieldLayer>();
@@ -38,22 +41,26 @@ namespace JAZG
             // Add agents to model
             description.AddAgent<Human, FieldLayer>();
             description.AddAgent<Zombie, FieldLayer>();
-
-            // Add entities to model
             description.AddAgent<Wall, FieldLayer>();
             description.AddAgent<Gun, FieldLayer>();
             description.AddAgent<Food, FieldLayer>();
             description.AddAgent<DeadPlayer, FieldLayer>();
             description.AddAgent<M16, FieldLayer>();
-            // Get model configuration
+            //TODO Add you custom agent to the model description here!
+            //----------------------------------------------------------------------------------------------------------
+            
+            
+            
+            // ----------------------------- Start Simulation ----------------------------------------------------------
             var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
-
-            // Start Simulation
             var task = SimulationStarter.Start(description, config);
             var loopResults = task.Run();
+            // ---------------------------------------------------------------------------------------------------------
 
-            // Serialize QTable 
+            
+            
+            //----------------------------- Serialize QTables-----------------------------------------------------------
             FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
             
             if (layer.learningMode > 0)
@@ -64,17 +71,23 @@ namespace JAZG
                         Path.Combine(basePath, "HumanLearning" + i + ".txt"));
                 }
             }
+            //----------------------------------------------------------------------------------------------------------
 
             // TODO Add training loop to program and current learning interation to statistics
-            // Save game statistics in file
+            
+            //----------------------------- Save game statistics in file------------------------------------------------
             if (layer.SaveStats)
             {
-                var statsText = "\n" + (double)(layer.HumansSpawned - layer.HumansKilled) / layer.HumansSpawned +";"+
-                                (double) layer.ZombiesKilled / layer.ZombiesSpawned ;
+                var statsText = (double)(layer.HumansSpawned - layer.HumansKilled) / layer.HumansSpawned +","+
+                                (double)layer.ZombiesKilled / layer.ZombiesSpawned +"\n";
                 File.AppendAllText(Path.Combine(basePath, "stats.txt"), statsText);
                 Console.WriteLine("Statistics saved!");
                 
             }
+            //----------------------------------------------------------------------------------------------------------
+            
+            
+            
             Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
                               (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
                                   ? "All humans were killed. All hope is gone."
@@ -84,6 +97,7 @@ namespace JAZG
                               loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
             Console.WriteLine("Zombies: " +
                               loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
+            
         }
     }
 }

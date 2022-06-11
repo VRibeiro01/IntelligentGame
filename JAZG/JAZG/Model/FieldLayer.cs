@@ -29,7 +29,7 @@ namespace JAZG.Model
         public IAgentManager AgentManager { get; private set; }
 
         public List<QHumanLearning> QHumanLearningList=new();
-      // TODO get from config file
+      
         public int amountOfMinds=5;
 
         // if true gaming statistics will be saved on to file stats.txt
@@ -77,10 +77,7 @@ namespace JAZG.Model
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
             var gunAgents = AgentManager.Spawn<Gun, FieldLayer>().ToList();            
             var m16Agents = AgentManager.Spawn<M16, FieldLayer>().ToList();
-            var humanAgents = AgentManager.Spawn<Human, FieldLayer>().Do((human, i) =>
-            {
-                human.BrainNr = i % 5;
-            }).ToList();
+            var humanAgents = AgentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
 
             HumansSpawned = humanAgents.Count;
@@ -114,7 +111,7 @@ namespace JAZG.Model
                 throw new ArgumentException("learningMode must equal 0 or be larger than 0");
             }
 
-            // TODO: Pfad anpassen
+           
             var basePath = @"..\..\..\Resources";
             for (int i = 0; i < amountOfMinds; i++)
             {
