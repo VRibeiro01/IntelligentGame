@@ -30,7 +30,7 @@ namespace JAZG.Model
 
         public List<QHumanLearning> QHumanLearningList=new();
       
-        public int amountOfMinds=5;
+        public int amountOfMinds=10;
 
         // if true gaming statistics will be saved on to file stats.txt
         public bool SaveStats = true;
@@ -50,7 +50,7 @@ namespace JAZG.Model
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
         /// </summary>
-        public int learningMode = 0;
+        public int learningMode = 1;
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -85,8 +85,7 @@ namespace JAZG.Model
             
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
-
-
+          
             return true;
         }
         
@@ -117,10 +116,9 @@ namespace JAZG.Model
             {
                 QHumanLearningList[i].QLearning = QHumanLearning.Deserialize(Path.Combine(basePath,"HumanLearning" + i + ".txt"));
             }
-          //  QHumanLearning.Deserialize(@"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning1.txt");
         }
 
-        // Helper method to find random position within the bounds of the layeröoöo
+        // Helper method to find random position within the bounds of the layer
         public Position FindRandomPosition()
         {
             var random = RandomHelper.Random;

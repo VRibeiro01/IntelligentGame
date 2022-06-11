@@ -1,2 +1,2 @@
-﻿percentage_human_survival;percentage_zombies_killed
-0,5;0,11428571428571428
+﻿learning_iteration;percentage_human_survival;percentage_zombies_killed
+1;20;18,75

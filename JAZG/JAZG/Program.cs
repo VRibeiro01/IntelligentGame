@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using JAZG.Model;
@@ -21,14 +20,14 @@ namespace JAZG
             
             
             
-           // ----------------------------- Start visualization -------------------------------------------------------- 
+           // ------ Start visualization: Comment this section out if you don't want the visualization to start---------
             
-            ProcessStartInfo start = new ProcessStartInfo();
+            /*ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
             bool exists = File.Exists(start.FileName);
             start.Arguments = "";
             start.UseShellExecute = true;
-            Process.Start(start); //Comment this for no visualization*/
+            Process.Start(start);*/ 
             
             
             
@@ -53,50 +52,56 @@ namespace JAZG
             // ----------------------------- Start Simulation ----------------------------------------------------------
             var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
-            var task = SimulationStarter.Start(description, config);
-            var loopResults = task.Run();
+            int learningIterations = 1;
+            for (int iterationIndex=1; iterationIndex <= learningIterations; iterationIndex++)
+            {
+                var task = SimulationStarter.Start(description, config);
+                var loopResults = task.Run(); 
             // ---------------------------------------------------------------------------------------------------------
 
-            
-            
-            //----------------------------- Serialize QTables-----------------------------------------------------------
-            FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
-            
-            if (layer.learningMode > 0)
-            {
-                for (int i = 0; i < layer.amountOfMinds; i++)
+
+
+                //----------------------------- Serialize QTables-----------------------------------------------------------
+                FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
+
+                if (layer.learningMode > 0)
                 {
-                    layer.QHumanLearningList[i].Serialize(
-                        Path.Combine(basePath, "HumanLearning" + i + ".txt"));
+                    for (int i = 0; i < layer.amountOfMinds; i++)
+                    {
+                        layer.QHumanLearningList[i].Serialize(
+                            Path.Combine(basePath, "HumanLearning" + i + ".txt"));
+                    }
                 }
-            }
-            //----------------------------------------------------------------------------------------------------------
+                //----------------------------------------------------------------------------------------------------------
 
-            // TODO Add training loop to program and current learning interation to statistics
-            
-            //----------------------------- Save game statistics in file------------------------------------------------
-            if (layer.SaveStats)
-            {
-                var statsText = (double)(layer.HumansSpawned - layer.HumansKilled) / layer.HumansSpawned +";"+
-                                (double)layer.ZombiesKilled / layer.ZombiesSpawned +"\n";
-                File.AppendAllText(Path.Combine(basePath, "stats.txt"), statsText);
-                Console.WriteLine("Statistics saved!");
-                
-            }
-            //----------------------------------------------------------------------------------------------------------
-            
-            
-            
-            Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
-                              (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
-                                  ? "All humans were killed. All hope is gone."
-                                  : "A small group of people survived. They will rebuild civilization."));
+                // TODO add current learning interation to statistics
 
-            Console.WriteLine("Humans: " +
-                              loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
-            Console.WriteLine("Zombies: " +
-                              loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
-            
+                //----------------------------- Save game statistics in file------------------------------------------------
+                if (layer.SaveStats)
+                {
+                    var statsText =iterationIndex + ";" + 
+                                   ((double) (layer.HumansSpawned - layer.HumansKilled) / layer.HumansSpawned )*100+ ";" +
+                                   ( (double) layer.ZombiesKilled / layer.ZombiesSpawned)*100 + "\n";
+                    
+                    File.AppendAllText(Path.Combine(basePath, "stats.txt"), statsText);
+                    Console.WriteLine("Statistics saved!");
+
+                }
+                //----------------------------------------------------------------------------------------------------------
+
+
+
+                Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
+                                  (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
+                                      ? "All humans were killed. All hope is gone."
+                                      : "A small group of people survived. They will rebuild civilization."));
+
+                Console.WriteLine("Humans: " +
+                                  loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
+                Console.WriteLine("Zombies: " +
+                                  loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
+            }
+
         }
     }
 }

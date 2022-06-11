@@ -126,12 +126,23 @@ namespace JAZG.Model.Players
             }
 
             var weaponIndex = weapons.FindIndex(e => e is M16);
-            if (weaponIndex > 0)
+            if (hasM16())
             {
                 return weapons[weaponIndex].Use(zombie);
             }
 
             return weapons[0].Use(zombie);
+        }
+
+        public bool hasM16()
+        {
+            var m16 = weapons.Where(e => e is M16).ToList();
+            if (m16.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public override void Kill()
