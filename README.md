@@ -45,7 +45,7 @@ Sie bewegen sich immer zu den Menschen hin, wenn welche in der Nähe sind. Wenn 
 #### Menschen
 Das Ziel der Menschen ist, möglichst lange zu überleben und Zombies zu töten. Dafür dürfen sie nicht von Zombies gefressen werden.
 Sie können weglaufen und können Waffen einsetzen. Um Waffen einzusetzen müssen diese erstmal gesammelt werden.
-Die gesammelten Waffen werden in der Liste "weapons" festgehalten.
+Zu jeden Menschen gehört eine Liste "weapons", in der seine gesammelten Waffen festgehalten werden.
 
 Es stehen folgende Waffen zur Verfügung:
 ##### Gun
