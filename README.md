@@ -62,7 +62,7 @@ Eine M16 kann beliebig von einem Menschen abgeschossen werden, aber es hat nur a
 
 Der Agent bewegt sich um ein Feld in eine zufällige Richtung
 
-#### GetDistanceFromPlayer(Player other), GetDistanceFromItem(Item item), GetDirectionFromPlayer(Player other), GetDirectionFromItem(Item item)
+#### GetDistanceFromPlayer(Player other), GetDistanceFromItem(Item item), GetDirectionToPlayer(Player other), GetDirectionToItem(Item item)
 
 Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines anderen Spielers(Menschen und Zombies sind Spieler),
 Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines Items(Wall, Food, Gun, M16 sind Items).
