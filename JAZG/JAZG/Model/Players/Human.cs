@@ -145,7 +145,7 @@ namespace JAZG.Model.Players
             return false;
         }
 
-        public override void Kill()
+        protected internal override void Kill()
         {
             base.Kill();
             Layer.HumansKilled++;

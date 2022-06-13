@@ -33,7 +33,7 @@ namespace JAZG.Model
         public int amountOfMinds=10;
 
         // if true gaming statistics will be saved on to file stats.txt
-        public bool SaveStats = true;
+        public bool SaveStats = false;
 
         //-------------------- Needed for statistics---------------------------------
         public int ZombiesKilled = 0;
@@ -79,6 +79,7 @@ namespace JAZG.Model
             var m16Agents = AgentManager.Spawn<M16, FieldLayer>().ToList();
             var humanAgents = AgentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
+            var customHumanAgents = AgentManager.Spawn<CustomHuman, FieldLayer>().ToList();
 
             HumansSpawned = humanAgents.Count;
             ZombiesSpawned = zombieAgents.Count;

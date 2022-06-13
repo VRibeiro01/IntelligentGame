@@ -7,11 +7,12 @@ using JAZG.Model.Players;
 using Mars.Components.Starter;
 using Mars.Interfaces.Model;
 
+
 namespace JAZG
 {
    
     //   Class that sets up model, configures the scenario and starts the simulation
-    internal static class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -44,6 +45,7 @@ namespace JAZG
             description.AddAgent<Food, FieldLayer>();
             description.AddAgent<DeadPlayer, FieldLayer>();
             description.AddAgent<M16, FieldLayer>();
+            description.AddAgent<CustomHuman, FieldLayer>();
             //TODO Add you custom agent to the model description here!
             //----------------------------------------------------------------------------------------------------------
             
@@ -52,8 +54,8 @@ namespace JAZG
             // ----------------------------- Start Simulation ----------------------------------------------------------
             var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
-            int learningIterations = 1000;
-            for (int iterationIndex=63; iterationIndex <= learningIterations; iterationIndex++)
+            int learningIterations = 1;
+            for (int iterationIndex=1; iterationIndex <= learningIterations; iterationIndex++)
             {
                 var task = SimulationStarter.Start(description, config);
                 var loopResults = task.Run(); 
@@ -64,7 +66,7 @@ namespace JAZG
                 //----------------------------- Serialize QTables-----------------------------------------------------------
                 FieldLayer layer = (FieldLayer) loopResults.Model.Layers.Values.First();
 
-                if (layer.learningMode > 0)
+                if (layer.learningMode > 1)
                 {
                     for (int i = 0; i < layer.amountOfMinds; i++)
                     {
@@ -73,8 +75,7 @@ namespace JAZG
                     }
                 }
                 //----------------------------------------------------------------------------------------------------------
-
-                // TODO add current learning interation to statistics
+                
 
                 //----------------------------- Save game statistics in file------------------------------------------------
                 if (layer.SaveStats)

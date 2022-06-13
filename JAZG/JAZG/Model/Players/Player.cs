@@ -22,8 +22,9 @@ namespace JAZG.Model.Players
         [PropertyDescription] public UnregisterAgent UnregisterHandle { get; set; }
 
         protected FieldLayer Layer { get; set; }
-        public int Energy { get; set; }
-        public int Speed { get; set; }
+        
+        internal int Energy { get; set; }
+        internal int Speed { get; set; }
 
         public Guid ID { get; set; }
 
@@ -61,7 +62,7 @@ namespace JAZG.Model.Players
             Layer.Environment.Move(this, bearing, Speed);
         }
 
-        public virtual void Kill()
+        protected internal virtual void Kill()
         {
             if (Dead) return;
             Dead = true;
@@ -91,7 +92,7 @@ namespace JAZG.Model.Players
                 Position.X, Position.Y, other.Position.X, other.Position.Y);
         }
 
-        protected double GetDirectionToItem(Item item)
+        public double GetDirectionToItem(Item item)
         {
             return PositionHelper.CalculateBearingCartesian(
                 Position.X, Position.Y, item.Position.X, item.Position.Y);
