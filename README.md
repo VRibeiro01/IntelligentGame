@@ -24,12 +24,11 @@ Beim Ausführen des Projekts wird die Visualisierung automatisch gestartet. Wenn
 In dem Projekt gibt es eine Programmierschnittstelle für die eigene Implementierung der Menschenlogik.
 Dafür können alle Hilfsmethoden der Klasse Player und der Klasse Human genutzt werden.
 
+Weitere Informationen zu Hilfsmethoden sind im weiteren Verlauf dieser Dokumentation zu finden.
+
 1. In die Klassendatei "CustomHuman" gehen
-2. Klasse "PleaseRenameYourHuman" umbenennen
 3. Tick-Methode mit eigener Logik füllen
-4. Dein Agent im "Program.cs" zur Model Description unter dem entsprechenden TODO!!! hinzufügen
-5. Dein Agent im "Fieldlayer" unter dem entsprechenden TODO in der initLayer-Methode
-5. Dein Agent in der "config.json"-Datei gemäß den anderen Agenten eintragen
+
 
 Deine Agenten werden in der Visualisierung anhand ihrer roten T-shirts erkennbar sein.
 
