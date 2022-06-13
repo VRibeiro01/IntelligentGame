@@ -17,7 +17,7 @@ Wenn alle Zombies tot sind, fängt das neue Level an und es werden weitere Zombi
 3. Nuget Packet von Mars installieren
 4. Rider Projekt ausführen
 
-Beim Ausführen des Projekts wird die Visualisierung automatisch gestartet. Wenn das nicht gewünscht ist, kann die Programmzeile in "Program.cs" auskommentiert werden. Die betroffene Zeile ist im Projekt gekennzeichnet.
+Beim Ausführen des Projekts wird die Visualisierung automatisch gestartet. Wenn das nicht gewünscht ist, kann der Programmcode in "Program.cs" auskommentiert werden. Der betroffene Code ist im Projekt gekennzeichnet.
 
 # Eigene Logik implementieren
 
