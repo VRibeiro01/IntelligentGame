@@ -4,6 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using JAZG.Model.Objects;
 using JAZG.Model.Players;
 using Mars.Common.IO;
@@ -16,14 +17,14 @@ namespace JAZG.Model.Learning
     [Serializable]
     public class QHumanLearning
     {
-        // amount of possible actions: run or shoot
+        
         public static int Actions = 3;
 
         //implements method to choose next action according to Roulette Wheel 
         public static RouletteWheelExploration ExplorationPolicy = new RouletteWheelExploration();
 
-        // possible distances from zombie
-        public static int States = 1536;
+
+        public static int States = 16384;  
 
 
         // QLearning class contains table with states and a zero-initialized double array where length=actions
@@ -35,50 +36,6 @@ namespace JAZG.Model.Learning
             QLearning = new QLearning(States, Actions, ExplorationPolicy);
         }
 
-
-        // Wenn Zombies gesehen werde und Waffe vorhanden ist: Entscheidung ob laufen oder schießen anhand des QLearning-Algorithmus
-        /*public void QMovement(Human human)
-        {
-            var zombiesNearMe = human.FindZombies();
-            var closestZombie = (Zombie) zombiesNearMe.OrderBy(zombie =>
-                    Distance.Chebyshev(human.Position.PositionArray, zombie.Position.PositionArray))
-                .FirstOrDefault();
-            var nextWeapon = human.FindClosestWeapon();
-
-            if (closestZombie != null)
-            {
-                if (human.weapons.Count > 1)
-                {
-                    var state = GetState(closestZombie, zombiesNearMe, human);
-                    Console.WriteLine("State: " + state);
-
-                    // action anhand der Q-Werte für Aktionen im aktuellen Zustand
-                    // Wahrscheinlichkeit nach Roulette Wheel Policy
-                    // TODO Find out why program doesnt get past this line when using deserialized qtable!!!
-
-                    lock (QLearning)
-                    {
-                        var action = QLearning.GetAction(state);
-                        Act(action, closestZombie, nextWeapon, human);
-                        var nextState = GetState(closestZombie, zombiesNearMe, human);
-                        QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
-                            nextState);
-                    }
-                }
-                else
-                {
-                    human.RunFromZombies(closestZombie);
-                }
-            }
-            else if (human.weapons.Count < 1 && human.GetDistanceFromItem(nextWeapon) < 20)
-            {
-                human.CollectItem(nextWeapon);
-            }
-            else
-            {
-                human.RandomMove();
-            }
-        }*/
 
         public void QMovement(Human human)
         {
@@ -93,17 +50,17 @@ namespace JAZG.Model.Learning
 
             // action anhand der Q-Werte für Aktionen im aktuellen Zustand
             // Wahrscheinlichkeit nach Roulette Wheel Policy
-            // TODO Find out why program doesnt get past this line when using deserialized qtable!!!
+
 
             lock (QLearning)
             {
                 var action = QLearning.GetAction(state);
-                Act(action, closestZombie, nextWeapon, human);
+                Act(action, closestZombie, nextWeapon, human, state);
                 var nextState = GetState(closestZombie, zombiesNearMe, nextWeapon, human);
                 QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
                     nextState);
             }
-        }
+    }
 
         public int _GetState(Player closestZombie, Human human)
         {
@@ -144,16 +101,16 @@ namespace JAZG.Model.Learning
 
             var closeZombiesCount = closeZombies.Count;
             int zn1 = 0, zn2 = 0, zn3 = 0;
-            //TODO: welche Anzahlen von Zombies
+            
             switch (closeZombiesCount)
             {
                 case <= 5:
                     zn1 = 1;
                     break;
-                case <= 15:
+                case <= 10:
                     zn2 = 1;
                     break;
-                case > 15:
+                case > 10:
                     zn3 = 1;
                     break;
             }
@@ -164,46 +121,46 @@ namespace JAZG.Model.Learning
             var zombiesSouthWest = closeZombies.FindAll(zombie =>
                 human.GetDirectionToPlayer(zombie) >= 180 && human.GetDirectionToPlayer(zombie) < 270);
             var zombiesNorthWest = closeZombies.FindAll(zombie => human.GetDirectionToPlayer(zombie) >= 270);
+            
             int zl1 = 0, zl2 = 0, zl3 = 0, zl4 = 0;
-            //TODO: wieviele Zombies pro Zone?
-            if (zombiesNorthEast.Count > 4) zl1 = 1;
-            if (zombiesSouthEast.Count > 4) zl2 = 1;
-            if (zombiesSouthWest.Count > 4) zl3 = 1;
-            if (zombiesNorthWest.Count > 4) zl4 = 1;
+            if (zombiesNorthEast.Count > 2) zl1 = 1;
+            if (zombiesSouthEast.Count > 2) zl2 = 1;
+            if (zombiesSouthWest.Count > 2) zl3 = 1;
+            if (zombiesNorthWest.Count > 2) zl4 = 1;
 
             double weaponDistance;
             if (nextWeapon == null) weaponDistance = -1;
             else weaponDistance = human.GetDistanceFromItem(nextWeapon);
 
-            int wd1 = 0, wd2 = 0, wd3 = 0;
+            int wd1 = 0, wd2 = 0;
             switch (weaponDistance)
             {
                 case -1:
                     break;
-                case <= 5:
+                case <= 8:
                     wd1 = 1;
                     break;
-                case <= 15:
+                case > 8:
                     wd2 = 1;
-                    break;
-                case > 15:
-                    wd3 = 1;
                     break;
             }
 
             var w = 0;
+            var w1 = 0;
             if (human.HasWeapon > 0) w = 1;
+            if (human.hasM16()) w1 = 1;
 
-            // number of states: 4 * 3 * 16 * 4 * 2 = 1536
+            // number of states: 14 different variables that define state. Each variable can be 0 or 1: 2^14 = 16384 states
             return zd1 | (zd2 << 1) | (zd3 << 2) | (zn1 << 3) | (zn2 << 4) | (zn3 << 5) | (zl1 << 6) | (zl2 << 7) |
-                   (zl3 << 8) | (zl4 << 9) | (wd1 << 10) | (wd2 << 11) | (wd3 << 12) | (w << 13);
+                   (zl3 << 8) | (zl4 << 9) | (wd1 << 10) | (wd2 << 11) | (w << 12) | (w1 << 13);
         }
 
         // Übersetzung des Action-Index in Aktion
-        public void Act(int actionIndex, Zombie closestZombie, Weapon nextWeapon, Human human)
+        public void Act(int actionIndex, Zombie closestZombie, Weapon nextWeapon, Human human, int state)
         {
             human.IsShooting = false;
-            Console.WriteLine("action index: " + actionIndex);
+            Console.WriteLine("state: " + state + "," + "action index: " + actionIndex);
+            
             switch (actionIndex)
             {
                 case 0:

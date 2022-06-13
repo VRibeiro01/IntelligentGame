@@ -29,11 +29,11 @@ namespace JAZG.Model
         public IAgentManager AgentManager { get; private set; }
 
         public List<QHumanLearning> QHumanLearningList=new();
-      // TODO get from config file
-        public int amountOfMinds=5;
+      
+        public int amountOfMinds=10;
 
         // if true gaming statistics will be saved on to file stats.txt
-        public bool SaveStats = true;
+        public bool SaveStats = false;
 
         //-------------------- Needed for statistics---------------------------------
         public int ZombiesKilled = 0;
@@ -50,7 +50,7 @@ namespace JAZG.Model
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
         /// </summary>
-        public int learningMode = 0;
+        public int learningMode = 2;
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -77,19 +77,16 @@ namespace JAZG.Model
             var wallAgents = AgentManager.Spawn<Wall, FieldLayer>().ToList();
             var gunAgents = AgentManager.Spawn<Gun, FieldLayer>().ToList();            
             var m16Agents = AgentManager.Spawn<M16, FieldLayer>().ToList();
-            var humanAgents = AgentManager.Spawn<Human, FieldLayer>().Do((human, i) =>
-            {
-                human.BrainNr = i % 5;
-            }).ToList();
+            var humanAgents = AgentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
+            var customHumanAgents = AgentManager.Spawn<CustomHuman, FieldLayer>().ToList();
 
             HumansSpawned = humanAgents.Count;
             ZombiesSpawned = zombieAgents.Count;
             
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
-
-
+          
             return true;
         }
         
@@ -114,16 +111,15 @@ namespace JAZG.Model
                 throw new ArgumentException("learningMode must equal 0 or be larger than 0");
             }
 
-            // TODO: Pfad anpassen
+           
             var basePath = @"..\..\..\Resources";
             for (int i = 0; i < amountOfMinds; i++)
             {
                 QHumanLearningList[i].QLearning = QHumanLearning.Deserialize(Path.Combine(basePath,"HumanLearning" + i + ".txt"));
             }
-          //  QHumanLearning.Deserialize(@"Z:\develop\jazg\JAZG\JAZG\Resources\HumanLearning1.txt");
         }
 
-        // Helper method to find random position within the bounds of the layeröoöo
+        // Helper method to find random position within the bounds of the layer
         public Position FindRandomPosition()
         {
             var random = RandomHelper.Random;

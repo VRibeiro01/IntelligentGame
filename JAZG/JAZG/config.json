@@ -1,7 +1,7 @@
 ﻿{
   "globals": {
     "startPoint": "2020-01-01T00:00:00",
-    "endPoint": "2020-01-01T00:10:00",
+    "endPoint": "2020-01-01T00:01:00",
     "deltaT": 1,
     "deltaTUnit": "seconds",
     "console": false,
@@ -17,7 +17,12 @@
     {
       "name": "Zombie",
       "pythonVisualizationWithProperties": true,
-      "count": 20
+      "count": 40
+    },
+    {
+      "name": "CustomHuman",
+      "pythonVisualizationWithProperties": true,
+      "count": 5
     },
     {
       "name": "Wall",
@@ -27,12 +32,12 @@
     {
       "name": "Gun",
       "pythonVisualizationWithProperties": true,
-      "count": 3
+      "count": 10
     },
     {
       "name": "M16",
       "pythonVisualizationWithProperties": true,
-      "count": 5
+      "count": 10
     }
   ],
   "layers": [

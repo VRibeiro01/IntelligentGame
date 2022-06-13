@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using Mars.Common;
 using Mars.Common.Core.Random;
-using Mars.Components.Services.Learning;
-using Mars.Numerics;
 using NetTopologySuite.Geometries;
-using ServiceStack.Text;
+
 
 namespace JAZG.Model.Players
 {
@@ -20,7 +17,8 @@ namespace JAZG.Model.Players
         private int _lastAction;
         private int _maxSeeingDistance;
         public List<Weapon> weapons = new();
-        public int BrainNr;
+        public bool WallCollision;
+        public Wall BlockingWall;
 
         // TODO: change to enum
         public int HasWeapon { get; set; }
@@ -52,16 +50,12 @@ namespace JAZG.Model.Players
             {
                 NonQMovement();
             }
-
-            //TODO Search for food and weapons
-            // TODO Where to go? Where to hide? When to rest? When to kill? 
-            //TODO reduce speed when energy is reduced
         }
 
         public Zombie FindClosestZombie()
         {
             // Sichtfeld des Menschen einschränken
-            return (Zombie) FindZombies().OrderBy(GetDistanceFromPlayer).FirstOrDefault();
+            return (Zombie)FindZombies().OrderBy(GetDistanceFromPlayer).FirstOrDefault();
         }
 
         public List<Player> FindZombies()
@@ -72,7 +66,7 @@ namespace JAZG.Model.Players
 
         public Weapon FindClosestWeapon()
         {
-            return (Weapon) Layer.Environment
+            return (Weapon)Layer.Environment
                 .ExploreObstacles(_boundaryBoxGeometry,
                     item => item is Weapon && GetDistanceFromItem(item) <= _maxSeeingDistance)
                 .OrderBy(GetDistanceFromItem).FirstOrDefault();
@@ -81,24 +75,38 @@ namespace JAZG.Model.Players
         public void RunFromZombies(Player closestZombie)
         {
             // TODO: do not run into walls
-            var directionFromClosest = (GetDirectionToPlayer(closestZombie) + 180) % 360;
+            var directionFromClosest = Modulo(GetDirectionToPlayer(closestZombie) + 180, 360);
             var directionFromEnemies = directionFromClosest;
             var closestDistance = GetDistanceFromPlayer(closestZombie);
             var zombies = FindZombies();
             foreach (var zombie in zombies)
             {
                 if (zombie == closestZombie) continue;
-                var directionFromEnemy = (GetDirectionToPlayer(zombie) + 180) % 360;
+                var directionFromEnemy = Modulo(GetDirectionToPlayer(zombie) + 180, 360);
                 var directionToClosest = directionFromEnemy - directionFromClosest;
                 directionFromEnemies =
-                    (directionFromEnemies + closestDistance / GetDirectionToPlayer(zombie) * directionToClosest) % 360;
+                    Modulo(directionFromEnemies + closestDistance / GetDirectionToPlayer(zombie) * directionToClosest,
+                        360);
             }
 
             if (double.IsNaN(directionFromEnemies))
                 directionFromEnemies = RandomHelper.Random.Next(360);
 
-
             Layer.Environment.Move(this, directionFromEnemies, 2);
+
+            if (WallCollision)
+            {
+                WallCollision = false;
+
+                var wallBearing = BlockingWall.bearing;
+                var otherBearing = (wallBearing + 180) % 360;
+                var finalBearing =
+                    BearingDif(directionFromEnemies, wallBearing) < BearingDif(directionFromClosest, otherBearing)
+                        ? wallBearing
+                        : otherBearing;
+
+                Layer.Environment.Move(this, finalBearing, 2);
+            }
         }
 
         public void CollectItem(Item item)
@@ -111,10 +119,33 @@ namespace JAZG.Model.Players
 
         public bool UseWeapon(Zombie zombie)
         {
+            if (weapons.Count == 0)
+            {
+                Console.WriteLine("I don't have a weapon");
+                return false;
+            }
+
+            var weaponIndex = weapons.FindIndex(e => e is M16);
+            if (hasM16())
+            {
+                return weapons[weaponIndex].Use(zombie);
+            }
+
             return weapons[0].Use(zombie);
         }
 
-        public override void Kill()
+        public bool hasM16()
+        {
+            var m16 = weapons.Where(e => e is M16).ToList();
+            if (m16.Count > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected internal override void Kill()
         {
             base.Kill();
             Layer.HumansKilled++;
@@ -185,7 +216,6 @@ namespace JAZG.Model.Players
                     }
                 }
             }
-            // TODO: remove duplicate
             else
             {
                 RandomMove();
@@ -195,6 +225,18 @@ namespace JAZG.Model.Players
                     _lastAction = 1;
                 }
             }
+        }
+
+        private static double Modulo(double a, double b)
+        {
+            return (a % b + b) % b;
+        }
+
+        private static double BearingDif(double a, double b)
+        {
+            var dif = Math.Abs(a - b) % 360;
+            if (dif > 180) dif = 360 - dif;
+            return dif;
         }
     }
 }

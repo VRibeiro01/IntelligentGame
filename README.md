@@ -1,9 +1,10 @@
-# JAZG
+# JAZG: Just Another Zombie Game
 
 Ein cooles, simples Zombie-Spiel, das man nicht wirklich spielen kann, weil die Spieler intelligenter sind als du.
 
+In diesem Spiel gibt es Menschen und Zombies:
 Das Ziel der Menschen ist es, möglichst viele Zombies zu töten und möglichst lange zu überleben.
-Wenn ein Mensch gefressen wird, wird er selber zum Zombie.
+Wenn ein Mensch gefressen wird, wird er selber zum Zombie. Dabei lernen die Menschen mit jedem Spielvon selbst, wie sie besser werden!
 
 Das Ziel der Zombies ist es, so viele Menschen wie möglich zu fressen, sonst sterben sie.
 Wenn alle Zombies tot sind, fängt das neue Level an und es werden weitere Zombies ins Leben geweckt.
@@ -14,8 +15,9 @@ Wenn alle Zombies tot sind, fängt das neue Level an und es werden weitere Zombi
 1. Requirements der Visualierung installieren (pip install -r requirements.txt)
 2. C# Projekt in Rider öffnen
 3. Nuget Packet von Mars installieren
-4. Main.py der Visualisierung ausführen (in JAZG/Visualization, NICHT die offizielle)
-5. Rider Projekt ausführen
+4. Rider Projekt ausführen
+
+Beim Ausführen des Projekts wird die Visualisierung automatisch gestartet. Wenn das nicht gewünscht ist, kann der Programmcode in "Program.cs" auskommentiert werden. Der betroffene Code ist im Projekt gekennzeichnet.
 
 # Eigene Logik implementieren
 
@@ -43,13 +45,14 @@ Sie bewegen sich immer zu den Menschen hin, wenn welche in der Nähe sind. Wenn 
 #### Menschen
 Das Ziel der Menschen ist, möglichst lange zu überleben und Zombies zu töten. Dafür dürfen sie nicht von Zombies gefressen werden.
 Sie können weglaufen und können Waffen einsetzen. Um Waffen einzusetzen müssen diese erstmal gesammelt werden.
+Zu jeden Menschen gehört eine Liste "weapons", in der seine gesammelten Waffen festgehalten werden.
 
 Es stehen folgende Waffen zur Verfügung:
-1. Gun
+##### Gun
 Gun trifft einen Zombie mit 50% Wahrscheinlichkeit und entnimmt dem getroffenen Zombie 15 Energiepunkte.
 Ein Gun kann beliebig von einem Menschen abgeschossen werden, aber es hat nur alle 8 Ticks einen Effekt.
 
-2. M16
+##### M16
 Eine M16 trifft einem Zombie mit 30% Wahrscheinlichkeit und entnimmt dem getroffenen Zombie 30 Energiepunkte.
 Eine M16 kann beliebig von einem Menschen abgeschossen werden, aber es hat nur alle 5 Ticks einen Effekt.
 
@@ -59,10 +62,32 @@ Eine M16 kann beliebig von einem Menschen abgeschossen werden, aber es hat nur a
 
 Der Agent bewegt sich um ein Feld in eine zufällige Richtung
 
-#### GetDistanceFromPlayer(Player other), GetDistanceFromItem(Item item), GetDirectionFromPlayer(Player other), GetDirectionFromItem(Item item)
+#### GetDistanceFromPlayer(Player other), GetDistanceFromItem(Item item), GetDirectionToPlayer(Player other), GetDirectionToItem(Item item)
 
 Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines anderen Spielers(Menschen und Zombies sind Spieler),
 Liefert die Entfernung/Richtung zwischen dem aufrufenden Agenten und eines Items(Wall, Food, Gun, M16 sind Items).
+
+
+#### FindClosestWeapon()
+Liefert eine Referenz auf die nächste Waffe, die sich in einem Umkreis von 20 Feldern befindet. Liefert null, wenn keine Waffe in der Nähe ist.
+
+#### FindClosestZombie()
+Liefert eine Referenz auf den nächsten Zombie, der sich in einem Umkreis von 20 Feldern befindet. Liefert null, wenn kein Zombie in der Nähe ist.
+
+#### FindZombies()
+Liefert eine Liste von Zombies, die sich in einem Umkreis von 20 Feldern befinden. Die Liste ist leer, wenn sich keine Zombies in der Umgebung befinden.
+
+#### UseWeapon(Zombie zombie)
+
+Wenn der Mensch eine M16 eingesammelt hat, wird diese Waffe einsetzt, ansonsten wird Gun eingesetzt.
+Wenn der Mensch noch keine Waffen einsammelt hat, liefert die Methode false.
+
+#### CollectItem(Item item)
+Der Mensch bewegt sich in die Richtung von item (z.B. Gun). 
+Sobald der Mensch mit dem Item "kollidiert", wird es eingesammelt.
+
+#### RunFromZombies(Player closestZombie)
+Der Mensch bewegt sich um zwei Felder weg von allen Zombies um sich herum (soweit möglich).
 
 
 # Authors 

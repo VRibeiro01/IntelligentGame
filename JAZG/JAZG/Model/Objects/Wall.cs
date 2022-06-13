@@ -1,4 +1,6 @@
 ﻿using System;
+using JAZG.Model.Players;
+using Mars.Common;
 using Mars.Components.Environments.Cartesian;
 using Mars.Interfaces.Annotations;
 using NetTopologySuite.Geometries;
@@ -19,6 +21,8 @@ namespace JAZG.Model.Objects
         [PropertyDescription(Name = "xright")] public int xRight { get; set; }
 
         [PropertyDescription(Name = "yright")] public int yRight { get; set; }
+        
+        [PropertyDescription(Name = "bearing")] public int bearing { get; set; }
 
         public override void Init(FieldLayer layer)
         {
@@ -40,9 +44,12 @@ namespace JAZG.Model.Objects
 
         public override CollisionKind? HandleCollision(ICharacter character)
         {
-           // Console.WriteLine("STOP. This is a wall!");
-           
-           return CollisionKind.Block;
+            if (character is Human human)
+            {
+                human.WallCollision = true;
+                human.BlockingWall = this;
+            }
+            return CollisionKind.Block;
         }
 
         public override VisibilityKind? HandleExploration(ICharacter explorer)

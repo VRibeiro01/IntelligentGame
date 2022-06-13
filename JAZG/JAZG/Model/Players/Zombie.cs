@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Mars.Common;
 using Mars.Numerics;
@@ -11,7 +10,7 @@ namespace JAZG.Model.Players
     {
         private int _lastAction;
 
-        private static int _level { get; set; } = 1;
+        private static int Level { get; set; } = 1;
 
         public override void Init(FieldLayer layer)
         {
@@ -34,7 +33,7 @@ namespace JAZG.Model.Players
                     EatHuman(nearestHuman);
                     //Console.WriteLine("Chomp, chomp!");
                 }
-                else if (humanDistance <= _level * 10)
+                else if (humanDistance <= Level * 10)
                 {
                     MoveTowardsHuman(nearestHuman);
                     if (_lastAction != 2)
@@ -70,15 +69,15 @@ namespace JAZG.Model.Players
             human.Kill();
         }
 
-        public override void Kill()
+        protected internal override void Kill()
         {
             base.Kill();
             Layer.ZombiesKilled++;
             Console.WriteLine("Zombie down!");
             if (AllZombiesDead())
             {
-                Console.WriteLine("you got Level " + _level);
-                _level += 1;
+                Console.WriteLine("you got Level " + Level);
+                Level += 1;
                 Spawn();
             }
         }
@@ -103,10 +102,10 @@ namespace JAZG.Model.Players
             var newZombies = Layer.AgentManager.Spawn<Zombie, FieldLayer>().ToList();
             foreach (var z in newZombies)
             {
-                z.Energy *= 2 * _level;
-                z.Speed = _level;
+                z.Energy *= 2 * Level;
+                z.Speed = Level;
             }
-            Console.WriteLine("We created " + newZombies.Count + " zombie agents." + "for level " + _level +
+            Console.WriteLine("We created " + newZombies.Count + " zombie agents." + "for level " + Level +
                               " with Energy " + newZombies.First().Energy);
             Layer.ZombiesSpawned += newZombies.Count;
         }
