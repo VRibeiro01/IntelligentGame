@@ -39,7 +39,7 @@ WINDOW_SIZE = 800, 800
 
 mixer.init()
 
-zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\Skull and Pizza illustration.png"), (28, 28)), False, True)
+zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_cartoon-zombie-isolated-on-white-background_8078433.png"), (28, 28)), False, True)
 zombie_rect = zombie_image.get_rect()
 human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.png"), (15, 28)), False, True)
 weapon_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_gun-isolated-vector-silhouette-illustration-pistol-white_7095722.png"), (22,22)), False, True)
