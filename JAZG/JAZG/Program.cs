@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using JAZG.Model;
@@ -23,12 +24,12 @@ namespace JAZG
             
            // ------ Start visualization: Comment this section out if you don't want the visualization to start---------
             
-            /*ProcessStartInfo start = new ProcessStartInfo();
+            ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
             bool exists = File.Exists(start.FileName);
             start.Arguments = "";
             start.UseShellExecute = true;
-            Process.Start(start);*/ 
+            Process.Start(start);
             
             
             

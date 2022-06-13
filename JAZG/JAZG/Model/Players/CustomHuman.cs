@@ -82,7 +82,7 @@ namespace JAZG.Model.Players
     }
     
     
-    public class CustomHuman : AbstractCustomHuman
+    public class CustomHuman : Human
     {
         public override void Tick()
         {
