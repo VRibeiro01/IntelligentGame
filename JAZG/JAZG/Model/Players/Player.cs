@@ -23,8 +23,8 @@ namespace JAZG.Model.Players
 
         protected FieldLayer Layer { get; set; }
         
-        internal int Energy { get; set; }
-        internal int Speed { get; set; }
+        public int Energy { get; set; }
+        protected int Speed { get; set; }
 
         public Guid ID { get; set; }
 
