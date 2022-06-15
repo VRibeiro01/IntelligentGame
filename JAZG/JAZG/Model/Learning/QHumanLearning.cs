@@ -45,7 +45,13 @@ namespace JAZG.Model.Learning
             var closestZombie = (Zombie) zombiesNearMe.OrderBy(zombie =>
                     Distance.Chebyshev(human.Position.PositionArray, zombie.Position.PositionArray))
                 .FirstOrDefault();
+            var allAliveZombies = human.Layer.GetAllZombiesCount();
+            var allAliveHumans = human.Layer.GetAllHumansCount();
+            var oldEnergy = closestZombie.Energy;
+            var oldDistance = human.GetDistanceFromPlayer(closestZombie);
+            var hadWeapon = human.HasWeapon == 4 || human.HasWeapon == 7;
             var nextWeapon = human.FindClosestWeapon();
+            
 
             var state = GetState(closestZombie, zombiesNearMe, nextWeapon, human);
             Console.WriteLine("State: " + state);
@@ -59,7 +65,7 @@ namespace JAZG.Model.Learning
                 var action = QLearning.GetAction(state);
                 Act(action, closestZombie, nextWeapon, human, state);
                 var nextState = GetState(closestZombie, zombiesNearMe, nextWeapon, human);
-                QLearning.UpdateState(state, action, Reward(closestZombie, state, zombiesNearMe.Count, human),
+                QLearning.UpdateState(state, action, Reward(closestZombie, oldEnergy, allAliveZombies,oldDistance,zombiesNearMe.Count, allAliveHumans,hadWeapon, human),
                     nextState);
             }
         }
@@ -192,13 +198,17 @@ namespace JAZG.Model.Learning
         // Berechnet die Bewertungsfunktion
         // GUT: Zombie tot, weniger Zombies in Sichtfeld, neue Distanz zum nächsten Zombie kleiner
         // Schlecht: Zombie lebt noch, mehr Zombies in Sichtfeld, Distanz zum nächsten Zombie kleiner
-        public double Reward(Player closestZombie, int oldDistance, int oldClosestZombiesCount, Human human)
+        public double Reward(Player closestZombie, int oldEnergy, int oldZombieCount, double oldDistance, int oldClosestZombiesCount,int oldTotalHumanCount, bool hadWeapon, Human human)
         {
             var reward = 0.0;
-            if (closestZombie.Dead)
+            if (closestZombie.Energy < oldEnergy)
+                reward += 0.25;
+
+            if (oldZombieCount > human.Layer.GetAllZombiesCount())
                 reward++;
             else
-                reward -= 0.25;
+                reward -= 0.5;
+        
 
             Player newClosestZombie = human.FindClosestZombie();
             if (newClosestZombie != null && human.GetDistanceFromPlayer(newClosestZombie) > oldDistance)
@@ -212,6 +222,14 @@ namespace JAZG.Model.Learning
                 reward -= 0.5;
 
             if (human.Dead) reward--;
+
+            if (human.Layer.GetAllHumansCount() < oldTotalHumanCount)
+                reward -= 0.5;
+
+            if (!hadWeapon && human.HasWeapon == 4)
+                reward += 0.5;
+            if (!hadWeapon && human.HasWeapon == 7)
+                reward++;
 
             return reward;
         }

@@ -30,10 +30,10 @@ namespace JAZG.Model
 
         public List<QHumanLearning> QHumanLearningList=new();
       
-        public int amountOfMinds=10;
+        public int amountOfMinds=5;
 
         // if true gaming statistics will be saved on to file stats.txt
-        public bool SaveStats = false;
+        public bool SaveStats = true;
 
         //-------------------- Needed for statistics---------------------------------
         public int ZombiesKilled = 0;
@@ -50,7 +50,7 @@ namespace JAZG.Model
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
         /// </summary>
-        public int learningMode = 0;
+        public int learningMode = 1;
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -134,6 +134,16 @@ namespace JAZG.Model
             var x = random.Next(0 + outerWallOffset * 3, Width - outerWallOffset * 3);
             var y = random.Next(0 + outerWallOffset * 3, Height - outerWallOffset * 3);
             return new Point(x, y);
+        }
+
+        public int GetAllZombiesCount()
+        {
+           return  Environment.Characters.Where(c => c is Zombie).ToList().Count;
+        }
+        
+        public int GetAllHumansCount()
+        {
+            return  Environment.Characters.Where(c => c is Human).ToList().Count;
         }
     }
 }

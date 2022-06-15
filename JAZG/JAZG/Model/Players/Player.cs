@@ -21,7 +21,7 @@ namespace JAZG.Model.Players
         public bool Dead;
         [PropertyDescription] public UnregisterAgent UnregisterHandle { get; set; }
 
-        protected FieldLayer Layer { get; set; }
+        public FieldLayer Layer { get; set; }
         
         public int Energy { get; set; }
         protected int Speed { get; set; }

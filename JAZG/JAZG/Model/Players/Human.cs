@@ -19,6 +19,8 @@ namespace JAZG.Model.Players
         public List<Weapon> weapons = new();
         public bool WallCollision;
         public Wall BlockingWall;
+        public int mindIndex;
+       
 
         // TODO: change to enum
         public int HasWeapon { get; set; }
@@ -37,13 +39,13 @@ namespace JAZG.Model.Players
             _boundaryBoxGeometry = new Polygon(new LinearRing(coordinates));
             Energy = 30;
             _maxSeeingDistance = 20;
+            mindIndex = RandomHelper.Random.Next(Layer.amountOfMinds);
         }
 
         public override void Tick()
         {
             if (Layer.learningMode > 0)
             {
-                var mindIndex = RandomHelper.Random.Next(Layer.amountOfMinds);
                 Layer.QHumanLearningList[mindIndex].QMovement(this);
             }
             else
