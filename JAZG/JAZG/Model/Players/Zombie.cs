@@ -24,6 +24,12 @@ namespace JAZG.Model.Players
             var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
 
+            if (nearestHuman is null)
+            {
+                nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(CustomHuman))
+                    .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
+            }
+            
             if (nearestHuman != null)
             {
                 var humanDistance = GetDistanceFromPlayer(nearestHuman);

@@ -43,6 +43,9 @@ namespace JAZG.Model
         public int ZombiesSpawned;
 
         public int HumansSpawned;
+        
+        public int CustomHumansSpawned;
+        
       //-----------------------------------------------------------------------------
         
         /// <summary>
@@ -83,9 +86,12 @@ namespace JAZG.Model
 
             HumansSpawned = humanAgents.Count;
             ZombiesSpawned = zombieAgents.Count;
+            CustomHumansSpawned = humanAgents.Count;
             
             Console.WriteLine("We created " + humanAgents.Count + " human agents.");
             Console.WriteLine("We created " + zombieAgents.Count + " zombie agents.");
+            Console.WriteLine("We created " + customHumanAgents.Count + " customHumanAgents agents.");
+
           
             return true;
         }

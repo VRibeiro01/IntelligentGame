@@ -21,7 +21,7 @@ namespace JAZG
             var basePath = @"..\..\..\Resources";
             
             
-            
+            /*
            // ------ Start visualization: Comment this section out if you don't want the visualization to start---------
             
             ProcessStartInfo start = new ProcessStartInfo();
@@ -30,7 +30,7 @@ namespace JAZG
             start.Arguments = "";
             start.UseShellExecute = true;
             Process.Start(start);
-            
+            */
             
             
             //----------------------------- Set up model description ---------------------------------------------------
@@ -94,7 +94,8 @@ namespace JAZG
 
 
                 Console.WriteLine("The sun rises and the night of the living dead is over...\n" +
-                                  (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count <= 0
+                                  (loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count + 
+                                      loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(CustomHuman))].Count <= 0 
                                       ? "All humans were killed. All hope is gone."
                                       : "A small group of people survived. They will rebuild civilization."));
 
@@ -102,6 +103,8 @@ namespace JAZG
                                   loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
                 Console.WriteLine("Zombies: " +
                                   loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Zombie))].Count);
+                Console.WriteLine("CustomHumans: " +
+                                  loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(CustomHuman))].Count);
             }
 
         }
