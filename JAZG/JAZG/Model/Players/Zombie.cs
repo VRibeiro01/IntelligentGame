@@ -21,7 +21,8 @@ namespace JAZG.Model.Players
         public override void Tick()
         {
             if (Energy <= 0) Kill();
-            var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human))
+            var nearestHuman = Layer.Environment.Characters
+                .Where(h => h.GetType() == typeof(Human) || h.GetType() == typeof(CustomHuman))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
 
             if (nearestHuman != null)
@@ -38,7 +39,7 @@ namespace JAZG.Model.Players
                     MoveTowardsHuman(nearestHuman);
                     if (_lastAction != 2)
                     {
-                       // Console.WriteLine("Braaaaaains!");
+                        // Console.WriteLine("Braaaaaains!");
                         _lastAction = 2;
                     }
                 }
@@ -105,6 +106,7 @@ namespace JAZG.Model.Players
                 z.Energy *= 2 * Level;
                 z.Speed = Level;
             }
+
             Console.WriteLine("We created " + newZombies.Count + " zombie agents." + "for level " + Level +
                               " with Energy " + newZombies.First().Energy);
             Layer.ZombiesSpawned += newZombies.Count;
