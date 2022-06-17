@@ -22,7 +22,7 @@ namespace JAZG.Model.Players
         [PropertyDescription] public UnregisterAgent UnregisterHandle { get; set; }
 
         public FieldLayer Layer { get; set; }
-        
+
         public int Energy { get; set; }
         protected int Speed { get; set; }
 
@@ -76,12 +76,16 @@ namespace JAZG.Model.Players
 
         public double GetDistanceFromPlayer(Player other)
         {
+            if (other is null) return 999;
+
             return Distance.Chebyshev(
                 Position.PositionArray, other.Position.PositionArray);
         }
 
         public double GetDistanceFromItem(Item item)
         {
+            if (item is null) return 999;
+
             return Distance.Chebyshev(
                 Position.PositionArray, item.Position.PositionArray);
         }

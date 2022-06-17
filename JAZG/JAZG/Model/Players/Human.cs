@@ -20,7 +20,7 @@ namespace JAZG.Model.Players
         public bool WallCollision;
         public Wall BlockingWall;
         public int mindIndex;
-       
+
 
         // TODO: change to enum
         public int HasWeapon { get; set; }
@@ -76,6 +76,8 @@ namespace JAZG.Model.Players
 
         public void RunFromZombies(Player closestZombie)
         {
+            if (closestZombie is null) return;
+
             // TODO: do not run into walls
             var directionFromClosest = Modulo(GetDirectionToPlayer(closestZombie) + 180, 360);
             var directionFromEnemies = directionFromClosest;
@@ -113,6 +115,8 @@ namespace JAZG.Model.Players
 
         public void CollectItem(Item item)
         {
+            if (item is null) return;
+
             var distanceToItem = GetDistanceFromItem(item);
             var directionToItem = GetDirectionToItem(item);
             if (double.IsNaN(directionToItem)) directionToItem = RandomHelper.Random.Next(360);
@@ -121,6 +125,8 @@ namespace JAZG.Model.Players
 
         public bool UseWeapon(Zombie zombie)
         {
+            if (zombie is null) return false;
+
             if (weapons.Count == 0)
             {
                 Console.WriteLine("I don't have a weapon");
