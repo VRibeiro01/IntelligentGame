@@ -17,7 +17,6 @@ namespace JAZG
     {
         public static void Main(string[] args)
         {
-            // TODO Für das Training: for-Schleife um Spiel mehrmals zu starten
             var basePath = @"..\..\..\Resources";
             
             
@@ -55,8 +54,8 @@ namespace JAZG
             // ----------------------------- Start Simulation ----------------------------------------------------------
             var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
-            int learningIterations = 500;
-            for (int iterationIndex=310; iterationIndex <= learningIterations; iterationIndex++)
+            int learningIterations = 900;
+            for (int iterationIndex=577; iterationIndex <= learningIterations; iterationIndex++)
             {
                 var task = SimulationStarter.Start(description, config);
                 var loopResults = task.Run(); 

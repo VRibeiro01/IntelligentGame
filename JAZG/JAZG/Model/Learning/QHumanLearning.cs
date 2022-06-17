@@ -64,7 +64,14 @@ namespace JAZG.Model.Learning
             {
                 var action = QLearning.GetAction(state);
                 Act(action, closestZombie, nextWeapon, human, state);
-                var nextState = GetState(closestZombie, zombiesNearMe, nextWeapon, human);
+                
+                var nextZombiesNearMe = human.FindZombies();
+                var nextClosestZombie = (Zombie) zombiesNearMe.OrderBy(zombie =>
+                        Distance.Chebyshev(human.Position.PositionArray, zombie.Position.PositionArray))
+                    .FirstOrDefault();
+                var nextNearestWeapon = human.FindClosestWeapon();
+                
+                var nextState = GetState(nextClosestZombie, nextZombiesNearMe, nextNearestWeapon, human);
                 QLearning.UpdateState(state, action, Reward(closestZombie, oldEnergy, allAliveZombies,oldDistance,zombiesNearMe.Count, allAliveHumans,hadWeapon, human),
                     nextState);
             }
