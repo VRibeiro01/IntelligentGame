@@ -21,7 +21,7 @@ namespace JAZG.Model.Players
         public override void Tick()
         {
             if (Energy <= 0) Kill();
-            var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human))
+            var nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(Human) || h.GetType() == typeof(CustomHuman))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
 
             if (nearestHuman != null)

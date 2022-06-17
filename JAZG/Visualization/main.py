@@ -39,16 +39,16 @@ WINDOW_SIZE = 800, 800
 
 mixer.init()
 
-zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_cartoon-zombie-isolated-on-white-background_8078433.png"), (28, 28)), False, True)
+zombie_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_cartoon-zombie-isolated-on-white-background_8078433.png"), (28, 28)), False, True)
 zombie_rect = zombie_image.get_rect()
-human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.png"), (15, 28)), False, True)
-weapon_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_gun-isolated-vector-silhouette-illustration-pistol-white_7095722.png"), (22,22)), False, True)
-wall_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\grunge brick wall texture 1201.jpg"), (32,32)), False, True)
-food_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_nigiri-sushi-japanese-food__preview_rev_1.png"), (22,22)), False, True)
-corpse_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_halloween-zombie-hand-coming-out-from-grave_.png"), (22,22)), False, True)
-muzzle_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\muzzleflash.png"), (20,20)), False, True)
-m16_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_m16-usa-automatic-machine-assault-rifle-silhouette-flat_.png"), (32,32)), False, True)
-custom_human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("..\..\..\..\Visualization\\vecteezy_vector-design-with-the-theme-of-people-s-characters-such-as_7971120.png"), (32,32)), False, True)
+human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_post-apocalyptic-character-poor-people-in-damaged-city-war_3498661.png"), (15, 28)), False, True)
+weapon_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_gun-isolated-vector-silhouette-illustration-pistol-white_7095722.png"), (22,22)), False, True)
+wall_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("grunge brick wall texture 1201.jpg"), (32,32)), False, True)
+food_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_nigiri-sushi-japanese-food__preview_rev_1.png"), (22,22)), False, True)
+corpse_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_halloween-zombie-hand-coming-out-from-grave_.png"), (22,22)), False, True)
+muzzle_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("muzzleflash.png"), (20,20)), False, True)
+m16_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_m16-usa-automatic-machine-assault-rifle-silhouette-flat_.png"), (32,32)), False, True)
+custom_human_image = pygame.transform.flip(pygame.transform.scale(pygame.image.load("vecteezy_vector-design-with-the-theme-of-people-s-characters-such-as_7971120.png"), (32,32)), False, True)
 
 #https://stackoverflow.com/a/67509308
 def Move(rotation, steps, position):
@@ -74,7 +74,7 @@ class Visualization:
         pygame.init()
         pygame.display.set_caption("MARS-Mini-VIS")
 
-        self.programIcon = pygame.image.load('..\..\..\..\Visualization\\icon.png')
+        self.programIcon = pygame.image.load('icon.png')
         pygame.display.set_icon(self.programIcon)
 
         self.clock = pygame.time.Clock()
@@ -266,8 +266,8 @@ class Visualization:
                                     ((y - self.WORLD_SIZE[1]) * scale_y) - (28/2)))
                     if(entity["p"]["IsShooting"]):
                        print("shooting")
-                       #mixer.music.load("..\..\..\..\Visualization\\GunShotSnglShotIn PE1097906.mp3")
-                       mixer.Sound("..\..\..\..\Visualization\\GunShotSnglShotIn_PE1097906.mp3").play()
+                       #mixer.music.load("GunShotSnglShotIn PE1097906.mp3")
+                       mixer.Sound("GunShotSnglShotIn_PE1097906.mp3").play()
                        
                     if(entity["p"]["HasWeapon"] > 0):
                         if(entity["p"]["HasWeapon"] == 4):
