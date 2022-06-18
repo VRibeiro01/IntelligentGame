@@ -88,7 +88,7 @@ namespace JAZG.Model.Players
     {
         public override void Tick()
         {
-            //Console.WriteLine("Tick from custom human");
+            Console.WriteLine("Tick from custom human");
             var zombies = FindZombies();
             var speed = zombies.IsEmpty() ? 0 : Math.Max(1, 
                 Math.Floor((double) zombies.OrderByDescending(zombie => zombie.Energy).FirstOrDefault().Energy / 15));
@@ -128,20 +128,15 @@ namespace JAZG.Model.Players
             {
                 if (((sDistance / cooldown) + 1) * damage >= cZombie.Energy)
                 {
-                    if (!UseWeapon(cZombie))
-                    {
-                        RunFromZombies(cZombie);
-                    }
-                } else if (((sDistance / cooldown) + 1) * damage >= lZombie.Energy)
+                    if (!UseWeapon(cZombie)) RunFromZombies(cZombie); 
+                } 
+                else if (((sDistance / cooldown) + 1) * damage >= lZombie.Energy)
                 {
-                    if (!UseWeapon(lZombie))
-                    {
-                        RunFromZombies(cZombie);
-                    }
+                    if (!UseWeapon(lZombie)) RunFromZombies(cZombie);
                 }
                 else
                 {
-                    RunFromZombies(cZombie);
+                    if (!UseWeapon(cZombie)) RunFromZombies(cZombie);
                 }
             }
             else
