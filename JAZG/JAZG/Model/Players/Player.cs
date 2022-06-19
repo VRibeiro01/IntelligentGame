@@ -44,6 +44,7 @@ namespace JAZG.Model.Players
 
         public virtual void Tick()
         {
+            if (Dead) Kill();
         }
 
         public Position Position { get; set; }
@@ -64,8 +65,6 @@ namespace JAZG.Model.Players
 
         protected internal virtual void Kill()
         {
-            if (Dead) return;
-            Dead = true;
             Layer.Environment.Remove(this);
             UnregisterHandle.Invoke(Layer, this);
             if (GetType() == typeof(Zombie))
@@ -76,12 +75,14 @@ namespace JAZG.Model.Players
 
         public double GetDistanceFromPlayer(Player other)
         {
+            if (other is null) return 999;
             return Distance.Chebyshev(
                 Position.PositionArray, other.Position.PositionArray);
         }
 
         public double GetDistanceFromItem(Item item)
         {
+            if (item is null) return 999;
             return Distance.Chebyshev(
                 Position.PositionArray, item.Position.PositionArray);
         }

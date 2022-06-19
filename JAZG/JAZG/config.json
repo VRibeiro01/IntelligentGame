@@ -6,38 +6,43 @@
     "deltaTUnit": "seconds",
     "console": false,
     "output": "csv",
-    "pythonVisualization": false
+    "pythonVisualization": true
   },
   "agents": [
     {
       "name": "Human",
-      "pythonVisualizationWithProperties": false,
-      "count": 0
+      "pythonVisualizationWithProperties": true,
+      "count": 5
     },
     {
       "name": "Zombie",
-      "pythonVisualizationWithProperties": false,
+      "pythonVisualizationWithProperties": true,
       "count": 20
     },
     {
       "name": "CustomHuman",
-      "pythonVisualizationWithProperties": false,
-      "count": 10
+      "pythonVisualizationWithProperties": true,
+      "count": 0
     },
     {
       "name": "Wall",
-      "pythonVisualizationWithProperties": false,
+      "pythonVisualizationWithProperties": true,
       "file": "Resources/InitWall.csv"
     },
     {
       "name": "Gun",
-      "pythonVisualizationWithProperties": false,
-      "count": 10
+      "pythonVisualizationWithProperties": true,
+      "count": 5
     },
     {
       "name": "M16",
-      "pythonVisualizationWithProperties": false,
-      "count": 10
+      "pythonVisualizationWithProperties": true,
+      "count": 5
+    },
+    {
+      "name": "DeadPlayer",
+      "pythonVisualizationWithProperties": true,
+      "count": 0
     }
   ],
   "layers": [

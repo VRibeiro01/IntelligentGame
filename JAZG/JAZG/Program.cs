@@ -21,7 +21,7 @@ namespace JAZG
             var basePath = @"..\..\..\Resources";
             
             
-            /*
+            
            // ------ Start visualization: Comment this section out if you don't want the visualization to start---------
             
             ProcessStartInfo start = new ProcessStartInfo();
@@ -30,7 +30,7 @@ namespace JAZG
             start.Arguments = "";
             start.UseShellExecute = true;
             Process.Start(start);
-            */
+            
             
             
             //----------------------------- Set up model description ---------------------------------------------------

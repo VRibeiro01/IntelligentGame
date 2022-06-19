@@ -41,6 +41,8 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
+            base.Tick();
+            
             if (Layer.learningMode > 0)
             {
                 var mindIndex = RandomHelper.Random.Next(Layer.amountOfMinds);
@@ -111,6 +113,7 @@ namespace JAZG.Model.Players
 
         public void CollectItem(Item item)
         {
+            if (item is null) return;
             var distanceToItem = GetDistanceFromItem(item);
             var directionToItem = GetDirectionToItem(item);
             if (double.IsNaN(directionToItem)) directionToItem = RandomHelper.Random.Next(360);

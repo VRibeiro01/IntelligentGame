@@ -83,6 +83,7 @@ namespace JAZG.Model
             var humanAgents = AgentManager.Spawn<Human, FieldLayer>().ToList();
             var zombieAgents = AgentManager.Spawn<Zombie, FieldLayer>().ToList();
             var customHumanAgents = AgentManager.Spawn<CustomHuman, FieldLayer>().ToList();
+            var deadPlayerAgents = AgentManager.Spawn<DeadPlayer, FieldLayer>().ToList();
 
             HumansSpawned = humanAgents.Count;
             ZombiesSpawned = zombieAgents.Count;

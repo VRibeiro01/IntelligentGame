@@ -107,6 +107,7 @@ namespace JAZG.Model.Players
         
         public int lastM16Shoot { get; set; }
         public int lastGunShoot { get; set; }
+        
         public override void Tick()
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -129,7 +130,7 @@ namespace JAZG.Model.Players
                     lastGunShoot = (int) this.Layer.GetCurrentTick();
                     Console.WriteLine("custom human shoots gun");
                 }
-                UseWeapon(zombie);
+                IsShooting = UseWeapon(zombie);
                 
             }
             else
