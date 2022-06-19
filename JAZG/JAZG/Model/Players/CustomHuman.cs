@@ -12,7 +12,7 @@ using ServiceStack;
 
 namespace JAZG.Model.Players
 {
-    public class _CustomHuman : Human
+    public class CustomHuman : Human
     {
         
         public int lastM16Shoot { get; set; }
@@ -67,7 +67,7 @@ namespace JAZG.Model.Players
         }
     }
     
-    public class CustomHuman : Human
+    public class _CustomHuman : Human
     {
         public override void Tick()
         {
