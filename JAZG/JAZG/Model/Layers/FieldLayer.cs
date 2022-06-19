@@ -54,7 +54,7 @@ namespace JAZG.Model
         // 3 --> A new Qtable of Type 2 will be created 
         // 4  --> A previously trained Qtable of Type 2 will be obtained from a file 
         /// </summary>
-        public int learningMode = 4;
+        public int learningMode = 0;
 
         // should table changes me saved?
         public bool updateTable = false;
