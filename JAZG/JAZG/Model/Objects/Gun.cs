@@ -37,6 +37,7 @@ namespace JAZG.Model.Objects
 
         public override bool Use(Zombie zombie)
         {
+            if (zombie is null) return false;
             return Shoot(zombie);
         }
 

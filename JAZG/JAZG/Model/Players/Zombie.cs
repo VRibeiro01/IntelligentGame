@@ -34,7 +34,7 @@ namespace JAZG.Model.Players
                     EatHuman(nearestHuman);
                     //Console.WriteLine("Chomp, chomp!");
                 }
-                else if (humanDistance <= Level * 10)
+                else if (humanDistance <= Level * 20)
                 {
                     MoveTowardsHuman(nearestHuman);
                     if (_lastAction != 2)
@@ -66,8 +66,8 @@ namespace JAZG.Model.Players
 
         private void EatHuman(Player human)
         {
-            Energy += 4;
             human.Kill();
+            Energy += 4;
         }
 
         protected internal override void Kill()
@@ -89,7 +89,7 @@ namespace JAZG.Model.Players
             var directionToEnemy =
                 PositionHelper.CalculateBearingCartesian
                     (Position.X, Position.Y, human.Position.X, human.Position.Y);
-            Layer.Environment.Move(this, directionToEnemy, distanceToHuman > 2 ? Speed : 1);
+            Layer.Environment.Move(this, directionToEnemy, distanceToHuman > 2 ? Speed : distanceToHuman);
         }
 
         private bool AllZombiesDead()

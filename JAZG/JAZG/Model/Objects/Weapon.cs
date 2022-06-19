@@ -34,7 +34,7 @@ namespace JAZG.Model.Objects
                     UnregisterHandle.Invoke(Layer, this);
                     Console.WriteLine("I got a Gun.");
                     human.HasWeapon = 4;
-                    return CollisionKind.Remove;
+                    return CollisionKind.Pass;
 
                 }
                 if(!m16human && this is M16)
@@ -44,7 +44,7 @@ namespace JAZG.Model.Objects
                     UnregisterHandle.Invoke(Layer, this);
                     Console.WriteLine("I got a M16.");
                     human.HasWeapon = 7;
-                    return CollisionKind.Remove;
+                    return CollisionKind.Pass;
 
                 }
             }
