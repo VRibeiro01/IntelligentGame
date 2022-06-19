@@ -189,7 +189,8 @@ namespace JAZG.Model.Learning
             var closestZombie = human.FindClosestZombie();
             var allAliveZombies = human.Layer.GetAllZombiesCount();
             var allAliveHumans = human.Layer.GetAllHumansCount();
-            var oldEnergy = closestZombie.Energy;
+            var oldEnergy = 15;
+            if (closestZombie is not null) oldEnergy = closestZombie.Energy;
             var oldDistance = human.GetDistanceFromPlayer(closestZombie);
             var hadWeapon = human.HasWeapon == 4 || human.HasWeapon == 7;
             var nextWeapon = human.FindClosestWeapon();
