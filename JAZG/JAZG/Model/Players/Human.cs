@@ -41,8 +41,6 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-            base.Tick();
-            
             if (Layer.learningMode > 0)
             {
                 var mindIndex = RandomHelper.Random.Next(Layer.amountOfMinds);

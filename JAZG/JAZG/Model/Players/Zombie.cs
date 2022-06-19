@@ -20,29 +20,21 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-            if (Energy <= 0) Dead = true;
-            base.Tick();
-            
+            if (Energy <= 0) Kill();
             var nearestHuman = Layer.Environment.Characters
                 .Where(h => h.GetType() == typeof(Human) || h.GetType() == typeof(CustomHuman))
                 .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
-
-            /*if (nearestHuman is null)
-            {
-                nearestHuman = Layer.Environment.Characters.Where(h => h.GetType() == typeof(CustomHuman))
-                    .OrderBy(hD => Distance.Chebyshev(Position.PositionArray, hD.Position.PositionArray)).FirstOrDefault();
-            }*/
 
             if (nearestHuman != null)
             {
                 var humanDistance = GetDistanceFromPlayer(nearestHuman);
 
-                if (humanDistance <= 3)
+                if (humanDistance <= 2)
                 {
                     EatHuman(nearestHuman);
                     //Console.WriteLine("Chomp, chomp!");
                 }
-                else if (humanDistance <= Level * 30)
+                else if (humanDistance <= Level * 10)
                 {
                     MoveTowardsHuman(nearestHuman);
                     if (_lastAction != 2)
@@ -74,7 +66,7 @@ namespace JAZG.Model.Players
 
         private void EatHuman(Player human)
         {
-            human.Dead = true;
+            human.Kill();
             Energy += 4;
         }
 

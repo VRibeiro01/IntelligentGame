@@ -44,7 +44,6 @@ namespace JAZG.Model.Players
 
         public virtual void Tick()
         {
-            if (Dead) Kill();
         }
 
         public Position Position { get; set; }
@@ -65,6 +64,8 @@ namespace JAZG.Model.Players
 
         protected internal virtual void Kill()
         {
+            if (Dead) return;
+            Dead = true;
             Layer.Environment.Remove(this);
             UnregisterHandle.Invoke(Layer, this);
             if (GetType() == typeof(Zombie))
