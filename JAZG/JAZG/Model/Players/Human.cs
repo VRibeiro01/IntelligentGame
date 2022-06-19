@@ -44,14 +44,19 @@ namespace JAZG.Model.Players
 
         public override void Tick()
         {
-            if (Layer.learningMode > 0)
+            if (Layer.learningMode > 0 && Layer.learningMode < 3)
             {
                 Layer.QHumanLearningList[mindIndex].QMovement(this);
+            }
+            else if(Layer.learningMode >=3)
+            {
+                Layer.QHumanLearningList[mindIndex].QMovement2(this);   
             }
             else
             {
                 NonQMovement();
             }
+            
         }
 
         public Zombie FindClosestZombie()

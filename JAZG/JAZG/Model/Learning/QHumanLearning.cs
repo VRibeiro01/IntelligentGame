@@ -38,6 +38,12 @@ namespace JAZG.Model.Learning
             QLearning = new QLearning(States, Actions, ExplorationPolicy);
         }
 
+        public QHumanLearning(bool learningType2)
+        {
+            QLearning = new QLearning(12, 4, ExplorationPolicy);
+            QLearning.LearningRate = 0.1;
+        }
+
 
         public void QMovement(Human human)
         {
@@ -72,6 +78,138 @@ namespace JAZG.Model.Learning
                 var nextNearestWeapon = human.FindClosestWeapon();
                 
                 var nextState = GetState(nextClosestZombie, nextZombiesNearMe, nextNearestWeapon, human);
+                QLearning.UpdateState(state, action, Reward(closestZombie, oldEnergy, allAliveZombies,oldDistance,zombiesNearMe.Count, allAliveHumans,hadWeapon, human),
+                    nextState);
+            }
+        }
+
+        public int GetState2(Human human, Zombie closestZombie, Weapon closestWeapon)
+        {
+            if (human.HasWeapon >= 4 && closestZombie !=null)
+            {
+                if (human.GetDistanceFromPlayer(closestZombie) < 6)
+                {
+                    return 0;
+                }
+
+                if (human.GetDistanceFromPlayer(closestZombie) <= 12)
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 2;
+                }
+            }
+
+            if (human.HasWeapon >= 4 && closestZombie == null)
+            {
+                return 3;
+            }
+
+            if (human.HasWeapon < 4 && closestZombie != null && closestWeapon != null)
+            {
+                if (human.GetDistanceFromItem(closestWeapon) <= 6)
+                {
+                    return 4;
+                }
+
+                if (human.GetDirectionToItem(closestWeapon) <= 12)
+                {
+                    return 5;
+                } else
+                {
+                    return 6;
+                }
+            }
+
+            if (human.HasWeapon < 4 && closestZombie != null && closestWeapon == null)
+            {
+                return 7;
+            }
+
+            if (human.HasWeapon < 4 && closestZombie == null && closestWeapon != null)
+            {
+                if (human.GetDistanceFromItem(closestWeapon) <= 6)
+                {
+                    return 8;
+                }
+
+                if (human.GetDirectionToItem(closestWeapon) <= 12)
+                {
+                    return 9;
+                }
+                else
+                {
+                    return 10;
+                }
+            }
+            else return 11;
+        }
+
+        public void Act2(Human human,int actionIndex, Zombie closestZombie, Weapon nextWeapon)
+        {
+            human.IsShooting = false;
+            
+            switch (actionIndex)
+            {
+                case 0:
+                    if (closestZombie == null)
+                    {
+                        break;
+                    }
+                    human.RunFromZombies(closestZombie);
+                    Console.WriteLine("Running From Zombies");
+                    break;
+                case 1:
+                    if (human.weapons.Count == 0 || closestZombie==null)
+                    {
+                        break;
+                    }
+                    human.IsShooting = human.UseWeapon(closestZombie);
+                    break;
+                case 2:
+                    if (nextWeapon == null)
+                    {
+                        break;
+                    }
+                    human.CollectItem(nextWeapon);
+                    break;
+                case 3:
+                    // TODO: explore method
+                    human.RandomMove();
+                    break;
+            }
+        }
+
+        public void QMovement2(Human human)
+        {
+            QLearning.LearningRate -= (double)human.Layer.GetCurrentTick() / 120 * QLearning.LearningRate;
+            var zombiesNearMe = human.FindZombies();
+            var closestZombie = human.FindClosestZombie();
+            var allAliveZombies = human.Layer.GetAllZombiesCount();
+            var allAliveHumans = human.Layer.GetAllHumansCount();
+            var oldEnergy = closestZombie.Energy;
+            var oldDistance = human.GetDistanceFromPlayer(closestZombie);
+            var hadWeapon = human.HasWeapon == 4 || human.HasWeapon == 7;
+            var nextWeapon = human.FindClosestWeapon();
+            
+
+            var state = GetState2(human, closestZombie, nextWeapon);
+            Console.WriteLine("State: " + state);
+            
+
+            lock (QLearning)
+            {
+                var action = QLearning.GetAction(state);
+                Console.WriteLine("Action index: " + action);
+                Act2(human,action, closestZombie, nextWeapon);
+                
+                
+                var newClosestZombie = human.FindClosestZombie();
+                var newNearestWeapon = human.FindClosestWeapon();
+                
+                var nextState = GetState2(human,newClosestZombie, newNearestWeapon);
                 QLearning.UpdateState(state, action, Reward(closestZombie, oldEnergy, allAliveZombies,oldDistance,zombiesNearMe.Count, allAliveHumans,hadWeapon, human),
                     nextState);
             }
@@ -208,7 +346,7 @@ namespace JAZG.Model.Learning
         public double Reward(Player closestZombie, int oldEnergy, int oldZombieCount, double oldDistance, int oldClosestZombiesCount,int oldTotalHumanCount, bool hadWeapon, Human human)
         {
             var reward = 0.0;
-            if (closestZombie.Energy < oldEnergy)
+            if (closestZombie!=null && closestZombie.Energy < oldEnergy)
                 reward += 0.25;
 
             if (oldZombieCount > human.Layer.GetAllZombiesCount())

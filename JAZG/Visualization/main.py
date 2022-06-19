@@ -267,7 +267,7 @@ class Visualization:
                     if(entity["p"]["IsShooting"]):
                        print("shooting")
                        #mixer.music.load("..\..\..\..\Visualization\\GunShotSnglShotIn PE1097906.mp3")
-                       mixer.Sound("..\..\..\..\Visualization\\GunShotSnglShotIn_PE1097906.mp3").play()
+                       #mixer.Sound("..\..\..\..\Visualization\\GunShotSnglShotIn_PE1097906.mp3").play()
                        
                     if(entity["p"]["HasWeapon"] > 0):
                         if(entity["p"]["HasWeapon"] == 4):

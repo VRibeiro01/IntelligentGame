@@ -5,7 +5,6 @@ using System.Linq;
 using JAZG.Model.Learning;
 using JAZG.Model.Objects;
 using JAZG.Model.Players;
-using Mars.Common.Core.Collections;
 using Mars.Common.Core.Random;
 using Mars.Components.Environments.Cartesian;
 using Mars.Components.Layers;
@@ -49,8 +48,16 @@ namespace JAZG.Model
         // 0 --> The agents will move without the QLearning algorithm
         // 1 --> A new Qtable will be created 
         // 2 --> A previously trained Qtable will be obtained from a file 
+        // 3 --> A new Qtable of Type 2 will be created 
+        // 4  --> A previously trained Qtable of Type 2 will be obtained from a file 
         /// </summary>
-        public int learningMode = 2;
+        public int learningMode = 4;
+
+        // should table changes me saved?
+        public bool updateTable = false;
+
+        
+        public int learningIterations = 3001;
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
@@ -89,33 +96,59 @@ namespace JAZG.Model
           
             return true;
         }
-        
-        public void  InitQHumanLearning()
+
+        public void InitQHumanLearning()
         {
-            for (int i = 0; i < amountOfMinds; i++)
-            {
-                QHumanLearningList.Add(new QHumanLearning());
-            }
-            if (learningMode == 0)
-            {
-                return;
-            }
-            if (learningMode == 1)
-            {
-                Console.WriteLine("New QTables created");
-                return;
-            }
+            var basePath = @"..\..\..\Resources";
+            
 
             if (learningMode < 0)
             {
                 throw new ArgumentException("learningMode must equal 0 or be larger than 0");
             }
-
-           
-            var basePath = @"..\..\..\Resources";
-            for (int i = 0; i < amountOfMinds; i++)
+            
+            if (learningMode == 0)
             {
-                QHumanLearningList[i].QLearning = QHumanLearning.Deserialize(Path.Combine(basePath,"HumanLearning" + i + ".txt"));
+                return;
+            }
+
+            if (learningMode <= 2)
+            {
+                for (int i = 0; i < amountOfMinds; i++)
+                {
+                    QHumanLearningList.Add(new QHumanLearning());
+                }
+                Console.WriteLine("New QTables created");
+            }
+            
+            if (learningMode == 2)
+            {
+                for (int i = 0; i < amountOfMinds; i++)
+                {
+                    QHumanLearningList[i].QLearning =
+                        QHumanLearning.Deserialize(Path.Combine(basePath, "HumanLearning" + i + ".txt"));
+                }
+
+                return;
+            }
+
+            if (learningMode <= 4)
+            {
+                for (int i = 0; i < amountOfMinds; i++)
+                {
+                    QHumanLearningList.Add(new QHumanLearning(true));
+                    
+                }
+                Console.WriteLine("New QTables Type 2 created");
+            }
+            if (learningMode == 4)
+            {
+                for (int i = 0; i < amountOfMinds; i++)
+                {
+                    QHumanLearningList[i].QLearning =
+                        QHumanLearning.Deserialize(Path.Combine(basePath, learningIterations + "NewHumanLearning" + i + ".txt"));
+                }
+                
             }
         }
 
@@ -123,7 +156,6 @@ namespace JAZG.Model
         public Position FindRandomPosition()
         {
             var random = RandomHelper.Random;
-            //TODO Fix Position out of bounds when inserting into environment
             return Position.CreatePosition(random.Next(0 + outerWallOffset, Width - outerWallOffset),
                 random.Next(0 + outerWallOffset, Height - outerWallOffset));
         }
