@@ -24,6 +24,11 @@
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <None Remove="Resources\zombieInit.csv" />
+        <None Remove="Resources\21501NewHumanLearning4.txt" />
+        <None Remove="Resources\21501NewHumanLearning3.txt" />
+        <None Remove="Resources\21501NewHumanLearning2.txt" />
+        <None Remove="Resources\21501NewHumanLearning1.txt" />
+        <None Remove="Resources\21501NewHumanLearning0.txt" />
     </ItemGroup>
 
 </Project>

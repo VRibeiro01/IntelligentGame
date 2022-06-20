@@ -23,12 +23,14 @@ namespace JAZG
             
            // ------ Start visualization: Comment this section out if you don't want the visualization to start---------
             
-            ProcessStartInfo start = new ProcessStartInfo();
+            
+            /*ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
             bool exists = File.Exists(start.FileName);
             start.Arguments = "";
             start.UseShellExecute = true;
-            Process.Start(start);
+            Process.Start(start);*/
+            
             
             
             
@@ -108,6 +110,8 @@ namespace JAZG
 
                 Console.WriteLine("Humans: " +
                                   loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
+                Console.WriteLine("DeadZombies: " +
+                                  loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(DeadPlayer))].Count);
                 Console.WriteLine("CustomHumans: " +
                                   loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(CustomHuman))].Count);
                 Console.WriteLine("Zombies: " +

@@ -60,7 +60,7 @@ namespace JAZG.Model
         public bool updateTable = false;
 
         
-        public int learningIterations = 3001;
+        public int learningIterations = 21501;
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
