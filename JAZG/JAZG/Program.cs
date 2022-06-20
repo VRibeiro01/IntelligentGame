@@ -23,12 +23,14 @@ namespace JAZG
             
            // ------ Start visualization: Comment this section out if you don't want the visualization to start---------
             
-            ProcessStartInfo start = new ProcessStartInfo();
+            
+            /*ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = "..\\..\\..\\..\\Visualization\\main.py";
             bool exists = File.Exists(start.FileName);
             start.Arguments = "";
             start.UseShellExecute = true;
-            Process.Start(start);
+            Process.Start(start);*/
+            
             
             
             
@@ -54,8 +56,8 @@ namespace JAZG
             // ----------------------------- Start Simulation ----------------------------------------------------------
             var file = File.ReadAllText("config.json");
             var config = SimulationConfig.Deserialize(file);
-            int learningIterations = 1;
-            for (int iterationIndex=1; iterationIndex <= learningIterations; iterationIndex++)
+            int learningIterations = 90;
+            for (int iterationIndex=76; iterationIndex <= learningIterations; iterationIndex++)
             {
                 var task = SimulationStarter.Start(description, config);
                 var loopResults = task.Run(); 
@@ -108,6 +110,8 @@ namespace JAZG
 
                 Console.WriteLine("Humans: " +
                                   loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(Human))].Count);
+                Console.WriteLine("DeadZombies: " +
+                                  loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(DeadPlayer))].Count);
                 Console.WriteLine("CustomHumans: " +
                                   loopResults.Model.ExecutionAgentTypeGroups[new AgentType(typeof(CustomHuman))].Count);
                 Console.WriteLine("Zombies: " +

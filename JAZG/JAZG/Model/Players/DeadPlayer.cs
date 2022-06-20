@@ -15,6 +15,7 @@ namespace JAZG.Model.Players
         public void Init(FieldLayer layer)
         {
             Layer = layer;
+           
         }
 
         public void Tick()
@@ -33,7 +34,7 @@ namespace JAZG.Model.Players
 
         public static void Spawn(FieldLayer layer, Player oldPlayer)
         {
-            layer.AgentManager.Spawn<DeadPlayer, FieldLayer>(null,
+            var player = layer.AgentManager.Spawn<DeadPlayer, FieldLayer>(null,
                 player => { player.Position = oldPlayer.Position; }).Take(1).First();
         }
     }

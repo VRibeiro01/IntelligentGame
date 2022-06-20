@@ -57,10 +57,10 @@ namespace JAZG.Model
         public int learningMode = 4;
 
         // should table changes me saved?
-        public bool updateTable = false;
+        public bool updateTable = true;
 
         
-        public int learningIterations = 3001;
+        public int learningIterations = 21501;
 
         public override bool InitLayer(LayerInitData layerInitData, RegisterAgent registerAgentHandle,
             UnregisterAgent unregisterAgentHandle)
